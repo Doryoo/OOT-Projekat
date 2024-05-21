@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocijalnaMreza"
         mc:Ignorable="d"
-        Height="450" Width="800"
+        Height="854" Width="480"
 >
     <Grid>
         <TabControl Name="MainTabovi">
             <TabItem Header="PregledProfilaIPostova">
-                <Label>Content1</Label>
+                <Grid>
+                    
+                </Grid>
             </TabItem>
             <TabItem Header="MrezaPrijatelja">
                 <Label>Content2</Label>
