@@ -5,13 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocijalnaMreza"
         mc:Ignorable="d"
-        Height="854" Width="480"
+        Height="640" Width="480"
 >
     <Grid>
         <TabControl Name="MainTabovi">
             <TabItem Header="PregledProfilaIPostova">
                 <Grid>
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="1">
+                        <Image.Source>
+                            <BitmapImage UriSource="pack://application:,,,/images/profileImage.png"/>
+                        </Image.Source>
+                    </Image>
+                    <StackPanel Grid.Row="1" Grid.Column="1" x:Name="ProfileInfo">
+                        <TextBox>ID: ABCD</TextBox>
+                        <TextBox>Doryo Doryiev</TextBox>
+                        <TextBox>Datum rodjenja: 23.1.2004</TextBox>
+                    </StackPanel>
+                    <Button Height="50" Width="100" Click="Toggle_Upload_Visibility_Click">+</Button>
+                    <StackPanel Grid.Row="1" Visibility="Hidden" x:Name="NewPost">
+                        <Button Click="Upload_Post_Click">Dodaj</Button>
+                        <TextBox x:Name="Upload_Post_Content"></TextBox>
+                    </StackPanel>
+                    <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
+                                     AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn Header="Autor" Binding="{Binding Path=IdAutora}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="MrezaPrijatelja">

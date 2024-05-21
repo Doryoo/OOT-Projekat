@@ -22,5 +22,36 @@ namespace SocijalnaMreza
             this.brojLajkova = brojLajkova;
             this.idAutora = autorId;
         }
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        public string Sadrzaj
+        {
+            get { return sadrzaj; }
+            set { sadrzaj = value; }
+        }
+        public DateOnly DatumObjave
+        {
+            get { return datumObjave; }
+            set { datumObjave = value; }
+        }
+        public int BrojLajkova
+        {
+            get { return brojLajkova; }
+            set { brojLajkova = value; }
+        }
+        public string IdAutora
+        {
+            get { return idAutora; }
+            set { idAutora = value; }
+        }
+
+        public override string ToString()
+        {
+            return sadrzaj + " " + datumObjave;
+        }
     }
 }
