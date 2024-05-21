@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocijalnaMreza"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="450" Width="800"
+>
     <Grid>
-
+        <TabControl Name="MainTabovi">
+            <TabItem Header="PregledProfilaIPostova">
+                <Label>Content1</Label>
+            </TabItem>
+            <TabItem Header="MrezaPrijatelja">
+                <Label>Content2</Label>
+            </TabItem>
+            <TabItem Header="GrupneDiskusije">
+                <Label>Content3</Label>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
