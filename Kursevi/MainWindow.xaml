@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursevi"
         mc:Ignorable="d"
-        Title="Kursevi" Height="450" Width="800">
+        Title="SocijalnaMreza" Height="450" Width="800">
     <Grid>
 
     </Grid>

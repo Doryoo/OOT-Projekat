@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Code\\VS Projects\\OOT-Projekat\\Kursevi\\Kursevi.csproj",
-      "projectName": "Kursevi",
-      "projectPath": "F:\\Code\\VS Projects\\OOT-Projekat\\Kursevi\\Kursevi.csproj",
+      "projectUniqueName": "F:\\Code\\VS Projects\\OOT-Projekat\\Kursevi\\DrustvenaMreza.csproj",
+      "projectName": "DrustvenaMreza",
+      "projectPath": "F:\\Code\\VS Projects\\OOT-Projekat\\Kursevi\\DrustvenaMreza.csproj",
       "packagesPath": "C:\\Users\\neman\\.nuget\\packages\\",
       "outputPath": "F:\\Code\\VS Projects\\OOT-Projekat\\Kursevi\\obj\\",
       "projectStyle": "PackageReference",
