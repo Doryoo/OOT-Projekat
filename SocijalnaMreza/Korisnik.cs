@@ -14,7 +14,7 @@ namespace SocijalnaMreza
         private string ime;
         private string prezime;
         private DateOnly datumRodjenja;
-        private Image profilnaSlika;
+        private Image profilnaSlika;                            //treba li getter i setter za ovo
         private ObservableCollection<Post> objavljeniPostovi;
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, Image profilnaSlika)
@@ -34,6 +34,7 @@ namespace SocijalnaMreza
         private int brojLajkova;
         private string idAutora;
         */
+
         public void dodajPost(string sadrzaj)
         {
             Random idGen = new Random();
@@ -43,5 +44,38 @@ namespace SocijalnaMreza
         public ObservableCollection<Post> getPosts() {
             return objavljeniPostovi;
         }
+
+
+
+
+
+
+
+
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public string Ime
+        {
+            get { return ime; }
+            set { ime = value; }
+        }
+
+        public string Prezime
+        {
+            get { return prezime; }
+            set { prezime = value; }
+        }
+
+        public DateOnly DatumRodjenja
+        {
+            get { return datumRodjenja; }
+            set { datumRodjenja = value; }
+        }
+
     }
 }
