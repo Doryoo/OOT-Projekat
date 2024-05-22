@@ -8,6 +8,8 @@ using System.Windows.Controls;
 
 namespace SocijalnaMreza
 {
+
+
     internal class Korisnik
     {
         private string id;
@@ -17,6 +19,7 @@ namespace SocijalnaMreza
         private Image profilnaSlika;                            //treba li getter i setter za ovo
         private ObservableCollection<Post> objavljeniPostovi;
         private ObservableCollection<Korisnik> listaPrijatelja;
+        
 
 
 
@@ -31,7 +34,7 @@ namespace SocijalnaMreza
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
 
-
+        
 
         /*
          private string id;
@@ -74,6 +77,21 @@ namespace SocijalnaMreza
         }
 
         /*
+         
+        public bool DodajPrijatelja(List<Korisnik> k)
+        {
+            if (k == null || listaPrijatelja.Contains(k)) return false;
+            listaPrijatelja.Add(k);
+            return true;
+        }
+
+        public bool ukloniPrijatelja(List<Korisnik> k)
+        {
+            return listaPrijatelja.Remove(k);
+        }
+
+
+
         //ovako bi izgledalo da zelimo listu sa stringovima (id-evima) prijatelja
         private ObservableCollection<string> listaPrijatelja;
 
@@ -108,7 +126,7 @@ namespace SocijalnaMreza
 
         public override string ToString()
         {
-            return "Ime : " + ime + ", Prezime :" + prezime;
+            return "Ime : " + ime + ", Prezime : " + prezime;
         }
 
 

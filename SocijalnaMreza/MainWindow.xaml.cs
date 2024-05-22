@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,22 +23,26 @@ namespace SocijalnaMreza
         Korisnik drugiKorisnik = new Korisnik(idGen.Next().ToString(),"Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik treci = new Korisnik(idGen.Next().ToString(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik cetvrti = new Korisnik(idGen.Next().ToString(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
-
+        
         public MainWindow()
         {
             InitializeComponent();
+
             
+
+
+
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             
-            glavniKorisnik.DodajPrijatelja(drugiKorisnik);
-            glavniKorisnik.DodajPrijatelja(treci);
-            glavniKorisnik.DodajPrijatelja(cetvrti);
+            //glavniKorisnik.DodajPrijatelja(drugiKorisnik);
+            //glavniKorisnik.DodajPrijatelja(treci);
+            //glavniKorisnik.DodajPrijatelja(cetvrti);
 
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
-            SviPrijatelji.ItemsSource = glavniKorisnik.getFriends();
+            //SviPrijatelji.ItemsSource = glavniKorisnik.getFriends();
             
         }
 
@@ -54,6 +60,16 @@ namespace SocijalnaMreza
         {
             glavniKorisnik.dodajPost(Upload_Post_Content.Text);
             Upload_Post_Content.Text = "";
+        }
+
+        private void FriendClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ViewPostsGridMreza_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }
