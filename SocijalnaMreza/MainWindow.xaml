@@ -51,8 +51,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="MrezaPrijatelja">
-                <TreeView>
-                    <TreeView.Resources></TreeView.Resources>
+                <TreeView Name="SviPrijatelji">
                 </TreeView>
             </TabItem>
             <TabItem Header="GrupneDiskusije">
