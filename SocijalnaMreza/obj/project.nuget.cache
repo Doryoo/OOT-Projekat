@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Nh2r7OxJ3Or84CdVqkBDia08G1ulhy17RKVi+Waex/OhIP55kulrQs58VhgW4ag2SDUGEHGDcmU/V07NvMkA/g==",
+  "dgSpecHash": "TMGu8ovdDC1zZqDgkbAsaeKPHX7Y7y5WvLV2ikO7B+rj/z439mAM9Koh+pk1F0BmUhpfSvvvL55HO6yG3g4hGQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Nikola\\Desktop\\Faks\\OOT\\Projekat\\OOT-Projekat\\SocijalnaMreza\\SocijalnaMreza.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.18\\microsoft.windowsdesktop.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.18\\microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.18\\microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\Nikola\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.18\\microsoft.netcore.app.host.win-x64.7.0.18.nupkg.sha512"
+  ],
   "logs": []
 }
