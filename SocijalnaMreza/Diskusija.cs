@@ -20,5 +20,34 @@ namespace SocijalnaMreza
             this.datumPoslednjePoruke = datumPoslednjePoruke;
             this.idGrupe = idGrupe;
         }
+
+
+
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        public string Naziv
+        {
+            get { return naziv; }
+            set { naziv = value; }
+        }
+
+        public DateOnly DatumPoslednjePoruke
+        {
+            get { return datumPoslednjePoruke; }
+            set { datumPoslednjePoruke = value; }
+        }
+
+        public string IdGrupe
+        {
+            get { return idGrupe; }
+            set { idGrupe = value; }
+        }
+
+
+
     }
 }

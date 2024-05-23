@@ -23,6 +23,9 @@ namespace SocijalnaMreza
             this.idAutora = autorId;
         }
 
+
+        
+        //nepotrebni su, ali eto, ako ustreba tu su
         public string Id
         {
             get { return id; }
@@ -48,7 +51,7 @@ namespace SocijalnaMreza
             get { return idAutora; }
             set { idAutora = value; }
         }
-
+        
         public override string ToString()
         {
             return sadrzaj + " " + datumObjave;

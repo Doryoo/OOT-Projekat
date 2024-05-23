@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,16 +20,30 @@ namespace SocijalnaMreza
     {
         static Random idGen = new Random();
         Korisnik glavniKorisnik = new Korisnik(idGen.Next().ToString(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), null);
-
+        Korisnik drugiKorisnik = new Korisnik(idGen.Next().ToString(),"Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
+        Korisnik treci = new Korisnik(idGen.Next().ToString(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
+        Korisnik cetvrti = new Korisnik(idGen.Next().ToString(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
+        
         public MainWindow()
         {
             InitializeComponent();
+
             
+
+
+
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
+            
+            //glavniKorisnik.DodajPrijatelja(drugiKorisnik);
+            //glavniKorisnik.DodajPrijatelja(treci);
+            //glavniKorisnik.DodajPrijatelja(cetvrti);
+
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
+            //SviPrijatelji.ItemsSource = glavniKorisnik.getFriends();
+            
         }
 
         private void Toggle_Upload_Visibility_Click(object sender, RoutedEventArgs e)
@@ -43,6 +59,17 @@ namespace SocijalnaMreza
         private void Upload_Post_Click(object sender, RoutedEventArgs e)
         {
             glavniKorisnik.dodajPost(Upload_Post_Content.Text);
+            Upload_Post_Content.Text = "";
+        }
+
+        private void FriendClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ViewPostsGridMreza_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

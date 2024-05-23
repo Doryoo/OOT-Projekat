@@ -51,7 +51,47 @@
                 </Grid>
             </TabItem>
             <TabItem Header="MrezaPrijatelja">
-                <Label>Content2</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.RowSpan="2" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
+                    <TreeView Grid.Column="0" MouseDoubleClick="FriendClicked" Grid.Row="1" Grid.RowSpan="16">
+
+                    </TreeView>
+
+                    <DataGrid Grid.Column="1" Grid.Row="10" x:Name="ViewPostsGridMreza" IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="5" Visibility="Hidden">
+                        <DataGrid.Columns> <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
+                            <DataGridTextColumn x:Name="temps" Header="ID"/>
+                            <DataGridTextColumn Header="Sadrzaj"/>
+                            <DataGridTextColumn Header="Objavljeno"/>
+                            <DataGridTextColumn Header="Lajkovi"/>
+                            <DataGridTextColumn Header="Autor"/>
+                        </DataGrid.Columns>
+                     </DataGrid> 
+
+                </Grid>
             </TabItem>
             <TabItem Header="GrupneDiskusije">
                 <Label>Content3</Label>
