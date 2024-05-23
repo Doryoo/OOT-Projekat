@@ -71,10 +71,6 @@ namespace SocijalnaMreza
             return listaPrijatelja.Remove(k);
         }
 
-        public ObservableCollection<Korisnik> getFriends()
-        {
-            return listaPrijatelja;
-        }
 
         /*
          

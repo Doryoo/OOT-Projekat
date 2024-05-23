@@ -32,11 +32,17 @@
                     <!-- Trenutno prikazani podaci /-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo">
                         <Label  FontWeight="Bold">ID:</Label>
-                        <TextBlock Margin="10 0 0 0">ABCd</TextBlock>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
+                        </Border>
                         <Label FontWeight="Bold" >Ime i Prezime:</Label>
-                        <TextBlock x:Name="NameSurname" Margin="10 0 0 0">Doryo doryev</TextBlock>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock x:Name="NameSurname" Margin="5 1 5 1">Doryo doryev</TextBlock>
+                        </Border>
                         <Label FontWeight="Bold" >Datum rodjenja:</Label>
-                        <TextBlock x:Name="BirthDate"  Margin="10 0 0 10">24.1.2004</TextBlock>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock x:Name="BirthDate"  Margin="5 1 5 1">24.1.2004</TextBlock>
+                         </Border>
                         <Button Click="Edit_Profile_Click">Edituj</Button>
                     </StackPanel>
 
@@ -61,16 +67,17 @@
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                                      AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
-                            <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
-                            <DataGridTextColumn Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
-                            <DataGridTextColumn Header="Autor" Binding="{Binding Path=IdAutora}"/>
+                            <DataGridTextColumn Header="ID"             Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn Header="Sadrzaj"        Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn Header="Datum Objave"   Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn Header="Broj lajkova"   Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn Header="Autor"          Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="MrezaPrijatelja">
+                <!-- Grid definitions -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -95,19 +102,39 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-
+                    
+                    <!-- TreeView -->
                     <Label Grid.Column="0" Grid.RowSpan="2" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
-                    <TreeView Grid.Column="0" MouseDoubleClick="FriendClicked" Grid.Row="1" Grid.RowSpan="16">
+                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="16" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
 
                     </TreeView>
 
-                    <DataGrid Grid.Column="1" Grid.Row="10" x:Name="ViewPostsGridMreza" IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="5" Visibility="Hidden">
+                    <!-- Podaci o odabranom korisniku/-->
+                    <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano ///todo -->
+                    <StackPanel Margin="0 20 0 10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
+                        <Label FontWeight="Bold">ID:</Label>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock Margin="5 1 5 1" IsEnabled="True" x:Name="IDMrezaSelektovano"></TextBlock>
+                        </Border>
+                        
+                        <Label FontWeight="Bold" >Ime i Prezime:</Label>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock x:Name="NameSurnameMreza" Margin="5 1 5 1"></TextBlock>
+                        </Border>
+                        <Label FontWeight="Bold" >Datum rodjenja:</Label>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock x:Name="BirthDateMreza" Margin="5 1 5 1" VerticalAlignment="Center"></TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- User content -->
+                    <DataGrid Grid.Column="1" Grid.Row="6" x:Name="ViewPostsGridMreza" IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
                         <DataGrid.Columns> <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
-                            <DataGridTextColumn x:Name="temps" Header="ID"/>
-                            <DataGridTextColumn Header="Sadrzaj"/>
-                            <DataGridTextColumn Header="Objavljeno"/>
-                            <DataGridTextColumn Header="Lajkovi"/>
-                            <DataGridTextColumn Header="Autor"/>
+                            <DataGridTextColumn x:Name="IDMreza" Header="ID" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno" Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi" Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor" Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
                      </DataGrid> 
 

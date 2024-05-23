@@ -23,12 +23,16 @@ namespace SocijalnaMreza
         Korisnik drugiKorisnik = new Korisnik(idGen.Next().ToString(),"Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik treci = new Korisnik(idGen.Next().ToString(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik cetvrti = new Korisnik(idGen.Next().ToString(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
-        
+
+       
+
         public MainWindow()
         {
             InitializeComponent();
 
-            
+            ObservableCollection<Korisnik> mreza = new ObservableCollection<Korisnik>();
+            mreza.Add(glavniKorisnik);
+                        
 
 
 
@@ -37,12 +41,12 @@ namespace SocijalnaMreza
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             
-            //glavniKorisnik.DodajPrijatelja(drugiKorisnik);
-            //glavniKorisnik.DodajPrijatelja(treci);
-            //glavniKorisnik.DodajPrijatelja(cetvrti);
+            glavniKorisnik.DodajPrijatelja(drugiKorisnik);
+            glavniKorisnik.DodajPrijatelja(treci);
+            glavniKorisnik.DodajPrijatelja(cetvrti);
 
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
-            //SviPrijatelji.ItemsSource = glavniKorisnik.getFriends();
+            SviPrijatelji.ItemsSource = mreza;
             
         }
 
@@ -68,13 +72,29 @@ namespace SocijalnaMreza
 
         private void FriendClicked(object sender, RoutedEventArgs e)
         {
-
+            var tmp = SviPrijatelji.SelectedItem as Korisnik;
+            if(tmp != null)
+            {
+                ViewPostsGridMreza.Visibility = Visibility.Visible;
+                ProfileInfoMreza.Visibility = Visibility.Visible;
+                IDMrezaSelektovano.Text = tmp.Id;
+                NameSurnameMreza.Text = tmp.Ime + " " + tmp.Prezime;
+                BirthDateMreza.Text = tmp.DatumRodjenja.ToString();
+                //IDMreza.Binding = ;
+                //                LajkoviMreza = tmp.
+                //                MessageBox.Show(tmp.ToString());
+            }
+            else
+            {
+                ViewPostsGridMreza.Visibility = Visibility.Hidden;
+                ProfileInfoMreza.Visibility = Visibility.Hidden;
+                IDMrezaSelektovano.Text = "";
+                NameSurnameMreza.Text = "";
+                BirthDateMreza.Text = "";
+            }
         }
 
-        private void ViewPostsGridMreza_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
 
-        }
 
         private void Edit_Profile_Click(object sender, RoutedEventArgs e)
         {
