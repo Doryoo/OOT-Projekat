@@ -21,9 +21,6 @@ namespace SocijalnaMreza
             this.idGrupe = idGrupe;
         }
 
-
-
-
         public string Id
         {
             get { return id; }

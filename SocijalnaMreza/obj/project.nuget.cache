@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TGWcmLiQVW4=",
+  "dgSpecHash": "3u6bMTEpDZ0=",
   "success": true,
   "projectFilePath": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\SocijalnaMreza.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\neman\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.19\\microsoft.windowsdesktop.app.ref.7.0.19.nupkg.sha512",
-    "C:\\Users\\neman\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.19\\microsoft.netcore.app.ref.7.0.19.nupkg.sha512",
-    "C:\\Users\\neman\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.19\\microsoft.aspnetcore.app.ref.7.0.19.nupkg.sha512",
-    "C:\\Users\\neman\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.19\\microsoft.netcore.app.host.win-x64.7.0.19.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

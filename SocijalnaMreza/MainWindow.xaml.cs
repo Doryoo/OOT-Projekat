@@ -62,6 +62,8 @@ namespace SocijalnaMreza
         {
             glavniKorisnik.dodajPost(UploadPostContent.Text);
             UploadPostContent.Text = "";
+            NewPostUpload.Visibility = Visibility.Hidden;
+            UploadPostContent.Visibility = Visibility.Hidden;
         }
 
         private void FriendClicked(object sender, RoutedEventArgs e)
