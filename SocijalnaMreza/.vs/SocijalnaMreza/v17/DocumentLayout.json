@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Grupa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Grupa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Korisnik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Korisnik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\korisnik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:korisnik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\grupa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:grupa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\SocijalnaMreza.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SocijalnaMreza.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\diskusija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:diskusija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Diskusija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Diskusija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|f:\\code\\vs projects\\oot-projekat\\socijalnamreza\\socijalnamreza.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{B454A51B-761F-4B0E-9B65-FC611CC4D5BA}|SocijalnaMreza.csproj|solutionrelative:socijalnamreza.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,24 +38,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SocijalnaMreza",
+              "DocumentIndex": 4,
+              "Title": "SocijalnaMreza.csproj",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\SocijalnaMreza.csproj",
               "RelativeDocumentMoniker": "SocijalnaMreza.csproj",
               "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\SocijalnaMreza.csproj",
               "RelativeToolTip": "SocijalnaMreza.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-05-21T16:24:02.939Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:24:02.939Z"
             },
             {
               "$type": "Document",
@@ -67,63 +70,55 @@
               "RelativeToolTip": "Diskusija.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T16:43:32.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:43:32.873Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Grupa.cs",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Grupa.cs",
               "RelativeDocumentMoniker": "Grupa.cs",
               "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Grupa.cs",
               "RelativeToolTip": "Grupa.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T16:41:05.149Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:41:05.149Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Post.cs",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Post.cs",
               "RelativeDocumentMoniker": "Post.cs",
               "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Post.cs",
               "RelativeToolTip": "Post.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAzwC8AAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T16:34:41.242Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:34:41.242Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Korisnik.cs",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Korisnik.cs",
               "RelativeDocumentMoniker": "Korisnik.cs",
               "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\Korisnik.cs",
               "RelativeToolTip": "Korisnik.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAArwCcAAAB3AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T16:25:36.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:25:36.463Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml*",
-              "RelativeToolTip": "MainWindow.xaml*",
+              "ToolTip": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-21T17:35:20.923Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T17:35:20.923Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "F:\\Code\\VS Projects\\OOT-Projekat\\SocijalnaMreza\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
@@ -131,8 +126,7 @@
               "RelativeToolTip": "MainWindow.xaml.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAywB0AAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T16:19:03.949Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T16:19:03.949Z"
             }
           ]
         }
