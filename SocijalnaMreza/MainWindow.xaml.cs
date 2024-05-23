@@ -48,18 +48,20 @@ namespace SocijalnaMreza
 
         private void Toggle_Upload_Visibility_Click(object sender, RoutedEventArgs e)
         {
-            if (NewPost.Visibility == Visibility.Hidden)
+            if (NewPostUpload.Visibility == Visibility.Hidden)
             {
-                NewPost.Visibility = Visibility.Visible;
+                NewPostUpload.Visibility = Visibility.Visible;
+                UploadPostContent.Visibility = Visibility.Visible;
             } else
             {
-                NewPost.Visibility = Visibility.Hidden;
+                NewPostUpload.Visibility = Visibility.Hidden;
+                UploadPostContent.Visibility = Visibility.Hidden;
             }
         }
         private void Upload_Post_Click(object sender, RoutedEventArgs e)
         {
-            glavniKorisnik.dodajPost(Upload_Post_Content.Text);
-            Upload_Post_Content.Text = "";
+            glavniKorisnik.dodajPost(UploadPostContent.Text);
+            UploadPostContent.Text = "";
         }
 
         private void FriendClicked(object sender, RoutedEventArgs e)
@@ -70,6 +72,21 @@ namespace SocijalnaMreza
         private void ViewPostsGridMreza_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 
+        }
+
+        private void Edit_Profile_Click(object sender, RoutedEventArgs e)
+        {
+            ProfileInfo.Visibility = Visibility.Hidden;
+            EditProfileInfo.Visibility = Visibility.Visible;
+        }
+
+        private void Save_Edit_Profile_Click(object sender, RoutedEventArgs e)
+        {
+            NameSurname.Text = EditedNameSurname.Text;
+            BirthDate.Text = EditedBirthDate.Text;
+
+            ProfileInfo.Visibility = Visibility.Visible;
+            EditProfileInfo.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -1,3 +1,6 @@
 *.jfm
 *.vsidx
 *.pdf
+SocijalnaMreza/bin/
+SocijalnaMreza/.vs/
+SocijalnaMreza/obj/

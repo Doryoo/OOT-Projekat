@@ -23,21 +23,41 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1">
+                    <Image Grid.Column="1" Height="150" Width="150">
                         <Image.Source>
                             <BitmapImage UriSource="pack://application:,,,/images/profileImage.png"/>
                         </Image.Source>
                     </Image>
-                    <StackPanel Grid.Row="1" Grid.Column="1" x:Name="ProfileInfo">
-                        <TextBox>ID: ABCD</TextBox>
-                        <TextBox>Doryo Doryiev</TextBox>
-                        <TextBox>Datum rodjenja: 23.1.2004</TextBox>
+                    
+                    <!-- Trenutno prikazani podaci /-->
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo">
+                        <Label  FontWeight="Bold">ID:</Label>
+                        <TextBlock Margin="10 0 0 0">ABCd</TextBlock>
+                        <Label FontWeight="Bold" >Ime i Prezime:</Label>
+                        <TextBlock x:Name="NameSurname" Margin="10 0 0 0">Doryo doryev</TextBlock>
+                        <Label FontWeight="Bold" >Datum rodjenja:</Label>
+                        <TextBlock x:Name="BirthDate"  Margin="10 0 0 10">24.1.2004</TextBlock>
+                        <Button Click="Edit_Profile_Click">Edituj</Button>
                     </StackPanel>
-                    <Button Height="50" Width="100" Click="Toggle_Upload_Visibility_Click">+</Button>
-                    <StackPanel Grid.Row="1" Visibility="Hidden" x:Name="NewPost">
-                        <Button Click="Upload_Post_Click">Dodaj</Button>
-                        <TextBox x:Name="Upload_Post_Content"></TextBox>
+
+                    <!-- Podaci koji se edituju/-->
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden">
+                        <Label  FontWeight="Bold">ID:</Label>
+                        <TextBlock Margin="10 0 0 0">ABCd</TextBlock>
+                        <Label FontWeight="Bold" >Ime i Prezime:</Label>
+                        <TextBox x:Name="EditedNameSurname" Margin="10 0 0 0">Doryo doryev</TextBox>
+                        <Label FontWeight="Bold" >Datum rodjenja:</Label>
+                        <TextBox x:Name="EditedBirthDate" Margin="10 0 0 10">24.1.2004</TextBox>
+                        <Button Click="Save_Edit_Profile_Click">Sacuvaj</Button>
                     </StackPanel>
+
+                    <!-- Upload new post/-->
+                    <StackPanel Margin="0 25 0 10">
+                        <Button Margin="0 0 0 10" Click="Toggle_Upload_Visibility_Click">Nov post</Button>
+                        <Button x:Name="NewPostUpload" Click="Upload_Post_Click" Visibility="Hidden">Dodaj</Button>
+                        <TextBox x:Name="UploadPostContent" Visibility="Hidden"></TextBox>
+                    </StackPanel>
+                    
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                                      AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3">
                         <DataGrid.Columns>
