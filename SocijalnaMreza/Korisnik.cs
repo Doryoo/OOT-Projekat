@@ -11,7 +11,7 @@ namespace SocijalnaMreza
 {
 
 
-    internal class Korisnik
+    internal class Korisnik : INotifyPropertyChanged
     {
         private string id;
         private string ime;
@@ -33,6 +33,24 @@ namespace SocijalnaMreza
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
 
+        public ObservableCollection<Korisnik> ListaPrijatelja
+        {
+            get { return listaPrijatelja; }
+            set
+            {
+                if (listaPrijatelja != value)
+                {
+                    listaPrijatelja = value;
+                    OnPropertyChanged(nameof(ListaPrijatelja));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
         /*
@@ -54,19 +72,6 @@ namespace SocijalnaMreza
         }
 
 
-        public ObservableCollection<Korisnik> ListaPrijatelja
-        {
-            get
-            {
-                return listaPrijatelja;
-            }
-            set
-            {
-                listaPrijatelja = value;
-
-            }
-        }
-        
 
 
         public bool DodajPrijatelja(Korisnik k)
