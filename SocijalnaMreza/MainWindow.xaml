@@ -30,7 +30,7 @@
                     </Image>
                     
                     <!-- Trenutno prikazani podaci /-->
-                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo">
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo" Visibility="Visible" Grid.RowSpan="2">
                         <Label  FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
@@ -47,13 +47,17 @@
                     </StackPanel>
 
                     <!-- Podaci koji se edituju/-->
-                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden">
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden" Grid.RowSpan="2"> 
+
+                        
                         <Label  FontWeight="Bold">ID:</Label>
-                        <TextBlock Margin="10 0 0 0">ABCd</TextBlock>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
+                        </Border>
                         <Label FontWeight="Bold" >Ime i Prezime:</Label>
-                        <TextBox x:Name="EditedNameSurname" Margin="10 0 0 0">Doryo doryev</TextBox>
+                        <TextBox x:Name="EditedNameSurname" Margin="5 1 10 6" Padding="1">Doryo doryev</TextBox>
                         <Label FontWeight="Bold" >Datum rodjenja:</Label>
-                        <TextBox x:Name="EditedBirthDate" Margin="10 0 0 10">24.1.2004</TextBox>
+                        <TextBox x:Name="EditedBirthDate" Margin="5 1 10 6" Padding="1">24.1.2004</TextBox>
                         <Button Click="Save_Edit_Profile_Click">Sacuvaj</Button>
                     </StackPanel>
 
@@ -104,7 +108,8 @@
                     </Grid.RowDefinitions>
                     
                     <!-- TreeView -->
-                    <Label Grid.Column="0" Grid.RowSpan="2" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
+                    <Label Grid.Column="0" Grid.RowSpan="15" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
+                    
                     <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="16" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
 
                     </TreeView>
