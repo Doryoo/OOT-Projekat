@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace SocijalnaMreza
+namespace SocijalnaMreza 
 {
 
 
@@ -19,8 +20,6 @@ namespace SocijalnaMreza
         private Image profilnaSlika;                            //treba li getter i setter za ovo
         private ObservableCollection<Post> objavljeniPostovi;
         private ObservableCollection<Korisnik> listaPrijatelja;
-        
-
 
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, Image profilnaSlika)
@@ -34,7 +33,7 @@ namespace SocijalnaMreza
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
 
-        
+
 
         /*
          private string id;
@@ -64,7 +63,18 @@ namespace SocijalnaMreza
         }
 
 
+        public ObservableCollection<Korisnik> ListaPrijatelja
+        {
+            get
+            {
+                return listaPrijatelja;
+            }
+            set
+            {
+                listaPrijatelja = value;
 
+            }
+        }
         
 
 

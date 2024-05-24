@@ -109,13 +109,19 @@
                     </Grid.RowDefinitions>
                     
                     <!-- TreeView -->
-                    <Label Grid.Column="0" Grid.RowSpan="15" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
+                    <Label Grid.Column="0" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
                     
-                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="16" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
-
+                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="12" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
+                        <TreeView.Resources>
+                            
+                        </TreeView.Resources>
                     </TreeView>
+                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="13"></Button>
+                    <TextBox Name="DodajPrijatelja" Grid.Row="14" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
+                    <Button Click="AddFriend" Content="Dodaj prijatelja sa id-jem" Grid.Row="15"></Button>
 
-                    <!-- Podaci o odabranom korisniku/-->
+                    <!-- Podaci o odabranom korisniku-->
+                    
                     <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano ///todo -->
                     <StackPanel Margin="0 20 0 10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
                         <Label FontWeight="Bold">ID:</Label>
@@ -134,16 +140,17 @@
                     </StackPanel>
 
                     <!-- User content -->
-                    <DataGrid Grid.Column="1" Grid.Row="6" x:Name="ViewPostsGridMreza" IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
+                    <DataGrid Grid.Column="1" Grid.Row="6" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
                         <DataGrid.Columns> <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
-                            <DataGridTextColumn x:Name="IDMreza" Header="ID" Binding="{Binding Path=Id}"/>
-                            <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno" Binding="{Binding Path=DatumObjave}"/>
-                            <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi" Binding="{Binding Path=BrojLajkova}"/>
-                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor" Binding="{Binding Path=IdAutora}"/>
+                            <DataGridTextColumn x:Name="IDMreza" Header="ID"                    Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor"              Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
-                     </DataGrid> 
-
+                     </DataGrid>
+                    
+                    <!-- Kraj podataka o odabranom korisniku-->
                 </Grid>
             </TabItem>
             <TabItem Header="GrupneDiskusije">
