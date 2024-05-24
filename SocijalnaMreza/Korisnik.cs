@@ -66,6 +66,15 @@ namespace SocijalnaMreza
             Random idGen = new Random();
             objavljeniPostovi.Add(new Post(idGen.Next().ToString(), sadrzaj, DateOnly.FromDateTime(DateTime.Now), 0, id));
         }
+        public void dodajPost(Post novPost)
+        {
+            objavljeniPostovi.Add(novPost);
+        }
+
+        public void obrisiPost(Post novPost)
+        {
+            objavljeniPostovi.Remove(novPost);
+        }
 
         public ObservableCollection<Post> getPosts() {
             return objavljeniPostovi;
