@@ -58,6 +58,17 @@ namespace SocijalnaMreza
             objavljeniPostovi.Remove(novPost);
         }
 
+        public void editujPost(Post post, string novSadrzaj)
+        {
+            for (int i = 0; i < objavljeniPostovi.Count(); i++)
+            {
+                if (objavljeniPostovi[i].Id == post.Id)
+                {
+                    objavljeniPostovi[i].Sadrzaj = novSadrzaj;
+                }
+            }
+        }
+
         public ObservableCollection<Post> getPosts() {
             return objavljeniPostovi;
         }

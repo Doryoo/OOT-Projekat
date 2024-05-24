@@ -68,15 +68,27 @@
                         <TextBox x:Name="UploadPostContent" Visibility="Hidden"></TextBox>
                     </StackPanel>
 
+                    <StackPanel Grid.Row="1">
+                        <Button Content="Delete Selected Row"  Click="DeleteButton_Click"/>
+                        <Button Content="Edit Selected Row" Click="EditButton_Click"/>
+                        <Button Content="Update Row" Click="UpdateButton_Click"/>
+                    </StackPanel>
+                    <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox">
+                        
+                    </TextBox>
+                    
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                           AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
                           PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
-                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter">
+                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
+                             MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
+                            CellEditEnding="ViewPostsGrid_CellEditEnding"
+                            SelectionUnit="FullRow">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
-                            <DataGridTextColumn Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

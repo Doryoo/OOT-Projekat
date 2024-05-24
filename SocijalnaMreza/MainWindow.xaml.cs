@@ -27,7 +27,7 @@ namespace SocijalnaMreza
         Korisnik cetvrti = new Korisnik(idGen.Next().ToString(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
         ObservableCollection<Korisnik> mreza = new ObservableCollection<Korisnik>();
         Point startPoint = new Point();
-
+        private Post _originalPost;
 
         public MainWindow()
         {
@@ -237,6 +237,71 @@ namespace SocijalnaMreza
                         mreza[i].ukloniPrijatelja(glavniKorisnik);
                     }
                 }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewPostsGrid.SelectedItem != null)
+            {
+                var post = ViewPostsGrid.SelectedItem as Post;
+
+                if (post != null)
+                {
+                    glavniKorisnik.obrisiPost(post);
+                }
+            }
+        }
+
+        private void ViewPostsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ViewPostsGrid.SelectedItem != null)
+            {
+                ViewPostsGrid.IsReadOnly = false;
+                _originalPost = (Post)ViewPostsGrid.SelectedItem;
+                ViewPostsGrid.BeginEdit();
+            }
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewPostsGrid.SelectedItem != null)
+            {
+                EditContentTextBox.Visibility = Visibility.Visible;
+                _originalPost = (Post)ViewPostsGrid.SelectedItem;
+                EditContentTextBox.Text = _originalPost.Sadrzaj;
+            }
+        }
+
+        private void ViewPostsGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var editingElement = e.EditingElement as TextBox;
+                if (editingElement != null && e.Column is DataGridBoundColumn boundColumn)
+                {
+                    var binding = boundColumn.Binding as Binding;
+                    if (binding != null)
+                    {
+                        var bindingPath = binding.Path.Path;
+                        var propertyInfo = typeof(Post).GetProperty(bindingPath);
+                        if (propertyInfo != null)
+                        {
+                            propertyInfo.SetValue(_originalPost, Convert.ChangeType(editingElement.Text, propertyInfo.PropertyType), null);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewPostsGrid.SelectedItem != null)
+            {
+                Post post = (Post)ViewPostsGrid.SelectedItem;
+
+                glavniKorisnik.editujPost(post, EditContentTextBox.Text);
+
+                EditContentTextBox.Visibility = Visibility.Hidden;
             }
         }
     }
