@@ -67,15 +67,16 @@
                         <Button x:Name="NewPostUpload" Click="Upload_Post_Click" Visibility="Hidden">Dodaj</Button>
                         <TextBox x:Name="UploadPostContent" Visibility="Hidden"></TextBox>
                     </StackPanel>
-                    
+
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
-                                     AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                          AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                          PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
+                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"             Binding="{Binding Path=Id}"/>
-                            <DataGridTextColumn Header="Sadrzaj"        Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn Header="Datum Objave"   Binding="{Binding Path=DatumObjave}"/>
-                            <DataGridTextColumn Header="Broj lajkova"   Binding="{Binding Path=BrojLajkova}"/>
-                            <DataGridTextColumn Header="Autor"          Binding="{Binding Path=IdAutora}"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
