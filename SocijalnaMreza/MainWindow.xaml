@@ -123,9 +123,9 @@
                     </TreeView>
 
                     <!-- Dugmad za dodavanje i brisanje prijatelja -->
-                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="13"></Button>
+                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="13" Margin="5"></Button>
                     <TextBox Name="DodajPrijatelja" Grid.Row="14" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
-                    <Button Click="AddFriend" Content="Dodaj prijatelja sa id-jem" Grid.Row="15"></Button>
+                    <Button Click="AddFriend" Content="Dodaj prijatelja sa napisanim id-jem" Grid.Row="15" Margin="5"></Button>
 
                     <!-- Podaci o odabranom korisniku-->
                     

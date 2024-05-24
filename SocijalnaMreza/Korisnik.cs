@@ -19,7 +19,9 @@ namespace SocijalnaMreza
         private DateOnly datumRodjenja;
         private Image profilnaSlika;                            //treba li getter i setter za ovo
         private ObservableCollection<Post> objavljeniPostovi;
+
         private ObservableCollection<Korisnik> listaPrijatelja;
+
 
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, Image profilnaSlika)
@@ -32,6 +34,19 @@ namespace SocijalnaMreza
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
+
+        public Korisnik(string id)
+        {
+            this.id = id;
+            this.ime = "bata";
+            this.prezime = "cimanje";
+            this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
+            this.profilnaSlika = null;
+            objavljeniPostovi = new ObservableCollection<Post>();
+            listaPrijatelja = new ObservableCollection<Korisnik>();
+        }
+
+
 
         public ObservableCollection<Korisnik> ListaPrijatelja
         {
@@ -89,6 +104,26 @@ namespace SocijalnaMreza
             listaPrijatelja.Add(k);
             return true;
         }
+
+        public bool DodajPrijatelja(string s)
+        {
+            if (s == null || s.Length == 0) return false;
+            bool postoji = true;
+            Korisnik k;
+            for(int i = 0; i < listaPrijatelja.Count; i++)
+            {
+                if (listaPrijatelja[i].id == s)
+                {
+                    postoji = false;
+                }
+            }
+            if (postoji) { 
+                listaPrijatelja.Add(new Korisnik(s));
+            }
+            return true;
+        }
+
+
 
         public bool ukloniPrijatelja(Korisnik k)
         {
