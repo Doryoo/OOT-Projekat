@@ -25,7 +25,7 @@ namespace SocijalnaMreza
         Korisnik drugiKorisnik = new Korisnik(idGen.Next().ToString(),"Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik treci = new Korisnik(idGen.Next().ToString(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik cetvrti = new Korisnik(idGen.Next().ToString(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
-        ObservableCollection<Korisnik> mreza = new ObservableCollection<Korisnik>();
+        ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
         Point startPoint = new Point();
         private Post _originalPost;
 
@@ -43,13 +43,18 @@ namespace SocijalnaMreza
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
+            drugiKorisnik.dodajPost("Hello world!");
+            treci.dodajPost("Hello world!");
+            cetvrti.dodajPost("Hello world!");
+            drugiKorisnik.dodajPost("Hello world!2");
+            drugiKorisnik.dodajPost("Hello world!3");
             
             glavniKorisnik.DodajPrijatelja(drugiKorisnik);
             glavniKorisnik.DodajPrijatelja(treci);
             glavniKorisnik.DodajPrijatelja(cetvrti);
-            mreza.Add(glavniKorisnik);
+            trenutniKorisnik.Add(glavniKorisnik);
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
-            SviPrijatelji.ItemsSource = mreza;
+            SviPrijatelji.ItemsSource = trenutniKorisnik;
             
         }
 
@@ -210,33 +215,19 @@ namespace SocijalnaMreza
         private void AddFriend(object sender, RoutedEventArgs e)
         {
             if(DodajPrijatelja.Text != null)
-            {   
-                for(int i = 0; i<mreza.Count();i++)
-                {
-                    if (mreza[i].Id == DodajPrijatelja.Text) 
-                    {
-                        mreza[i].DodajPrijatelja(glavniKorisnik);
-                        glavniKorisnik.DodajPrijatelja(mreza[i]);
-                        
-                    }
-                }
+            {
+                glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text);
                 DodajPrijatelja.Text = "";
             }
         }
 
         private void RemoveFriend(object sender, RoutedEventArgs e)
         {
-            var tmp = sender as Korisnik;
+            var tmp = SviPrijatelji.SelectedItem as Korisnik;
             if(tmp != null)
             {
                 glavniKorisnik.ukloniPrijatelja(tmp);
-                for(int i = 0; i < mreza.Count(); i++)
-                {
-                    if(tmp == mreza[i])
-                    {
-                        mreza[i].ukloniPrijatelja(glavniKorisnik);
-                    }
-                }
+                
             }
         }
 
