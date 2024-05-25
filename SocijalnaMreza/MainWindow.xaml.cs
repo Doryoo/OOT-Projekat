@@ -89,41 +89,19 @@ namespace SocijalnaMreza
         // ########## OPERACIJE EDIT PROFILA GLAVNOG KORISNIKA ##########
         private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
-                Title = "Select a Photo",
-                Multiselect = false // Change to true if you want to allow multiple file selection
-            };
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                // The selected file path
-                string selectedFilePath = openFileDialog.FileName;
-                // Determine the target directory and file name
-                string targetDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images");
-                string targetFileName = System.IO.Path.Combine(targetDirectory, "profilePicture" + System.IO.Path.GetExtension(selectedFilePath));
-
                 try
                 {
-                    // Ensure the target directory exists
-                    if (!System.IO.Directory.Exists(targetDirectory))
-                    {
-                        System.IO.Directory.CreateDirectory(targetDirectory);
-                    }
-
-                    // Copy the selected file to the target directory
-                    System.IO.File.Copy(selectedFilePath, targetFileName, true);
-                    MessageBox.Show($"File saved to: {targetFileName}", "File Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
+                    ProfileImage.Source = image;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred while saving the file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error loading image: " + ex.Message);
                 }
-            }
-            else
-            {
-                MessageBox.Show("No file selected.", "File Selection", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private void Edit_Profile_Click(object sender, RoutedEventArgs e)

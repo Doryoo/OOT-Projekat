@@ -216,6 +216,10 @@ namespace SocijalnaMreza
             get { return datumRodjenja; }
             set { datumRodjenja = value; }
         }
-
+        public Image ProfilnaSlika
+        {
+            get { return profilnaSlika; }
+            set { profilnaSlika = value; }
+        }
     }
 }
