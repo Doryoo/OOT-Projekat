@@ -23,11 +23,15 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1" Height="150" Width="150">
-                        <Image.Source>
-                            <BitmapImage UriSource="pack://application:,,,/images/profileImage.png"/>
-                        </Image.Source>
-                    </Image>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Image  Height="150" Width="150">
+                            <Image.Source>
+                                <BitmapImage UriSource="pack://application:,,,/images/profileImage.png"/>
+                            </Image.Source>
+                        </Image>
+                        <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
+                    </StackPanel>
                     
                     <!-- Trenutno prikazani podaci /-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo" Visibility="Visible" Grid.RowSpan="2">
@@ -69,11 +73,14 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="1">
-                        <Button Content="Delete Selected Row"  Click="DeleteButton_Click"/>
-                        <Button Content="Edit Selected Row" Click="EditButton_Click"/>
-                        <Button Content="Update Row" Click="UpdateButton_Click"/>
+                        <Button Content="Delete Selected Row"  Click="DeleteButton_Click" x:Name="DeleteRowButton" IsEnabled="False"/>
+                        <Button Content="Edit Selected Row" Click="EditButton_Click" x:Name="EditRowButton" IsEnabled="False"/>
+                        <Button Content="Update Row" Click="UpdateButton_Click" x:Name="UpdateRowButton" IsEnabled="False"/>
                     </StackPanel>
-                    <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox">
+                    
+                    <!--Edit post content-->
+                    <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox"
+                             Text="{Binding ElementName=ViewPostsGrid,Path=SelectedItem.Sadrzaj}">
                         
                     </TextBox>
                     
@@ -82,8 +89,9 @@
                           PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
                           AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
                              MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
-                            CellEditEnding="ViewPostsGrid_CellEditEnding"
-                            SelectionUnit="FullRow">
+                            
+                            SelectionUnit="FullRow" SelectedCellsChanged="ViewPostsGrid_SelectedCellsChanged"
+                            >
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>

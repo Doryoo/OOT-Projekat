@@ -93,13 +93,10 @@ namespace SocijalnaMreza
 
         public void editujPost(Post post, string novSadrzaj)
         {
-            for (int i = 0; i < objavljeniPostovi.Count(); i++)
-            {
-                if (objavljeniPostovi[i].Id == post.Id)
-                {
-                    objavljeniPostovi[i].Sadrzaj = novSadrzaj;
-                }
-            }
+            int index = objavljeniPostovi.IndexOf(post);
+            post.Sadrzaj= novSadrzaj;
+            objavljeniPostovi.RemoveAt(index);
+            objavljeniPostovi.Insert(index, post);
         }
 
         public ObservableCollection<Post> getPosts() {
