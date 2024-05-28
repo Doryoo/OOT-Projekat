@@ -191,7 +191,30 @@
                 </Grid>
             </TabItem>
             <TabItem Header="GrupneDiskusije">
-                <Label>Content3</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListBox>
+                        <ListBoxItem>
+                            Grupa1
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Grupa2
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Grupa3
+                        </ListBoxItem>
+                    </ListBox>
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Header="Naziv"                    Binding="{Binding Path=Naziv}"/>
+                            <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanova}"/>
+                            <DataGridTextColumn  Header="Datum zadnje poruke"    Binding="{Binding Path=DatumObjave}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
