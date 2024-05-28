@@ -32,7 +32,7 @@
                         </Image>
                         <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
                     </StackPanel>
-                    
+
                     <!-- Trenutno prikazani podaci /-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo" Visibility="Visible" Grid.RowSpan="2">
                         <Label FontWeight="Bold">ID:</Label>
@@ -87,13 +87,13 @@
                         <Button Content="Edit Selected Row" Click="EditButton_Click" x:Name="EditRowButton" IsEnabled="False"/>
                         <Button Content="Update Row" Click="UpdateButton_Click" x:Name="UpdateRowButton" IsEnabled="False"/>
                     </StackPanel>
-                    
+
                     <!--Edit post content-->
                     <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox"
                              Text="{Binding ElementName=ViewPostsGrid,Path=SelectedItem.Sadrzaj}">
-                        
+
                     </TextBox>
-                    
+
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                           AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
                           PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
@@ -137,7 +137,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- TreeView -->
                     <Label Grid.Column="0" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
                     <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="12" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
@@ -158,25 +158,22 @@
                     <Button Click="AddFriend" Content="Dodaj prijatelja sa napisanim id-jem" Grid.Row="15" Margin="5"></Button>
 
                     <!-- Podaci o odabranom korisniku-->
-                    
+
                     <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano ///todo -->
                     <StackPanel Margin="0 20 0 10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
-                        
                         <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1" IsEnabled="True" x:Name="IDMrezaSelektovano"></TextBlock>
                         </Border>
-                        
+
                         <Label FontWeight="Bold" >Ime i Prezime:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock x:Name="NameSurnameMreza" Margin="5 1 5 1"></TextBlock>
                         </Border>
-                        
                         <Label FontWeight="Bold" >Datum rodjenja:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock x:Name="BirthDateMreza" Margin="5 1 5 1" VerticalAlignment="Center"></TextBlock>
                         </Border>
-                        
                     </StackPanel>
 
                     <!-- User content -->
@@ -187,9 +184,10 @@
                             <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
                             <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave}"/>
                             <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor"              Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    
+
                     <!-- Kraj podataka o odabranom korisniku-->
                 </Grid>
             </TabItem>

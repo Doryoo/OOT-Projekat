@@ -24,9 +24,9 @@ namespace SocijalnaMreza
         static List<string> allIDs = new List<string>();
 
         Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), "images/profileImage.png");
-        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
-        Korisnik treci = new Korisnik(GenerateNewUniqueID(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
-        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
+        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac", DateOnly.FromDateTime(DateTime.Now), null);
+        Korisnik treci = new Korisnik(GenerateNewUniqueID(), "random1", "kk", DateOnly.FromDateTime(DateTime.Now), null);
+        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(), "random2", "lol", DateOnly.FromDateTime(DateTime.Now), null);
         ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
         Point startPoint = new Point();
         private Post _originalPost;
@@ -38,24 +38,16 @@ namespace SocijalnaMreza
             glavniKorisnik.dodajPost("cao svima 2");
             glavniKorisnik.dodajPost("cao svima 3");
             glavniKorisnik.dodajPost("cao svima 4");
-            glavniKorisnik.dodajPost("cao svima");
-            glavniKorisnik.dodajPost("cao svima");
-            glavniKorisnik.dodajPost("cao svima");
-            glavniKorisnik.dodajPost("cao svima");
             drugiKorisnik.dodajPost("Hello world!");
-            treci.dodajPost("Hello world!6");
-            treci.dodajPost("Hello world!5");
-            cetvrti.dodajPost("Hello world!7");
-            cetvrti.dodajPost("Hello world!4");
+            treci.dodajPost("Hello world!");
+            cetvrti.dodajPost("Hello world!");
             drugiKorisnik.dodajPost("Hello world!2");
             drugiKorisnik.dodajPost("Hello world!3");
-            
+
             glavniKorisnik.DodajPrijatelja(drugiKorisnik);
             glavniKorisnik.DodajPrijatelja(treci);
             glavniKorisnik.DodajPrijatelja(cetvrti);
-
             trenutniKorisnik.Add(glavniKorisnik);
-
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
 
@@ -67,7 +59,7 @@ namespace SocijalnaMreza
         static private string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
-            while(allIDs.Contains(newID))
+            while (allIDs.Contains(newID))
             {
                 newID = idGen.Next(100000, 1000000).ToString();
             }
@@ -82,45 +74,47 @@ namespace SocijalnaMreza
             {
                 NewPostUpload.Visibility = Visibility.Visible;
                 UploadPostContent.Visibility = Visibility.Visible;
-            } else
-            {
-                NewPostUpload.Visibility = Visibility.Hidden;
-                UploadPostContent.Visibility = Visibility.Hidden;
-            glavniKorisnik.dodajPost(UploadPostContent.Text);
-            UploadPostContent.Text = "";
-            NewPostUpload.Visibility = Visibility.Hidden;
-            UploadPostContent.Visibility = Visibility.Hidden;
-        }
-
-
-
-        private void FriendClicked(object sender, RoutedEventArgs e)
-        {
-            var tmp = SviPrijatelji.SelectedItem as Korisnik;
-
-            if (tmp != null)
-            {
-                ViewPostsGridMreza.ItemsSource = tmp.getPosts();
-                ViewPostsGridMreza.Visibility = Visibility.Visible;
-                ProfileInfoMreza.Visibility = Visibility.Visible;
-                IDMrezaSelektovano.Text = tmp.Id;
-                NameSurnameMreza.Text = tmp.Ime + " " + tmp.Prezime;
-                BirthDateMreza.Text = tmp.DatumRodjenja.ToString();
-                //IDMreza.Binding = ;
-                //                LajkoviMreza = tmp.
-                //                MessageBox.Show(tmp.ToString());
             }
             else
             {
-                ViewPostsGridMreza.Visibility = Visibility.Hidden;
-                ProfileInfoMreza.Visibility = Visibility.Hidden;
-                IDMrezaSelektovano.Text = "";
-                NameSurnameMreza.Text = "";
-                BirthDateMreza.Text = "";
-                ProfileInfoMreza.Visibility = Visibility.Hidden;
-                IDMrezaSelektovano.Text = "";
-                NameSurnameMreza.Text = "";
-                BirthDateMreza.Text = "";
+                NewPostUpload.Visibility = Visibility.Hidden;
+                UploadPostContent.Visibility = Visibility.Hidden;
+            }
+        }
+        private void Upload_Post_Click(object sender, RoutedEventArgs e)
+        {
+            if (UploadPostContent.Text.Length > 0)
+            {
+                glavniKorisnik.dodajPost(UploadPostContent.Text);
+                UploadPostContent.Text = "";
+                NewPostUpload.Visibility = Visibility.Hidden;
+                UploadPostContent.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MessageBox.Show("Ne moze se okaciti prazan post");
+            }
+
+        }
+        // ########## KRAJ OPERACIJA ZA UPLOAD POSTOVA ##########
+
+
+        // ########## OPERACIJE EDIT PROFILA GLAVNOG KORISNIKA ##########
+        private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
+                    ProfileImage.Source = image;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message);
+                }
             }
         }
         private void Edit_Profile_Click(object sender, RoutedEventArgs e)
@@ -133,7 +127,8 @@ namespace SocijalnaMreza
         {
             bool isInputValidated = true;
 
-            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) {
+            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
                 MessageBox.Show("Nije dobar datum");
                 isInputValidated = false;
             }
@@ -147,7 +142,8 @@ namespace SocijalnaMreza
                 MessageBox.Show("Prezime ne moze biti prazno");
                 isInputValidated = false;
             }
-            if (isInputValidated) {
+            if (isInputValidated)
+            {
                 glavniKorisnik.Ime = EditedName.Text;
                 glavniKorisnik.Prezime = EditedSurname.Text;
                 glavniKorisnik.DatumRodjenja = DateOnly.ParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture);
@@ -155,10 +151,10 @@ namespace SocijalnaMreza
                 ProfileInfo.Visibility = Visibility.Visible;
                 EditProfileInfo.Visibility = Visibility.Hidden;
             }
-            
+
         }
         // ########## KRAJ OPERACIJA ZA EDIT PROFILA GLAVNOG KORISNIKA ##########
-        
+
 
 
         // ########## OPERACIJE ZA DRAG AND DROP ##########
@@ -203,7 +199,7 @@ namespace SocijalnaMreza
                 current = VisualTreeHelper.GetParent(current);
             }
             while (current != null);
-                return null;
+            return null;
         }
 
         private void ListView_DragEnter(object sender, DragEventArgs e)
@@ -238,7 +234,7 @@ namespace SocijalnaMreza
                 }
             }
         }
-        
+
         private Post GetDataGridRowItem(DataGrid dataGrid, Point position)
         {
             // Helper method to get the item from DataGridRow based on mouse position
@@ -259,7 +255,7 @@ namespace SocijalnaMreza
         // ########## OPERACIJE NAD FRIEND LISTOM ##########
         private void AddFriend(object sender, RoutedEventArgs e)
         {
-            if(DodajPrijatelja.Text != null)
+            if (DodajPrijatelja.Text != null)
             {
                 glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text);
                 DodajPrijatelja.Text = "";
@@ -269,10 +265,10 @@ namespace SocijalnaMreza
         private void RemoveFriend(object sender, RoutedEventArgs e)
         {
             var tmp = SviPrijatelji.SelectedItem as Korisnik;
-            if(tmp != null)
+            if (tmp != null)
             {
                 glavniKorisnik.ukloniPrijatelja(tmp);
-                
+
             }
         }
 
@@ -355,7 +351,7 @@ namespace SocijalnaMreza
                 UpdateRowButton.IsEnabled = false;
             }
         }
-        
+
         private void ViewPostsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             EditRowButton.IsEnabled = true;
