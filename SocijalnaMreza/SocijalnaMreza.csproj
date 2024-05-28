@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\profileImage.png">
+    <Content Include="images\profileImage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -23,40 +23,56 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1" Height="150" Width="150">
-                        <Image.Source>
-                            <BitmapImage UriSource="pack://application:,,,/images/profileImage.png"/>
-                        </Image.Source>
-                    </Image>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Image x:Name="ProfileImage" Height="150" Width="150" >
+                            <Image.Source>
+                                <BitmapImage x:Name="GlavniKorisnikProfilePicture" UriSource="/images/profileImage.png"/>
+                            </Image.Source>
+                        </Image>
+                        <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
+                    </StackPanel>
                     
                     <!-- Trenutno prikazani podaci /-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo" Visibility="Visible" Grid.RowSpan="2">
-                        <Label  FontWeight="Bold">ID:</Label>
+                        <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
-                            <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
+                            <TextBlock Margin="5 1 5 1" Text="{Binding Id}"/>
                         </Border>
-                        <Label FontWeight="Bold" >Ime i Prezime:</Label>
+                        <Label FontWeight="Bold">Ime:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
-                            <TextBlock x:Name="NameSurname" Margin="5 1 5 1">Doryo doryev</TextBlock>
+                            <TextBlock Margin="5 1 5 1" Text="{Binding Ime}"/>
                         </Border>
-                        <Label FontWeight="Bold" >Datum rodjenja:</Label>
+                        <Label FontWeight="Bold">Prezime:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
-                            <TextBlock x:Name="BirthDate"  Margin="5 1 5 1">24.1.2004</TextBlock>
-                         </Border>
+                            <TextBlock Margin="5 1 5 1" Text="{Binding Prezime}"/>
+                        </Border>
+                        <Label FontWeight="Bold">Datum rodjenja:</Label>
+                        <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBlock Margin="5 1 5 1" Text="{Binding DatumRodjenja, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                        </Border>
                         <Button Click="Edit_Profile_Click">Edituj</Button>
                     </StackPanel>
 
                     <!-- Podaci koji se edituju/-->
-                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden" Grid.RowSpan="2"> 
-                        <Label  FontWeight="Bold">ID:</Label>
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden" Grid.RowSpan="2">
+                        <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
-                            <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
+                            <TextBlock Margin="5 1 5 1" Text="{Binding Id}"/>
                         </Border>
-                        <Label FontWeight="Bold" >Ime i Prezime:</Label>
-                        <TextBox x:Name="EditedNameSurname" Margin="5 1 10 6" Padding="1">Doryo doryev</TextBox>
-                        <Label FontWeight="Bold" >Datum rodjenja:</Label>
-                        <TextBox x:Name="EditedBirthDate" Margin="5 1 10 6" Padding="1">24.1.2004</TextBox>
-                        <Button Click="Save_Edit_Profile_Click">Sacuvaj</Button>
+                        <Label FontWeight="Bold">Ime:</Label>
+                        <Border  BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBox BorderThickness="0" x:Name="EditedName" Margin="5 1 5 1" Text="{Binding Ime}"/>
+                        </Border>
+                        <Label FontWeight="Bold">Prezime:</Label>
+                        <Border  BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBox BorderThickness="0" x:Name="EditedSurname" Margin="5 1 5 1" Text="{Binding Prezime}"/>
+                        </Border>
+                        <Label FontWeight="Bold">Datum rodjenja:</Label>
+                        <Border  BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
+                            <TextBox BorderThickness="0" x:Name="EditedBirthDate" Margin="5 1 5 1" Text="{Binding DatumRodjenja, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                        </Border>
+                        <Button Click="Save_Edit_Profile_Click">Save</Button>
                     </StackPanel>
 
                     <!-- Upload new post/-->
@@ -66,15 +82,31 @@
                         <TextBox x:Name="UploadPostContent" Visibility="Hidden"></TextBox>
                     </StackPanel>
 
+                    <StackPanel Grid.Row="1">
+                        <Button Content="Delete Selected Row"  Click="DeleteButton_Click" x:Name="DeleteRowButton" IsEnabled="False"/>
+                        <Button Content="Edit Selected Row" Click="EditButton_Click" x:Name="EditRowButton" IsEnabled="False"/>
+                        <Button Content="Update Row" Click="UpdateButton_Click" x:Name="UpdateRowButton" IsEnabled="False"/>
+                    </StackPanel>
+                    
+                    <!--Edit post content-->
+                    <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox"
+                             Text="{Binding ElementName=ViewPostsGrid,Path=SelectedItem.Sadrzaj}">
+                        
+                    </TextBox>
+                    
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                           AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
                           PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
-                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter">
+                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
+                             MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
+                            
+                            SelectionUnit="FullRow" SelectedCellsChanged="ViewPostsGrid_SelectedCellsChanged"
+                            >
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
-                            <DataGridTextColumn Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -162,7 +194,30 @@
                 </Grid>
             </TabItem>
             <TabItem Header="GrupneDiskusije">
-                <Label>Content3</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListBox>
+                        <ListBoxItem>
+                            Grupa1
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Grupa2
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Grupa3
+                        </ListBoxItem>
+                    </ListBox>
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Header="Naziv"                    Binding="{Binding Path=Naziv}"/>
+                            <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanova}"/>
+                            <DataGridTextColumn  Header="Datum zadnje poruke"    Binding="{Binding Path=DatumObjave}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

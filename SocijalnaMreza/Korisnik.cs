@@ -17,20 +17,20 @@ namespace SocijalnaMreza
         private string ime;
         private string prezime;
         private DateOnly datumRodjenja;
-        private Image profilnaSlika;                            //treba li getter i setter za ovo
+        private string profilnaSlikaPath;                            //treba li getter i setter za ovo
         private ObservableCollection<Post> objavljeniPostovi;
 
         private ObservableCollection<Korisnik> listaPrijatelja;
 
 
 
-        public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, Image profilnaSlika)
+        public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
         {
             this.id = id;
             this.ime = ime;
             this.prezime = prezime;
             this.datumRodjenja = datumRodjenja;
-            this.profilnaSlika = profilnaSlika;
+            this.profilnaSlikaPath = profilnaSlikaPath;
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
@@ -41,7 +41,7 @@ namespace SocijalnaMreza
             this.ime = "bata";
             this.prezime = "cimanje";
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
-            this.profilnaSlika = null;
+            this.profilnaSlikaPath = null;
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
         }
@@ -89,6 +89,14 @@ namespace SocijalnaMreza
         public void obrisiPost(Post novPost)
         {
             objavljeniPostovi.Remove(novPost);
+        }
+
+        public void editujPost(Post post, string novSadrzaj)
+        {
+            int index = objavljeniPostovi.IndexOf(post);
+            post.Sadrzaj= novSadrzaj;
+            objavljeniPostovi.RemoveAt(index);
+            objavljeniPostovi.Insert(index, post);
         }
 
         public ObservableCollection<Post> getPosts() {
@@ -188,26 +196,45 @@ namespace SocijalnaMreza
         public string Id
         {
             get { return id; }
-            set { id = value; }
+            set { 
+                id = value;
+                OnPropertyChanged(nameof(Id));
+            }
         }
 
         public string Ime
         {
             get { return ime; }
-            set { ime = value; }
+            set { 
+                ime = value;
+                OnPropertyChanged(nameof(Ime));
+            }
         }
 
         public string Prezime
         {
             get { return prezime; }
-            set { prezime = value; }
+            set { 
+                prezime = value;
+                OnPropertyChanged(nameof(Prezime));
+            }
         }
 
         public DateOnly DatumRodjenja
         {
             get { return datumRodjenja; }
-            set { datumRodjenja = value; }
+            set { 
+                datumRodjenja = value;
+                OnPropertyChanged(nameof(DatumRodjenja));
+            }
         }
-
+        public string ProfilnaSlikaPath
+        {
+            get { return profilnaSlikaPath; }
+            set {
+                profilnaSlikaPath = value;
+                OnPropertyChanged(nameof(ProfilnaSlikaPath));
+            }
+        }
     }
 }
