@@ -48,8 +48,6 @@
 
                     <!-- Podaci koji se edituju/-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="EditProfileInfo" Visibility="Hidden" Grid.RowSpan="2"> 
-
-                        
                         <Label  FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1">ABCd</TextBlock>
@@ -131,6 +129,7 @@
                     
                     <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano ///todo -->
                     <StackPanel Margin="0 20 0 10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
+                        
                         <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1" IsEnabled="True" x:Name="IDMrezaSelektovano"></TextBlock>
@@ -140,22 +139,24 @@
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock x:Name="NameSurnameMreza" Margin="5 1 5 1"></TextBlock>
                         </Border>
+                        
                         <Label FontWeight="Bold" >Datum rodjenja:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock x:Name="BirthDateMreza" Margin="5 1 5 1" VerticalAlignment="Center"></TextBlock>
                         </Border>
+                        
                     </StackPanel>
 
                     <!-- User content -->
                     <DataGrid Grid.Column="1" Grid.Row="6" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
-                        <DataGrid.Columns> <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
+                        <DataGrid.Columns>
+                            <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
                             <DataGridTextColumn x:Name="IDMreza" Header="ID"                    Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
                             <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave}"/>
                             <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
-                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor"              Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
-                     </DataGrid>
+                    </DataGrid>
                     
                     <!-- Kraj podataka o odabranom korisniku-->
                 </Grid>

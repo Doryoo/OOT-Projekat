@@ -33,26 +33,26 @@ namespace SocijalnaMreza
         {
             InitializeComponent();
 
-            
-            
-                        
 
-
-
+            //inicijalizacija i dodavanje post-ova,prijatelja
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             glavniKorisnik.dodajPost("cao svima");
             drugiKorisnik.dodajPost("Hello world!");
-            treci.dodajPost("Hello world!");
-            cetvrti.dodajPost("Hello world!");
+            treci.dodajPost("Hello world!6");
+            treci.dodajPost("Hello world!5");
+            cetvrti.dodajPost("Hello world!7");
+            cetvrti.dodajPost("Hello world!4");
             drugiKorisnik.dodajPost("Hello world!2");
             drugiKorisnik.dodajPost("Hello world!3");
             
             glavniKorisnik.DodajPrijatelja(drugiKorisnik);
             glavniKorisnik.DodajPrijatelja(treci);
             glavniKorisnik.DodajPrijatelja(cetvrti);
+
             trenutniKorisnik.Add(glavniKorisnik);
+
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
             
@@ -78,10 +78,10 @@ namespace SocijalnaMreza
             UploadPostContent.Visibility = Visibility.Hidden;
         }
 
+
+
         private void FriendClicked(object sender, RoutedEventArgs e)
         {
-
-
             var tmp = SviPrijatelji.SelectedItem as Korisnik;
 
             if (tmp != null)
@@ -162,7 +162,7 @@ namespace SocijalnaMreza
                 current = VisualTreeHelper.GetParent(current);
             }
             while (current != null);
-            return null;
+                return null;
         }
 
         private void ListView_DragEnter(object sender, DragEventArgs e)
