@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SocijalnaMreza 
@@ -21,6 +22,7 @@ namespace SocijalnaMreza
         private ObservableCollection<Post> objavljeniPostovi;
 
         private ObservableCollection<Korisnik> listaPrijatelja;
+        private ObservableCollection<Korisnik> listaPrijateljaSelektovana;
 
 
 
@@ -30,20 +32,50 @@ namespace SocijalnaMreza
             this.ime = ime;
             this.prezime = prezime;
             this.datumRodjenja = datumRodjenja;
-            this.profilnaSlikaPath = profilnaSlikaPath;
+            if (profilnaSlikaPath != null)
+                this.profilnaSlikaPath = profilnaSlikaPath;
+            else
+                this.profilnaSlikaPath = "images/profileImage.png";
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
+            listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
+        }
+        public Korisnik(string id, string ime, string prezime, string profilnaSlikaPath)
+        {
+            this.id = id;
+            this.ime = ime;
+            this.prezime = prezime;
+            this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
+            if (profilnaSlikaPath != null)
+                this.profilnaSlikaPath = profilnaSlikaPath;
+            else
+                this.profilnaSlikaPath = "images/profileImage.png";
+            objavljeniPostovi = new ObservableCollection<Post>();
+            listaPrijatelja = new ObservableCollection<Korisnik>();
+            listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
+        }
+        public Korisnik(string id, string ime, string prezime)
+        {
+            this.id = id;
+            this.ime = ime;
+            this.prezime = prezime;
+            this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
+            this.profilnaSlikaPath = "images/profileImage.png";
+            objavljeniPostovi = new ObservableCollection<Post>();
+            listaPrijatelja = new ObservableCollection<Korisnik>();
+            listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
         }
 
         public Korisnik(string id)
         {
             this.id = id;
             this.ime = "bata";
-            this.prezime = "cimanje";
+            this.prezime = "posao";
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
             this.profilnaSlikaPath = null;
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
+            listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
         }
 
 
@@ -61,20 +93,59 @@ namespace SocijalnaMreza
             }
         }
 
+        public ObservableCollection<Korisnik> ListaPrijateljaSelektovana
+        {
+            get { return listaPrijateljaSelektovana; }
+            set
+            {
+                if (listaPrijateljaSelektovana != value)
+                {
+                    listaPrijateljaSelektovana = value;
+                    OnPropertyChanged(nameof(ListaPrijateljaSelektovana));
+                }
+            }
+        }
+
+        public void initPrijatelji()
+        {
+            listaPrijateljaSelektovana.Clear();
+            foreach (var item in listaPrijatelja) 
+            {
+                ListaPrijateljaSelektovana.Add(item);
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void SearchFor(string s)
+        {
+            listaPrijateljaSelektovana.Clear();
+            foreach (var item in ListaPrijatelja)
+            {
+                foreach (var item2 in item.getPosts())
+                {
+                    if (item2.Sadrzaj.Contains(s) && !listaPrijateljaSelektovana.Contains(item))
+                    {
+                        ListaPrijateljaSelektovana.Add(item);
+                        //MessageBox.Show("test");
+                    }
+                }
 
-        /*
-         private string id;
-        private string sadrzaj;
-        private DateOnly datumObjave;
-        private int brojLajkova;
-        private string idAutora;
-        */
+                if (s == "" || item.ime.Contains(s) || item.prezime.Contains(s) || item.DatumRodjenja.ToString().Contains(s)) 
+                {
+                    if (!listaPrijateljaSelektovana.Contains(item)) { 
+                        listaPrijateljaSelektovana.Add(item);
+                        //MessageBox.Show("test");
+                    }
+                    //dodati jos za search po post-ovima
+                }
+               
+            }
+        }
 
         public void dodajPost(string sadrzaj)
         {

@@ -23,10 +23,10 @@ namespace SocijalnaMreza
         static Random idGen = new Random();
         static List<string> allIDs = new List<string>();
 
-        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), "images/profileImage.png");
-        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac", DateOnly.FromDateTime(DateTime.Now), null);
-        Korisnik treci = new Korisnik(GenerateNewUniqueID(), "random1", "kk", DateOnly.FromDateTime(DateTime.Now), null);
-        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(), "random2", "lol", DateOnly.FromDateTime(DateTime.Now), null);
+        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", "images/profileImage.png");
+        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac");
+        Korisnik treci = new Korisnik(GenerateNewUniqueID(),"Treci", "kk");
+        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"Cetvrti", "lol");
         ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
         Point startPoint = new Point();
         private Post _originalPost;
@@ -43,14 +43,18 @@ namespace SocijalnaMreza
             cetvrti.dodajPost("Hello world!");
             drugiKorisnik.dodajPost("Hello world!2");
             drugiKorisnik.dodajPost("Hello world!3");
-
+            
             glavniKorisnik.DodajPrijatelja(drugiKorisnik);
             glavniKorisnik.DodajPrijatelja(treci);
             glavniKorisnik.DodajPrijatelja(cetvrti);
+            
+            glavniKorisnik.initPrijatelji();
+
             trenutniKorisnik.Add(glavniKorisnik);
+
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
-
+            
             ProfileInfo.DataContext = glavniKorisnik;
             EditProfileInfo.DataContext = glavniKorisnik;
             ProfileImage.DataContext = glavniKorisnik;
@@ -59,7 +63,7 @@ namespace SocijalnaMreza
         static private string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
-            while (allIDs.Contains(newID))
+            while(allIDs.Contains(newID))
             {
                 newID = idGen.Next(100000, 1000000).ToString();
             }
@@ -67,15 +71,18 @@ namespace SocijalnaMreza
             return newID;
         }
 
-        // ########## OPERACIJE ZA UPLOAD POSTOVA ##########
+
+
+        ////////////////////////////////////////////////
+        ///////// OPERACIJE ZA UPLOAD POSTOVA //////////
+        ////////////////////////////////////////////////
         private void Toggle_Upload_Visibility_Click(object sender, RoutedEventArgs e)
         {
             if (NewPostUpload.Visibility == Visibility.Hidden)
             {
                 NewPostUpload.Visibility = Visibility.Visible;
                 UploadPostContent.Visibility = Visibility.Visible;
-            }
-            else
+            } else
             {
                 NewPostUpload.Visibility = Visibility.Hidden;
                 UploadPostContent.Visibility = Visibility.Hidden;
@@ -83,23 +90,24 @@ namespace SocijalnaMreza
         }
         private void Upload_Post_Click(object sender, RoutedEventArgs e)
         {
-            if (UploadPostContent.Text.Length > 0)
-            {
+            if (UploadPostContent.Text.Length > 0) {
                 glavniKorisnik.dodajPost(UploadPostContent.Text);
                 UploadPostContent.Text = "";
                 NewPostUpload.Visibility = Visibility.Hidden;
                 UploadPostContent.Visibility = Visibility.Hidden;
-            }
-            else
+            } else
             {
                 MessageBox.Show("Ne moze se okaciti prazan post");
             }
-
+            
         }
         // ########## KRAJ OPERACIJA ZA UPLOAD POSTOVA ##########
 
 
-        // ########## OPERACIJE EDIT PROFILA GLAVNOG KORISNIKA ##########
+
+        ////////////////////////////////////////////////////////////////////
+        ////////// OPERACIJE EDITOVANJA PROFILA GLAVNOG KORISNIKA //////////
+        ////////////////////////////////////////////////////////////////////
         private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -127,8 +135,7 @@ namespace SocijalnaMreza
         {
             bool isInputValidated = true;
 
-            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
+            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) {
                 MessageBox.Show("Nije dobar datum");
                 isInputValidated = false;
             }
@@ -142,8 +149,7 @@ namespace SocijalnaMreza
                 MessageBox.Show("Prezime ne moze biti prazno");
                 isInputValidated = false;
             }
-            if (isInputValidated)
-            {
+            if (isInputValidated) {
                 glavniKorisnik.Ime = EditedName.Text;
                 glavniKorisnik.Prezime = EditedSurname.Text;
                 glavniKorisnik.DatumRodjenja = DateOnly.ParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture);
@@ -151,13 +157,15 @@ namespace SocijalnaMreza
                 ProfileInfo.Visibility = Visibility.Visible;
                 EditProfileInfo.Visibility = Visibility.Hidden;
             }
-
+            
         }
         // ########## KRAJ OPERACIJA ZA EDIT PROFILA GLAVNOG KORISNIKA ##########
 
 
+        ////////////////////////////////////////////////
+        ////////// OPERACIJE ZA DRAG AND DROP //////////
+        ////////////////////////////////////////////////
 
-        // ########## OPERACIJE ZA DRAG AND DROP ##########
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             startPoint = e.GetPosition(null);
@@ -234,7 +242,7 @@ namespace SocijalnaMreza
                 }
             }
         }
-
+        
         private Post GetDataGridRowItem(DataGrid dataGrid, Point position)
         {
             // Helper method to get the item from DataGridRow based on mouse position
@@ -251,11 +259,12 @@ namespace SocijalnaMreza
         // ########## KRAJ OPERACIJA ZA DRAG AND DROP ##########
 
 
-
-        // ########## OPERACIJE NAD FRIEND LISTOM ##########
+        ///////////////////////////////////////////////
+        ///////// OPERACIJE NAD FRIEND LISTOM /////////
+        ///////////////////////////////////////////////
         private void AddFriend(object sender, RoutedEventArgs e)
         {
-            if (DodajPrijatelja.Text != null)
+            if(DodajPrijatelja.Text != null)
             {
                 glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text);
                 DodajPrijatelja.Text = "";
@@ -265,10 +274,10 @@ namespace SocijalnaMreza
         private void RemoveFriend(object sender, RoutedEventArgs e)
         {
             var tmp = SviPrijatelji.SelectedItem as Korisnik;
-            if (tmp != null)
+            if(tmp != null)
             {
                 glavniKorisnik.ukloniPrijatelja(tmp);
-
+                
             }
         }
 
@@ -300,11 +309,21 @@ namespace SocijalnaMreza
             }
         }
 
+        private void SearchButt(object sender, RoutedEventArgs e)
+        {
+            if(SearchContent.Text != null)
+            {
+                glavniKorisnik.SearchFor(SearchContent.Text);
+            }
+            SearchContent.Text = "";
+        }
+
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
 
 
-
-        // ########## OPERACIJE NAD DATA GRID-OM ##########
+        ///////////////////////////////////////////////
+        /////////  OPERACIJE NAD DATA GRID-OM /////////
+        ///////////////////////////////////////////////
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewPostsGrid.SelectedItem != null)
@@ -351,7 +370,7 @@ namespace SocijalnaMreza
                 UpdateRowButton.IsEnabled = false;
             }
         }
-
+        
         private void ViewPostsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             EditRowButton.IsEnabled = true;
@@ -368,6 +387,8 @@ namespace SocijalnaMreza
                 ViewPostsGrid.BeginEdit();
             }
         }
+
+
 
         // ########## OPERACIJA NAD DATA GRID-OM ##########
 
