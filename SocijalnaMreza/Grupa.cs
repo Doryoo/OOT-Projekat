@@ -31,9 +31,9 @@ namespace SocijalnaMreza
             return true;
         }
 
-        public bool DodajClana(string id, string ime, string prezime, DateOnly datumRodjenja, Image profilnaSlika)
+        public bool DodajClana(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
         {
-            Korisnik k = new Korisnik(id,ime,prezime,datumRodjenja,profilnaSlika);
+            Korisnik k = new Korisnik(id,ime,prezime,datumRodjenja, profilnaSlikaPath);
             if (listaClanova.Contains(k)) return false;
             listaClanova.Add(k);
             return true;

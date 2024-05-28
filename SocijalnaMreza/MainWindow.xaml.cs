@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace SocijalnaMreza
         static Random idGen = new Random();
         static List<string> allIDs = new List<string>();
 
-        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), null);
+        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), "images/profileImage.png");
         Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik treci = new Korisnik(GenerateNewUniqueID(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
         Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
@@ -49,7 +50,10 @@ namespace SocijalnaMreza
             trenutniKorisnik.Add(glavniKorisnik);
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
-            
+
+            ProfileInfo.DataContext = glavniKorisnik;
+            EditProfileInfo.DataContext = glavniKorisnik;
+            ProfileImage.DataContext = glavniKorisnik;
         }
 
         static private string GenerateNewUniqueID()
@@ -78,10 +82,16 @@ namespace SocijalnaMreza
         }
         private void Upload_Post_Click(object sender, RoutedEventArgs e)
         {
-            glavniKorisnik.dodajPost(UploadPostContent.Text);
-            UploadPostContent.Text = "";
-            NewPostUpload.Visibility = Visibility.Hidden;
-            UploadPostContent.Visibility = Visibility.Hidden;
+            if (UploadPostContent.Text.Length > 0) {
+                glavniKorisnik.dodajPost(UploadPostContent.Text);
+                UploadPostContent.Text = "";
+                NewPostUpload.Visibility = Visibility.Hidden;
+                UploadPostContent.Visibility = Visibility.Hidden;
+            } else
+            {
+                MessageBox.Show("Ne moze se okaciti prazan post");
+            }
+            
         }
         // ########## KRAJ OPERACIJA ZA UPLOAD POSTOVA ##########
 
@@ -112,11 +122,31 @@ namespace SocijalnaMreza
 
         private void Save_Edit_Profile_Click(object sender, RoutedEventArgs e)
         {
-            NameSurname.Text = EditedNameSurname.Text;
-            BirthDate.Text = EditedBirthDate.Text;
+            bool isInputValidated = true;
 
-            ProfileInfo.Visibility = Visibility.Visible;
-            EditProfileInfo.Visibility = Visibility.Hidden;
+            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) {
+                MessageBox.Show("Nije dobar datum");
+                isInputValidated = false;
+            }
+            if (EditedName.Text.Length == 0)
+            {
+                MessageBox.Show("Ime ne moze biti prazno");
+                isInputValidated = false;
+            }
+            if (EditedSurname.Text.Length == 0)
+            {
+                MessageBox.Show("Prezime ne moze biti prazno");
+                isInputValidated = false;
+            }
+            if (isInputValidated) {
+                glavniKorisnik.Ime = EditedName.Text;
+                glavniKorisnik.Prezime = EditedSurname.Text;
+                glavniKorisnik.DatumRodjenja = DateOnly.ParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+
+                ProfileInfo.Visibility = Visibility.Visible;
+                EditProfileInfo.Visibility = Visibility.Hidden;
+            }
+            
         }
         // ########## KRAJ OPERACIJA ZA EDIT PROFILA GLAVNOG KORISNIKA ##########
         
