@@ -22,6 +22,7 @@ namespace SocijalnaMreza
             this.naziv = naziv;
             this.opis = opis;
             this.listaClanova = listaClanova;
+            brojClanova = listaClanova.Count;
         }
         
         
@@ -36,6 +37,7 @@ namespace SocijalnaMreza
             this.naziv = naziv;
             this.opis = opis;
             this.listaClanova = new List<Korisnik>();
+            brojClanova = listaClanova.Count;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -52,7 +54,9 @@ namespace SocijalnaMreza
         public bool DodajClana(Korisnik k)
         {
             if(k == null || listaClanova.Contains(k)) return false;
-                listaClanova.Add(k); 
+                listaClanova.Add(k);
+            brojClanova++;
+            OnPropertyChanged(nameof(listaClanova));
             return true;
         }
 
@@ -60,13 +64,17 @@ namespace SocijalnaMreza
         {
             Korisnik k = new Korisnik(id,ime,prezime,datumRodjenja, profilnaSlikaPath);
             if (listaClanova.Contains(k)) return false;
-            listaClanova.Add(k);
+                listaClanova.Add(k);
+            brojClanova++;
+            OnPropertyChanged(nameof(listaClanova));
             return true;
         }
 
 
 
         public bool UkloniClana(Korisnik k) {
+            OnPropertyChanged(nameof(listaClanova));
+            brojClanova--;
             return listaClanova.Remove(k);
         }
 
@@ -96,7 +104,7 @@ namespace SocijalnaMreza
         public List<Korisnik> ListaClanova
         {
             get { return listaClanova; }
-            set { listaClanova = value; }
+            set { listaClanova = value; OnPropertyChanged(nameof(listaClanova)); }
         }
 
         public override string ToString()

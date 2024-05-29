@@ -13,6 +13,14 @@ namespace SocijalnaMreza
         private DateOnly datumPoslednjePoruke;
         private string idGrupe;
 
+        private int brojClanovaGrupe;
+
+        public int BrojClanovaGrupe
+        {
+            get { return brojClanovaGrupe; }
+            set { brojClanovaGrupe = value; }
+        }
+
         public Diskusija(string id, string naziv, DateOnly datumPoslednjePoruke, string idGrupe)
         {
             this.id = id;
@@ -28,6 +36,8 @@ namespace SocijalnaMreza
             this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
             this.idGrupe = idGrupe;
         }
+
+        
 
         public string Id
         {

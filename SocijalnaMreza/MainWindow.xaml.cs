@@ -78,6 +78,8 @@ namespace SocijalnaMreza
             ProfileInfo.DataContext = glavniKorisnik;
             EditProfileInfo.DataContext = glavniKorisnik;
             ProfileImage.DataContext = glavniKorisnik;
+
+            
         }
 
         static private string GenerateNewUniqueID()
@@ -431,12 +433,51 @@ namespace SocijalnaMreza
                     {
                         if (sveDiskusije[i].IdGrupe == tmp.Id)
                         {
+                            sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
                             vezaneDiskusije.Add(sveDiskusije[i]);
                         }
                     }
                     PregledDiskusija.ItemsSource = vezaneDiskusije;
                 }
             }
+        }
+
+        private void RemoveGroup(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddGroupButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditGroupDiscussion(object sender, RoutedEventArgs e)
+        {
+            //koristimo, kako bi napravili mesta za textbox koji nam sluzi za editovanje
+            Grid.SetRowSpan(listaGrupa, 1);
+            Grid.SetRowSpan(PregledDiskusija, 1);
+        }
+
+
+        private void ExportCSV(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveDiscussion(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddDiscussionButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditDone(object sender, RoutedEventArgs e)
+        {
+
         }
 
 
