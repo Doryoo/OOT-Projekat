@@ -49,8 +49,6 @@ namespace SocijalnaMreza
             }
         }
 
-
-        // temp ig, posto treba da imas perms da bih mogao dodati/ukloniti clana iz grupe?!?
         public bool DodajClana(Korisnik k)
         {
             if(k == null || listaClanova.Contains(k)) return false;

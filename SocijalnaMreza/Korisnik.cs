@@ -12,7 +12,7 @@ namespace SocijalnaMreza
 {
 
 
-    internal class Korisnik : INotifyPropertyChanged
+    public class Korisnik : INotifyPropertyChanged
     {
         private string id;
         private string ime;
@@ -35,7 +35,7 @@ namespace SocijalnaMreza
             if (profilnaSlikaPath != null)
                 this.profilnaSlikaPath = profilnaSlikaPath;
             else
-                this.profilnaSlikaPath = "images/profileImage.png";
+                this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
             listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
@@ -49,7 +49,7 @@ namespace SocijalnaMreza
             if (profilnaSlikaPath != null)
                 this.profilnaSlikaPath = profilnaSlikaPath;
             else
-                this.profilnaSlikaPath = "images/profileImage.png";
+                this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
             listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
@@ -60,7 +60,7 @@ namespace SocijalnaMreza
             this.ime = ime;
             this.prezime = prezime;
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
-            this.profilnaSlikaPath = "images/profileImage.png";
+            this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
             listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
@@ -72,7 +72,7 @@ namespace SocijalnaMreza
             this.ime = "bata";
             this.prezime = "posao";
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
-            this.profilnaSlikaPath = null;
+            this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
             listaPrijatelja = new ObservableCollection<Korisnik>();
             listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
@@ -138,7 +138,7 @@ namespace SocijalnaMreza
                 if (s == "" || item.ime.Contains(s) || item.prezime.Contains(s) || item.DatumRodjenja.ToString().Contains(s)) 
                 {
                     if (!listaPrijateljaSelektovana.Contains(item)) { 
-                        listaPrijateljaSelektovana.Add(item);
+                        ListaPrijateljaSelektovana.Add(item);
                         //MessageBox.Show("test");
                     }
                     //dodati jos za search po post-ovima
@@ -180,11 +180,12 @@ namespace SocijalnaMreza
         public bool DodajPrijatelja(Korisnik k)
         {
             if (k == null || listaPrijatelja.Contains(k)) return false;
-            listaPrijatelja.Add(k);
+                ListaPrijatelja.Add(k);
+                listaPrijateljaSelektovana.Add(k);
             return true;
         }
 
-        public bool DodajPrijatelja(string s)
+        public bool DodajPrijatelja(string s,List<Korisnik> svi)
         {
             if (s == null || s.Length == 0) return false;
             bool postoji = true;
@@ -196,8 +197,21 @@ namespace SocijalnaMreza
                     postoji = false;
                 }
             }
-            if (postoji) { 
-                listaPrijatelja.Add(new Korisnik(s));
+
+
+            if (postoji) {
+                foreach (var item in svi)
+                {
+                    if(item.Id == s)
+                    {
+                        listaPrijatelja.Add(item);
+                        listaPrijateljaSelektovana.Add(item);
+                        return true;
+                    }
+                }
+                Korisnik t = new Korisnik(s);
+                listaPrijatelja.Add(t);
+                listaPrijateljaSelektovana.Add(t);
             }
             return true;
         }
@@ -206,6 +220,7 @@ namespace SocijalnaMreza
 
         public bool ukloniPrijatelja(Korisnik k)
         {
+            listaPrijateljaSelektovana.Remove(k);
             return listaPrijatelja.Remove(k);
         }
 

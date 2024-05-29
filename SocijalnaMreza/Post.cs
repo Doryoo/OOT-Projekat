@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace SocijalnaMreza
 {
-    internal class Post : INotifyPropertyChanged
+    public class Post : INotifyPropertyChanged
     {
         private string id;
         private string sadrzaj;
