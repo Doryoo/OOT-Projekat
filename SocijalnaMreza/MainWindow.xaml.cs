@@ -28,6 +28,11 @@ namespace SocijalnaMreza
         Korisnik treci = new Korisnik(GenerateNewUniqueID(),"Treci", "kk");
         Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"Cetvrti", "lol");
         ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
+
+        ObservableCollection<Grupa> sveGrupe = new ObservableCollection<Grupa>();
+
+        ObservableCollection<Diskusija> sveDiskusije = new ObservableCollection<Diskusija>();
+
         Point startPoint = new Point();
         private Post _originalPost;
 
@@ -51,6 +56,21 @@ namespace SocijalnaMreza
             glavniKorisnik.initPrijatelji();
 
             trenutniKorisnik.Add(glavniKorisnik);
+            List<Korisnik> listaTest = new List<Korisnik>();
+            listaTest.Add(glavniKorisnik);
+            listaTest.Add(drugiKorisnik);
+            Grupa grupa1 = new Grupa(GenerateNewUniqueID(),"Grupica","Nema", listaTest);
+            Grupa grupa2 = new Grupa(GenerateNewUniqueID(),"Druga","Nema", new List<Korisnik>());
+
+            sveGrupe.Add(grupa1);
+            sveGrupe.Add(grupa2);
+
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija1", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija3", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija4", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija2", DateOnly.FromDateTime(DateTime.Now), grupa2.Id));
+
+            listaGrupa.ItemsSource = sveGrupe;
 
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
@@ -390,7 +410,36 @@ namespace SocijalnaMreza
 
 
 
+
         // ########## OPERACIJA NAD DATA GRID-OM ##########
 
+        //////////////////////////////
+        /////////  TRECI TAB /////////
+        //////////////////////////////
+
+        private void listaGrupa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (listaGrupa.SelectedItem != null)
+            {
+                Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+                if (tmp != null)
+                {
+                    //MessageBox.Show(tmp.ToString());
+                    ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+                    for (int i = 0; i < sveDiskusije.Count; i++)
+                    {
+                        if (sveDiskusije[i].IdGrupe == tmp.Id)
+                        {
+                            vezaneDiskusije.Add(sveDiskusije[i]);
+                        }
+                    }
+                    PregledDiskusija.ItemsSource = vezaneDiskusije;
+                }
+            }
+        }
+
+
+        // ########## TRECI TAB ##########
     }
 }

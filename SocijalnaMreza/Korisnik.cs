@@ -18,7 +18,7 @@ namespace SocijalnaMreza
         private string ime;
         private string prezime;
         private DateOnly datumRodjenja;
-        private string profilnaSlikaPath;                            //treba li getter i setter za ovo
+        private string profilnaSlikaPath;
         private ObservableCollection<Post> objavljeniPostovi;
 
         private ObservableCollection<Korisnik> listaPrijatelja;

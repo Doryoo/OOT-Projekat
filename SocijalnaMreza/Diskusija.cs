@@ -21,6 +21,14 @@ namespace SocijalnaMreza
             this.idGrupe = idGrupe;
         }
 
+        public Diskusija(string id, string idGrupe)
+        {
+            this.id = id;
+            this.naziv = "DiskusijaDefault";
+            this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
+            this.idGrupe = idGrupe;
+        }
+
         public string Id
         {
             get { return id; }

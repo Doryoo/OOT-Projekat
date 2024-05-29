@@ -148,7 +148,7 @@
 
                     <!-- TreeView -->
                     <Label Grid.Column="0" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
-                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="12" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
+                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="12" Name="SviPrijatelji" SelectedItemChanged="FriendClicked" >
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="{x:Type local:Korisnik}" ItemsSource="{Binding ListaPrijateljaSelektovana}">
                                 <StackPanel Orientation="Horizontal">
@@ -220,24 +220,24 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <ListBox>
-                        <ListBoxItem>
-                            Grupa1
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Grupa2
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Grupa3
-                        </ListBoxItem>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ListBox Name="listaGrupa" SelectionChanged="listaGrupa_SelectionChanged">
+
                     </ListBox>
-                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija">
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" >
                         <DataGrid.Columns>
                             <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
                             <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanova}"/>
                             <DataGridTextColumn  Header="Datum zadnje poruke"   Binding="{Binding Path=DatumObjave}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    
                 </Grid>
             </TabItem>
         </TabControl>
