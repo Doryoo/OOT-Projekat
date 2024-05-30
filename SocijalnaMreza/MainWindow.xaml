@@ -9,6 +9,9 @@
 >
     <Grid>
         <TabControl Name="MainTabovi">
+            <!--#######################-->
+            <!--###### PRVI TAB ######-->
+            <!--#######################-->
             <TabItem Header="PregledProfilaIPostova">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -28,7 +31,7 @@
                         <Image x:Name="ProfileImage" Height="150" Width="150" ></Image>
                         <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
                     </StackPanel>
-                    
+
                     <!-- Trenutno prikazani podaci /-->
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="2" x:Name="ProfileInfo" Visibility="Visible" Grid.RowSpan="2">
                         <Label FontWeight="Bold">ID:</Label>
@@ -83,13 +86,13 @@
                         <Button Content="Edit Selected Row" Click="EditButton_Click" x:Name="EditRowButton" IsEnabled="False"/>
                         <Button Content="Update Row" Click="UpdateButton_Click" x:Name="UpdateRowButton" IsEnabled="False"/>
                     </StackPanel>
-                    
+
                     <!--Edit post content-->
                     <TextBox Grid.Row="1" Grid.Column="1" Visibility="Hidden" x:Name="EditContentTextBox"
                              Text="{Binding ElementName=ViewPostsGrid,Path=SelectedItem.Sadrzaj}">
-                        
+
                     </TextBox>
-                    
+
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
                           AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
                           PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
@@ -107,6 +110,11 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
+            
+            <!--#######################-->
+            <!--###### DRUGI TAB ######-->
+            <!--#######################-->
+            
             <TabItem Header="MrezaPrijatelja">
                 <!-- Grid definitions -->
                 <Grid>
@@ -133,12 +141,12 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- TreeView -->
-                    <Label Grid.Column="0" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top">Lista prijatelja :</Label>
-                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="12" Name="SviPrijatelji" SelectedItemChanged="FriendClicked">
+                    <Label Grid.Column="0" Padding="10" Grid.Row="0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2">Lista prijatelja :</Label>
+                    <TreeView Grid.Column="0" Grid.Row="1" Grid.RowSpan="10" Name="SviPrijatelji" SelectedItemChanged="FriendClicked" >
                         <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type local:Korisnik}" ItemsSource="{Binding ListaPrijatelja}">
+                            <HierarchicalDataTemplate DataType="{x:Type local:Korisnik}" ItemsSource="{Binding ListaPrijateljaSelektovana}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Ime}" />
                                     <TextBlock Text=" " />
@@ -149,19 +157,32 @@
                     </TreeView>
 
                     <!-- Dugmad za dodavanje i brisanje prijatelja -->
-                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="13" Margin="5"></Button>
-                    <TextBox Name="DodajPrijatelja" Grid.Row="14" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
-                    <Button Click="AddFriend" Content="Dodaj prijatelja sa napisanim id-jem" Grid.Row="15" Margin="5"></Button>
+                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="11" Margin="5"></Button>
+                    <TextBox Name="DodajPrijatelja" Grid.Row="12" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
+                    <Button Click="AddFriend" Content="Dodaj prijatelja sa napisanim id-jem" Grid.Row="13" Margin="5"></Button>
 
-                    <!-- Podaci o odabranom korisniku-->
-                    
-                    <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano ///todo -->
-                    <StackPanel Margin="0 20 0 10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
+                    <!-- Search/filtriranje korisnika -->
+
+                    <Label  Grid.Row="14" Content="Pretrazi/Filtriraj prijatelje:" FontWeight="Bold" HorizontalContentAlignment="Left"  Grid.RowSpan="2"/>
+                    <TextBox Name="SearchContent" Grid.Row="15" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
+                    <Button Grid.Row="16" Click="SearchButt" Content="Pretrazi svoje prijatelje" Margin="5"></Button>
+
+                    <!-- Podaci o odabranom korisniku // Desni deo tab-a -->
+
+                    <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano  -->
+                    <!-- WRAP PANEL NAMESTITI DA RADI KAKO TREBA  -->
+
+
+                    <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
+                        <Image x:Name="ProfilePic" Height="100" Width="100" >
+                            <Image.Source>
+                                <BitmapImage x:Name="CurrentUserPicture" UriSource="/images/defaultImage.jpg"/>
+                            </Image.Source>
+                        </Image>
                         <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1" IsEnabled="True" x:Name="IDMrezaSelektovano"></TextBlock>
                         </Border>
-                        
                         <Label FontWeight="Bold" >Ime i Prezime:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock x:Name="NameSurnameMreza" Margin="5 1 5 1"></TextBlock>
@@ -173,43 +194,71 @@
                     </StackPanel>
 
                     <!-- User content -->
-                    <DataGrid Grid.Column="1" Grid.Row="6" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
-                        <DataGrid.Columns> <!-- treba uraditi binding naknadno, tek kad se klikne neko, ceo ovaj dataGrid je hidden dok se ne prizove neki user-->
+                    <DataGrid Grid.Column="1" Grid.Row="8" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
+                        <DataGrid.Columns>
                             <DataGridTextColumn x:Name="IDMreza" Header="ID"                    Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
                             <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave}"/>
                             <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
-                            <DataGridTextColumn x:Name="AutorMreza" Header="Autor"              Binding="{Binding Path=IdAutora}"/>
                         </DataGrid.Columns>
-                     </DataGrid>
-                    
+                    </DataGrid>
+
+
                     <!-- Kraj podataka o odabranom korisniku-->
                 </Grid>
             </TabItem>
+            
+            <!--#######################-->
+            <!--###### TRECI TAB ######-->
+            <!--#######################-->
             <TabItem Header="GrupneDiskusije">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <ListBox>
-                        <ListBoxItem>
-                            Grupa1
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Grupa2
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Grupa3
-                        </ListBoxItem>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="11*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ListBox Name="listaGrupa" SelectionChanged="listaGrupa_SelectionChanged" Grid.RowSpan="1">
+
                     </ListBox>
-                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija">
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn  Header="Naziv"                    Binding="{Binding Path=Naziv}"/>
-                            <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanova}"/>
-                            <DataGridTextColumn  Header="Datum zadnje poruke"    Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
+                            <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanovaGrupe}"/>
+                            <DataGridTextColumn  Header="Datum zadnje poruke"   Binding="{Binding Path=DatumPoslednjePoruke}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <!-- Dugmad za dodavanje i brisanje GRUPE LEVA GRUPA-->
+                    <Button Click="RemoveGroup" Content="Obrisi odabranu grupu" Grid.Row="1" Margin="5"></Button>
+                    <TextBox Name="AddGroupBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
+                    <Button Click="AddGroupButton" Content="Dodaj grupu (id iznad)" Grid.Row="3" Margin="5"></Button>
+
+
+                    <!-- Dugmad za EXPORT, EDIT CENTRALNA GRUPA-->
+                    <Button Content="Exportuj u CSV" Click="ExportCSV" Grid.Column="1" Grid.Row="1" Margin="5" ></Button>
+                    <Button Content="Edituj odabrano" Click="EditSelectedT" Grid.Column="1" Grid.Row="2" Margin="5"></Button>
+                    <Button Content="Zavrsi editovanje" Click="EditDone" Grid.Column="1" Grid.Row="3" Margin="5" ></Button>
+       
+                    <!-- Dugmad za dodavanje i brisanje DISKUSIJE DESNA GRUPA-->
+                    <Button Click="RemoveDiscussion" Content="Obrisi odabran discussion" Grid.Row="1" Margin="5" Grid.Column="3"></Button>
+                    <TextBox Name="AddDiscussionBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" Grid.Column="3"></TextBox>
+                    <Button Click="AddDiscussionButton" Content="Dodaj discussion (id iznad)" Grid.Row="3" Margin="5" Grid.Column="3"></Button>
+
+                    
+                    
+                    <!-- EDIT BOX KOJI SE PRIKAZUJE TEK KAD KLIKNEMO EDIT ZA GRUPU-->
+                    <Label Content="Promeni x:" Name="LabelZaMenjanje" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden"/>
+                    <TextBox Name="EditBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" IsEnabled="False" Visibility="Hidden"></TextBox>
+                    
+
                 </Grid>
             </TabItem>
         </TabControl>

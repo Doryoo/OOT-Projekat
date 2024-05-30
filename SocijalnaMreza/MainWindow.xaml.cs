@@ -22,18 +22,31 @@ namespace SocijalnaMreza
     {
         static Random idGen = new Random();
         static List<string> allIDs = new List<string>();
+        static List<Korisnik> allUsers = new List<Korisnik>();
+        static ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
+        static ObservableCollection<Grupa> sveGrupe = new ObservableCollection<Grupa>();
+        static ObservableCollection<Diskusija> sveDiskusije = new ObservableCollection<Diskusija>();
 
-        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", DateOnly.FromDateTime(DateTime.Now), "images/profileImage.png");
-        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac",DateOnly.FromDateTime(DateTime.Now),null);
-        Korisnik treci = new Korisnik(GenerateNewUniqueID(),"random1", "kk",DateOnly.FromDateTime(DateTime.Now),null);
-        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"random2", "lol",DateOnly.FromDateTime(DateTime.Now),null);
-        ObservableCollection<Korisnik> trenutniKorisnik = new ObservableCollection<Korisnik>();
+        Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", "images/profileImage.png");
+        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac");
+        Korisnik treci = new Korisnik(GenerateNewUniqueID(),"Treci", "kk");
+        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(),"Cetvrti", "lol");
+
+
+
         Point startPoint = new Point();
         private Post _originalPost;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            allUsers.Add(glavniKorisnik);
+            allUsers.Add(drugiKorisnik);
+            allUsers.Add(treci);
+            allUsers.Add(cetvrti);
+
+
             glavniKorisnik.dodajPost("cao svima 1");
             glavniKorisnik.dodajPost("cao svima 2");
             glavniKorisnik.dodajPost("cao svima 3");
@@ -47,10 +60,31 @@ namespace SocijalnaMreza
             glavniKorisnik.DodajPrijatelja(drugiKorisnik);
             glavniKorisnik.DodajPrijatelja(treci);
             glavniKorisnik.DodajPrijatelja(cetvrti);
+            glavniKorisnik.DodajPrijatelja(new Korisnik(GenerateNewUniqueID()));
+
+            
+            glavniKorisnik.initPrijatelji();
+
             trenutniKorisnik.Add(glavniKorisnik);
+            List<Korisnik> listaTest = new List<Korisnik>();
+            listaTest.Add(glavniKorisnik);
+            listaTest.Add(drugiKorisnik);
+            Grupa grupa1 = new Grupa(GenerateNewUniqueID(),"Grupica","Nema", listaTest);
+            Grupa grupa2 = new Grupa(GenerateNewUniqueID(),"Druga","Nema", new List<Korisnik>());
+
+            sveGrupe.Add(grupa1);
+            sveGrupe.Add(grupa2);
+
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija1", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija3", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija4", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija2", DateOnly.FromDateTime(DateTime.Now), grupa2.Id));
+
+            listaGrupa.ItemsSource = sveGrupe;
+
             ViewPostsGrid.ItemsSource = glavniKorisnik.getPosts();
             SviPrijatelji.ItemsSource = trenutniKorisnik;
-
+            
             ProfileInfo.DataContext = glavniKorisnik;
             EditProfileInfo.DataContext = glavniKorisnik;
             ProfileImage.DataContext = glavniKorisnik;
@@ -70,7 +104,31 @@ namespace SocijalnaMreza
             return newID;
         }
 
-        // ########## OPERACIJE ZA UPLOAD POSTOVA ##########
+        public Korisnik newUser() { 
+            Korisnik novi = new Korisnik(GenerateNewUniqueID());
+            allUsers.Add(novi);
+            return novi;
+        }
+        public Korisnik newUser(string ime, string prezime) { 
+            Korisnik novi = new Korisnik(GenerateNewUniqueID(),ime,prezime);
+            allUsers.Add(novi);
+            return novi;
+        }
+        public Korisnik newUser(string ime, string prezime, string profilnaSlikaPath) { 
+            Korisnik novi = new Korisnik(GenerateNewUniqueID(),ime,prezime,profilnaSlikaPath);
+            allUsers.Add(novi);
+            return novi;
+        }
+        public Korisnik newUser(string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath) { 
+            Korisnik novi = new Korisnik(GenerateNewUniqueID(),ime,prezime,datumRodjenja,profilnaSlikaPath);
+            allUsers.Add(novi);
+            return novi;
+        }
+
+
+        ////////////////////////////////////////////////
+        ///////// OPERACIJE ZA UPLOAD POSTOVA //////////
+        ////////////////////////////////////////////////
         private void Toggle_Upload_Visibility_Click(object sender, RoutedEventArgs e)
         {
             if (NewPostUpload.Visibility == Visibility.Hidden)
@@ -99,8 +157,10 @@ namespace SocijalnaMreza
         // ########## KRAJ OPERACIJA ZA UPLOAD POSTOVA ##########
 
 
-        // ########## OPERACIJE EDIT PROFILA GLAVNOG KORISNIKA ##########
 
+        ////////////////////////////////////////////////////////////////////
+        ////////// OPERACIJE EDITOVANJA PROFILA GLAVNOG KORISNIKA //////////
+        ////////////////////////////////////////////////////////////////////
         private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -169,10 +229,12 @@ namespace SocijalnaMreza
             
         }
         // ########## KRAJ OPERACIJA ZA EDIT PROFILA GLAVNOG KORISNIKA ##########
-        
 
 
-        // ########## OPERACIJE ZA DRAG AND DROP ##########
+        ////////////////////////////////////////////////
+        ////////// OPERACIJE ZA DRAG AND DROP //////////
+        ////////////////////////////////////////////////
+
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             startPoint = e.GetPosition(null);
@@ -266,13 +328,14 @@ namespace SocijalnaMreza
         // ########## KRAJ OPERACIJA ZA DRAG AND DROP ##########
 
 
-
-        // ########## OPERACIJE NAD FRIEND LISTOM ##########
+        ///////////////////////////////////////////////
+        ///////// OPERACIJE NAD FRIEND LISTOM /////////
+        ///////////////////////////////////////////////
         private void AddFriend(object sender, RoutedEventArgs e)
         {
             if(DodajPrijatelja.Text != null)
             {
-                glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text);
+                glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text,allUsers);
                 DodajPrijatelja.Text = "";
             }
         }
@@ -301,6 +364,9 @@ namespace SocijalnaMreza
                 IDMrezaSelektovano.Text = tmp.Id;
                 NameSurnameMreza.Text = tmp.Ime + " " + tmp.Prezime;
                 BirthDateMreza.Text = tmp.DatumRodjenja.ToString();
+                BitmapImage bitmap = new BitmapImage(new Uri("/images/defaultImage.jpg",UriKind.RelativeOrAbsolute));
+                ProfilePic.Source= bitmap;
+                
                 //IDMreza.Binding = ;
                 //                LajkoviMreza = tmp.
                 //                MessageBox.Show(tmp.ToString());
@@ -315,11 +381,21 @@ namespace SocijalnaMreza
             }
         }
 
+        private void SearchButt(object sender, RoutedEventArgs e)
+        {
+            if(SearchContent.Text != null)
+            {
+                glavniKorisnik.SearchFor(SearchContent.Text);
+            }
+            SearchContent.Text = "";
+        }
+
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
 
 
-
-        // ########## OPERACIJE NAD DATA GRID-OM ##########
+        ///////////////////////////////////////////////
+        /////////  OPERACIJE NAD DATA GRID-OM /////////
+        ///////////////////////////////////////////////
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewPostsGrid.SelectedItem != null)
@@ -384,7 +460,124 @@ namespace SocijalnaMreza
             }
         }
 
+
+
+
         // ########## OPERACIJA NAD DATA GRID-OM ##########
 
+        //////////////////////////////
+        /////////  TRECI TAB /////////
+        //////////////////////////////
+
+        private void listaGrupa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (listaGrupa.SelectedItem != null)
+            {
+                Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+                if (tmp != null)
+                {
+                    //MessageBox.Show(tmp.ToString());
+                    ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+                    for (int i = 0; i < sveDiskusije.Count; i++)
+                    {
+                        if (sveDiskusije[i].IdGrupe == tmp.Id)
+                        {
+                            sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
+                            vezaneDiskusije.Add(sveDiskusije[i]);
+                        }
+                    }
+                    PregledDiskusija.ItemsSource = vezaneDiskusije;
+                }
+            }
+        }
+
+        private void RemoveGroup(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddGroupButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        //editovanje selektovanog itema u trecem tabu
+        private void EditSelectedT(object sender, RoutedEventArgs e)
+        {
+            /*koristimo, kako bi napravili mesta za textbox koji nam sluzi za editovanje // ipak ne treba, za ovu trenutnu verziju xd
+            Grid.SetRowSpan(listaGrupa, 1);
+            Grid.SetRowSpan(PregledDiskusija, 1);*/
+            if(PregledDiskusija.SelectedItem!= null)
+            {
+                Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
+                if (tmp != null)
+                {
+                    //MessageBox.Show(tmp.ToString());
+                    LabelZaMenjanje.Visibility = Visibility.Visible;
+                    EditBox.Visibility = Visibility.Visible;
+                    EditBox.IsEnabled = true;
+                }
+            }
+            else if(listaGrupa.SelectedItem != null)
+            {
+                Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+                if (tmp != null)
+                {
+                    //MessageBox.Show(tmp.ToString());
+                    LabelZaMenjanje.Visibility = Visibility.Visible;
+                    EditBox.Visibility = Visibility.Visible;
+                    EditBox.IsEnabled = true;
+                    EditBox.Text = "";
+                }
+            }
+            else
+            {
+                LabelZaMenjanje.Visibility = Visibility.Hidden;
+                EditBox.Visibility = Visibility.Hidden;
+                EditBox.IsEnabled = false;
+                EditBox.Text = "";
+            }
+        }
+
+        private void EditDone(object sender, RoutedEventArgs e)
+        {
+
+            //ovde treba da se izvrsi editovanje selektovanog itema
+            if (PregledDiskusija.SelectedItem != null)
+            { 
+            
+            } 
+            else if (listaGrupa.SelectedItem != null) 
+            {
+            
+            }
+
+                LabelZaMenjanje.Visibility = Visibility.Hidden;
+            EditBox.Visibility = Visibility.Hidden;
+            EditBox.IsEnabled = false;
+            EditBox.Text = "";
+        }
+
+        private void ExportCSV(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveDiscussion(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddDiscussionButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        
+
+
+        // ########## TRECI TAB ##########
     }
 }
