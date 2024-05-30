@@ -54,6 +54,9 @@ namespace SocijalnaMreza
             ProfileInfo.DataContext = glavniKorisnik;
             EditProfileInfo.DataContext = glavniKorisnik;
             ProfileImage.DataContext = glavniKorisnik;
+
+            Uri resourceUri = new Uri(glavniKorisnik.ProfilnaSlikaPath, UriKind.Relative);
+            ProfileImage.Source = new BitmapImage(resourceUri);
         }
 
         static private string GenerateNewUniqueID()
@@ -97,6 +100,7 @@ namespace SocijalnaMreza
 
 
         // ########## OPERACIJE EDIT PROFILA GLAVNOG KORISNIKA ##########
+
         private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -105,15 +109,31 @@ namespace SocijalnaMreza
             {
                 try
                 {
-                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
+                    string selectedFilePath = openFileDialog.FileName;
+                    BitmapImage image = new BitmapImage(new Uri(selectedFilePath));
                     ProfileImage.Source = image;
+
+                    // Create directory if it doesn't exist
+                    string directoryPath = "images";
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    // Save the image to the images directory
+                    string fileName = System.IO.Path.GetFileName(selectedFilePath);
+                    string destinationFilePath = System.IO.Path.Combine(directoryPath, fileName);
+                    File.Copy(selectedFilePath, destinationFilePath, true);
+
+                    MessageBox.Show("Image saved to " + destinationFilePath);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error loading image: " + ex.Message);
+                    MessageBox.Show("Error loading or saving image: " + ex.Message);
                 }
             }
         }
+
         private void Edit_Profile_Click(object sender, RoutedEventArgs e)
         {
             ProfileInfo.Visibility = Visibility.Hidden;

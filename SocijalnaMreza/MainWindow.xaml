@@ -25,11 +25,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <Image x:Name="ProfileImage" Height="150" Width="150" >
-                            <Image.Source>
-                                <BitmapImage x:Name="GlavniKorisnikProfilePicture" UriSource="/images/profileImage.png"/>
-                            </Image.Source>
-                        </Image>
+                        <Image x:Name="ProfileImage" Height="150" Width="150" ></Image>
                         <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
                     </StackPanel>
                     
