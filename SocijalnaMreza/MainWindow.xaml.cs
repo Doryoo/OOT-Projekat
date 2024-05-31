@@ -147,6 +147,34 @@ namespace SocijalnaMreza
             listaGrupa.ItemsSource = shownGroups;
         }
 
+        public void SyncShownDiscussions(Grupa tmp)
+        {
+            ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+            for (int i = 0; i < sveDiskusije.Count; i++)
+            {
+                if (sveDiskusije[i].IdGrupe == tmp.Id)
+                {
+                    sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
+                    vezaneDiskusije.Add(sveDiskusije[i]);
+                }
+            }
+            PregledDiskusija.ItemsSource = vezaneDiskusije;
+        }
+
+        public void SyncShownDiscussions(Diskusija tmpDiskusija)
+        {
+            ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+            for (int i = 0; i < sveDiskusije.Count; i++)
+            {
+                if (sveDiskusije[i].IdGrupe == tmpDiskusija.IdGrupe)
+                {
+                    sveDiskusije[i].BrojClanovaGrupe = tmpDiskusija.BrojClanovaGrupe;
+                    vezaneDiskusije.Add(sveDiskusije[i]);
+                }
+            }
+            PregledDiskusija.ItemsSource = vezaneDiskusije;
+        }
+
 
         /*
          zanimljiv recommendation od intellisense-a 
@@ -536,16 +564,7 @@ namespace SocijalnaMreza
 
                 delGroup.IsEnabled = true;
                 //MessageBox.Show(tmp.ToString());
-                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                for (int i = 0; i < sveDiskusije.Count; i++)
-                {
-                    if (sveDiskusije[i].IdGrupe == tmp.Id)
-                    {
-                        sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
-                        vezaneDiskusije.Add(sveDiskusije[i]);
-                    }
-                }
-                PregledDiskusija.ItemsSource = vezaneDiskusije;
+                SyncShownDiscussions(tmp);
                 PregledDiskusija.Visibility = Visibility.Visible;
                 AddDiscussionBox.IsEnabled = true;
                 addDiscButton.IsEnabled = true;
@@ -654,6 +673,7 @@ namespace SocijalnaMreza
             */
         }
 
+        //Dugme koje se klikne kada zavrsimo editovanje selektovanog itema na trecem tabu
         private void EditDone(object sender, RoutedEventArgs e)
         {
 
@@ -668,16 +688,7 @@ namespace SocijalnaMreza
             {
                 tmpDiskusija.Naziv = EditBox.Text;
 
-                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                for (int i = 0; i < sveDiskusije.Count; i++)
-                {
-                    if (sveDiskusije[i].IdGrupe == tmpDiskusija.IdGrupe)
-                    {
-                        sveDiskusije[i].BrojClanovaGrupe = tmpDiskusija.BrojClanovaGrupe;
-                        vezaneDiskusije.Add(sveDiskusije[i]);
-                    }
-                }
-                PregledDiskusija.ItemsSource = vezaneDiskusije;
+                SyncShownDiscussions(tmpDiskusija); 
             }
 
 
@@ -699,16 +710,7 @@ namespace SocijalnaMreza
             if (tmp != null)
             {
                 sveDiskusije.Remove(tmp);
-                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                for (int i = 0; i < sveDiskusije.Count; i++)
-                {
-                    if (sveDiskusije[i].IdGrupe == tmp.IdGrupe)
-                    {
-                        sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanovaGrupe;
-                        vezaneDiskusije.Add(sveDiskusije[i]);
-                    }
-                }
-                PregledDiskusija.ItemsSource = vezaneDiskusije;
+                SyncShownDiscussions(tmp);
             }
         }
 
@@ -719,22 +721,13 @@ namespace SocijalnaMreza
             {
                 sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), AddDiscussionBox.Text, DateOnly.FromDateTime(DateTime.Now), tmp.Id));
                 AddDiscussionBox.Text = "";
-                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                for (int i = 0; i < sveDiskusije.Count; i++)
-                {
-                    if (sveDiskusije[i].IdGrupe == tmp.Id)
-                    {
-                        sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
-                        vezaneDiskusije.Add(sveDiskusije[i]);
-                    }
-                }
-                PregledDiskusija.ItemsSource = vezaneDiskusije;
+                SyncShownDiscussions(tmp);
             }
         }
 
         private void preLevogKlika(object sender, MouseButtonEventArgs e)
         {
-            // Check the state here
+            // Proveravamo kojeg tipa je poslednji selektovani item
             if (listaGrupa.IsKeyboardFocusWithin)
             {
                 if (listaGrupa.SelectedItem != null)

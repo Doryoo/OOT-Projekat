@@ -68,8 +68,8 @@ namespace SocijalnaMreza
         public Korisnik(string id)
         {
             this.id = id;
-            this.ime = "bata";
-            this.prezime = "posao";
+            this.ime = "defaultIme";
+            this.prezime = "defaultPrezime";
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
             this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
