@@ -376,10 +376,18 @@ namespace SocijalnaMreza
         {
             if (DodajPrijatelja.Text != null)
             {
-                int num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
-                if (num > 100) 
+                string num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
+                if (num != "0") 
                 { 
-                    allIDs.Add(num.ToString());
+                    allIDs.Add(num);
+                    ObservableCollection<Korisnik> tmp = glavniKorisnik.ListaPrijatelja;
+                    foreach(Korisnik korisnik in tmp)
+                    {
+                        if (korisnik.Id == num)
+                        {
+                            allUsers.Add(korisnik);
+                        }
+                    }
                 }
                 DodajPrijatelja.Text = "";
             }

@@ -210,39 +210,41 @@ namespace SocijalnaMreza
             return true;
         }
 
-        public int DodajPrijatelja(string s, List<Korisnik> svi,List<string> allIDs)
+        public string DodajPrijatelja(string s, List<Korisnik> svi,List<string> allIDs)
         {
-            if (s == null || s.Length == 0) return 0;
-            foreach (var item in allIDs)
+            if (s == null || s.Length == 0) return "0";
+            foreach (var item in ListaPrijatelja)
             {
-                if (item == s)
+                if (item.Id == s)
                 {
-                    return 0;
+                    return "0";
                 }
                 
             }
-
-
 
             foreach (var item in svi)
             {
                 if (item.Id == s)
                 {
+                    svi.Add(item);
                     listaPrijatelja.Add(item);
                     ListaPrijateljaSelektovana.Add(item);
                     ListaPrijateljskihIDs.Add(item.Id);
-                    return 1;
+                    return s;
                 }
+
                 if (item.Ime.Contains(s) || item.Prezime.Contains(s) || s.Contains(item.ime) || s.Contains(item.prezime))
                 {
-                    if (listaPrijatelja.Contains(item)) return 0;
+                    if (svi.Contains(item)) break;
+                    svi.Add(item);
                     ListaPrijatelja.Add(item);
                     ListaPrijateljaSelektovana.Add(item);
                     listaPrijateljskihIDs.Add(item.Id);
                     MessageBox.Show("ok");
-                    return 1;
+                    return item.Id;
                 }
             }
+
             Random idGen = new Random();
             string newID = idGen.Next(100000, 1000000).ToString();
             while (allIDs.Contains(newID))
@@ -254,10 +256,11 @@ namespace SocijalnaMreza
             int num = -1;
             if (int.TryParse(s, out num)) {
                 Korisnik t = new Korisnik(s);
-                listaPrijatelja.Add(t);
+                svi.Add(t);
+                ListaPrijatelja.Add(t);
                 listaPrijateljaSelektovana.Add(t);
                 listaPrijateljskihIDs.Add(t.Id);
-                return 1;
+                return t.id;
             }
             else
             {
@@ -265,20 +268,22 @@ namespace SocijalnaMreza
                 if (parts.Length == 2)
                 {
                     Korisnik t = new Korisnik(newID,parts[0], parts[1]);
-                    listaPrijatelja.Add(t);
-                    listaPrijateljaSelektovana.Add(t);
-                    listaPrijateljskihIDs.Add(t.Id);
-                    return int.Parse(newID);
+                    svi.Add(t);
+                    ListaPrijatelja.Add(t);
+                    ListaPrijateljaSelektovana.Add(t);
+                    ListaPrijateljskihIDs.Add(t.Id);
+                    return newID;
                 }
                 else if (parts.Length == 1) 
                 { 
                     Korisnik t = new Korisnik(newID, parts[0], "prezime");
-                    listaPrijatelja.Add(t);
+                    svi.Add(t);
+                    ListaPrijatelja.Add(t);
                     listaPrijateljaSelektovana.Add(t);
                     listaPrijateljskihIDs.Add(t.Id);
-                    return int.Parse(newID);
+                    return newID;
                 }
-                return 0;
+                return "0";
             }
             
         }
