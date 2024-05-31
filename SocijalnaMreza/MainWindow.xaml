@@ -101,10 +101,10 @@
                     </TextBox>
 
                     <DataGrid Grid.Row="2" x:Name="ViewPostsGrid" IsReadOnly="True" GridLinesVisibility="Horizontal"
-                          AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                          PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
-                          AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
-                             MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
+                            AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                            PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
+                            AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
+                            MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
                             
                             SelectionUnit="FullRow" SelectedCellsChanged="ViewPostsGrid_SelectedCellsChanged"
                             >
@@ -176,9 +176,6 @@
 
                     <!-- Podaci o odabranom korisniku // Desni deo tab-a -->
 
-                    <!-- Treba content da se automatski menja od svega, u zavisnosti od toga sta je selektovano  -->
-                    <!-- WRAP PANEL NAMESTITI DA RADI KAKO TREBA  -->
-
 
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
                         <Border Width="100" Height="100" CornerRadius="50" BorderThickness="1" BorderBrush="Black">
@@ -239,7 +236,7 @@
 
                     </ListBox>
                     
-                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Visibility="Hidden" SelectionChanged="diskusijeChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
                             <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanovaGrupe}"/>
@@ -248,25 +245,25 @@
                     </DataGrid>
 
                     <!-- Dugmad za dodavanje i brisanje GRUPE LEVA GRUPA-->
-                    <Button Click="RemoveGroup" Content="Obrisi odabranu grupu" Grid.Row="1" Margin="5"></Button>
+                    <Button Name="delGroup" Click="RemoveGroup" Content="Obrisi odabranu grupu" Grid.Row="1" Margin="5" IsEnabled="False"></Button>
                     <TextBox Name="AddGroupBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
                     <Button Click="AddGroupButton" Content="Dodaj grupu (id iznad)" Grid.Row="3" Margin="5"></Button>
 
 
                     <!-- Dugmad za EXPORT, EDIT CENTRALNA GRUPA-->
                     <Button Content="Exportuj u CSV" Click="ExportCSV" Grid.Column="1" Grid.Row="1" Margin="5" ></Button>
-                    <Button Content="Edituj odabrano" Click="EditSelectedT" Grid.Column="1" Grid.Row="2" Margin="5"></Button>
+                    <Button Content="Edituj odabrano" Click="EditSelectedT" Grid.Column="1" Grid.Row="2" Margin="5" PreviewMouseLeftButtonDown="preLevogKlika"></Button>
                     <Button Content="Zavrsi editovanje" Click="EditDone" Grid.Column="1" Grid.Row="3" Margin="5" ></Button>
        
                     <!-- Dugmad za dodavanje i brisanje DISKUSIJE DESNA GRUPA-->
-                    <Button Click="RemoveDiscussion" Content="Obrisi odabran discussion" Grid.Row="1" Margin="5" Grid.Column="3"></Button>
-                    <TextBox Name="AddDiscussionBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" Grid.Column="3"></TextBox>
-                    <Button Click="AddDiscussionButton" Content="Dodaj discussion (ime)" Grid.Row="3" Margin="5" Grid.Column="3"></Button>
+                    <Button x:Name="delDiscussion" Click="RemoveDiscussion" Content="Obrisi odabran discussion" Grid.Row="1" Margin="5" Grid.Column="3" IsEnabled="False"></Button>
+                    <TextBox Name="AddDiscussionBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" Grid.Column="3" IsEnabled="False"></TextBox>
+                    <Button  Click="AddDiscussionButton" Content="Dodaj discussion (ime)" Grid.Row="3" Margin="5" Grid.Column="3" Name="addDiscButton" IsEnabled="False"></Button>
 
                     
                     
                     <!-- EDIT BOX KOJI SE PRIKAZUJE TEK KAD KLIKNEMO EDIT ZA GRUPU-->
-                    <Label Content="Promeni x:" Name="LabelZaMenjanje" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden"/>
+                    <Label Content="Promeni x:"  Name="LabelZaMenjanje" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden"/>
                     <TextBox Name="EditBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" IsEnabled="False" Visibility="Hidden" VerticalAlignment="Center" Padding="3"></TextBox>
                     
 

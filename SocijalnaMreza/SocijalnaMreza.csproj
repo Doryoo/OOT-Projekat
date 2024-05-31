@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
+	<!--
   <ItemGroup>
     <None Remove="images\defaultIm.svg" />
     <None Remove="images\defaultImage.jpg" />
@@ -21,17 +21,25 @@
     <None Remove="users\user3.txt" />
     <None Remove="users\user4.txt" />
   </ItemGroup>
+  -->
 
   <ItemGroup>
+	  <Content Include="images\*">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="users\*">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <!-- 
     <Content Include="images\defaultIm.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="images\defaultImage.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\profileImage.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+	  <Content Include="images\profileImage.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
     <Content Include="images\user1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -42,7 +50,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="images\user4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>i z
     </Content>
     <Content Include="users\glavniKorisnik.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -55,7 +63,9 @@
     </Content>
     <Content Include="users\user4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Content> 
+	-->
   </ItemGroup>
+
 
 </Project>
