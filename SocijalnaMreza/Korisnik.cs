@@ -1,5 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Printing;
+using System.Windows;
 
 namespace SocijalnaMreza
 {
@@ -18,7 +22,7 @@ namespace SocijalnaMreza
         private ObservableCollection<Korisnik> listaPrijateljaSelektovana;
 
         //private ObservableCollection<Grupa> listaGrupa;
-
+        private List <string> listaPrijateljskihIDs = new List <string> ();
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
         {
@@ -196,14 +200,12 @@ namespace SocijalnaMreza
             return objavljeniPostovi;
         }
 
-
-
-
         public bool DodajPrijatelja(Korisnik k)
         {
             if (k == null || listaPrijatelja.Contains(k)) return false;
             ListaPrijatelja.Add(k);
             listaPrijateljaSelektovana.Add(k);
+            listaPrijateljskihIDs.Add(k.Id);
             return true;
         }
 
@@ -231,14 +233,14 @@ namespace SocijalnaMreza
             Korisnik t = new Korisnik(s);
             listaPrijatelja.Add(t);
             listaPrijateljaSelektovana.Add(t);
+            listaPrijateljskihIDs.Add(t.Id);
             return true;
         }
-
-
 
         public bool ukloniPrijatelja(Korisnik k)
         {
             listaPrijateljaSelektovana.Remove(k);
+            listaPrijateljskihIDs.Remove(k.Id);
             return listaPrijatelja.Remove(k);
         }
 
@@ -289,7 +291,113 @@ namespace SocijalnaMreza
 
 
 
+        static public Korisnik LoadUser(string file)
+        {
+            Korisnik newKorisnik = new Korisnik("temp");
+            StreamReader sr = null;
+            string naziv;
+            double cena;
+            string linija;
+            bool first = true;
+            int numberOfPosts = 0;
+            try
+            {
+                sr = new StreamReader(System.IO.Path.Combine("users/", file));
 
+                // petlja za kreiranje stavki (u fajlu je jedan red - jedna stavka)
+                linija = sr.ReadLine();
+
+                string[] lineParts = linija.Split('¬');
+                newKorisnik.Id = lineParts[0];
+                newKorisnik.Ime = lineParts[1];
+                newKorisnik.Prezime = lineParts[2];
+                newKorisnik.DatumRodjenja = DateOnly.Parse(lineParts[3], CultureInfo.InvariantCulture);
+                newKorisnik.profilnaSlikaPath = lineParts[4];
+                numberOfPosts = int.Parse(lineParts[5]);
+
+                for (int i = 0; i < numberOfPosts; i++)
+                {
+                    linija = sr.ReadLine();
+                    lineParts = linija.Split('¬');
+                    newKorisnik.dodajPost(new Post(lineParts[0], lineParts[1], DateOnly.Parse(lineParts[2], CultureInfo.InvariantCulture), int.Parse(lineParts[3]), lineParts[4]));
+                }
+
+                linija = sr.ReadLine();
+                List<string> friendIDs = linija.Split('¬').ToList<string>();
+                newKorisnik.ListaPrijateljskihIDs = friendIDs;
+                
+                
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (sr != null)
+                {
+                    sr.Close();
+                }
+            }
+            return newKorisnik;
+        }
+
+        static public void SaveUser(string file, Korisnik k)
+        {
+            StreamWriter sw = null;
+        
+            int numberOfPosts = k.getPosts().Count();
+            try
+            {
+                if (!Directory.Exists("users/"))
+                {
+                    
+                    Directory.CreateDirectory("users/");
+                       
+                }
+
+                sw = new StreamWriter(System.IO.Path.Combine("users/",file));
+
+                sw.WriteLine(k.Id + "¬" + k.Ime + "¬" + k.Prezime + "¬" + k.DatumRodjenja + "¬" + k.ProfilnaSlikaPath + "¬" + numberOfPosts);
+
+                Post[] posts = k.getPosts().ToArray();
+                for (int i = 0; i < numberOfPosts; i++)
+                {
+                    sw.WriteLine(posts[i].Id + "¬" + posts[i].Sadrzaj + "¬" + posts[i].DatumObjave + "¬" + posts[i].BrojLajkova + "¬" + posts[i].IdAutora);
+                }
+
+                string friendIDs = "";
+                string[] friendIDArr = k.ListaPrijateljskihIDs.ToArray();
+                    
+                for (int i = 0; i < k.ListaPrijateljskihIDs.Count(); i++)
+                {
+                    friendIDs += friendIDArr[i] + "¬";
+                }
+
+                
+                if (friendIDs.Length > 0) {
+                    sw.WriteLine(friendIDs);
+                }
+                
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
+        }
 
         public override string ToString()
         {
@@ -343,6 +451,16 @@ namespace SocijalnaMreza
             {
                 profilnaSlikaPath = value;
                 OnPropertyChanged(nameof(ProfilnaSlikaPath));
+            }
+        }
+    
+        public List<string> ListaPrijateljskihIDs
+        {
+            get { return listaPrijateljskihIDs; }
+            set
+            {
+                listaPrijateljskihIDs = value;
+                OnPropertyChanged(nameof(listaPrijateljskihIDs));
             }
         }
     }

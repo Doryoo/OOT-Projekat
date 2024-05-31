@@ -16,6 +16,10 @@
     <None Remove="images\user2.png" />
     <None Remove="images\user3.png" />
     <None Remove="images\user4.png" />
+    <None Remove="users\glavniKorisnik.txt" />
+    <None Remove="users\user2.txt" />
+    <None Remove="users\user3.txt" />
+    <None Remove="users\user4.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +42,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="images\user4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="users\glavniKorisnik.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="users\user2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="users\user3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="users\user4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

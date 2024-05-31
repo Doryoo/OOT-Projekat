@@ -24,8 +24,6 @@ namespace SocijalnaMreza
         Korisnik treci = new Korisnik(GenerateNewUniqueID(), "Treci", "kk", "images/user2.png");
         Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(), "Cetvrti", "lol", "images/user3.png");
 
-
-
         Point startPoint = new Point();
         private Post _originalPost;
 
@@ -85,6 +83,12 @@ namespace SocijalnaMreza
 
             Uri resourceUri = new Uri(glavniKorisnik.ProfilnaSlikaPath, UriKind.Relative);
             ProfileImage.Source = new BitmapImage(resourceUri);
+
+            Korisnik.SaveUser("glavniKorisnik.txt", glavniKorisnik);
+            Korisnik.SaveUser("user2.txt", drugiKorisnik);
+            Korisnik.SaveUser("user3.txt", treci);
+            Korisnik.SaveUser("user4.txt", cetvrti);
+            Korisnik novi = Korisnik.LoadUser("glavniKorisnik.txt");
         }
 
         static private string GenerateNewUniqueID()
