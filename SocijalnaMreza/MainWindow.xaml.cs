@@ -97,7 +97,7 @@ namespace SocijalnaMreza
             Korisnik novi = Korisnik.LoadUser("glavniKorisnik.txt");
         }
 
-        static private string GenerateNewUniqueID()
+        static public string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
             while (allIDs.Contains(newID))
@@ -376,7 +376,11 @@ namespace SocijalnaMreza
         {
             if (DodajPrijatelja.Text != null)
             {
-                glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers);
+                int num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
+                if (num > 100) 
+                { 
+                    allIDs.Add(num.ToString());
+                }
                 DodajPrijatelja.Text = "";
             }
         }
@@ -387,6 +391,7 @@ namespace SocijalnaMreza
             if (tmp != null)
             {
                 glavniKorisnik.ukloniPrijatelja(tmp);
+                ObrisiPrijatelja.IsEnabled = false;
 
             }
         }
@@ -398,6 +403,9 @@ namespace SocijalnaMreza
 
             if (tmp != null)
             {
+                if (tmp!= glavniKorisnik) { 
+                    ObrisiPrijatelja.IsEnabled = true;
+                }
                 ViewPostsGridMreza.ItemsSource = tmp.getPosts();
                 ViewPostsGridMreza.Visibility = Visibility.Visible;
                 ProfileInfoMreza.Visibility = Visibility.Visible;
@@ -414,6 +422,7 @@ namespace SocijalnaMreza
             }
             else
             {
+                ObrisiPrijatelja.IsEnabled = false;
                 ViewPostsGridMreza.Visibility = Visibility.Hidden;
                 ProfileInfoMreza.Visibility = Visibility.Hidden;
                 IDMrezaSelektovano.Text = "";

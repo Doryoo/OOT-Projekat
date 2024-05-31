@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -209,16 +210,18 @@ namespace SocijalnaMreza
             return true;
         }
 
-        public bool DodajPrijatelja(string s, List<Korisnik> svi)
+        public int DodajPrijatelja(string s, List<Korisnik> svi,List<string> allIDs)
         {
-            if (s == null || s.Length == 0) return false;
-            for (int i = 0; i < listaPrijatelja.Count; i++)
+            if (s == null || s.Length == 0) return 0;
+            foreach (var item in allIDs)
             {
-                if (listaPrijatelja[i].id == s)
+                if (item == s)
                 {
-                    return false;
+                    return 0;
                 }
+                
             }
+
 
 
             foreach (var item in svi)
@@ -226,15 +229,58 @@ namespace SocijalnaMreza
                 if (item.Id == s)
                 {
                     listaPrijatelja.Add(item);
-                    listaPrijateljaSelektovana.Add(item);
-                    return true;
+                    ListaPrijateljaSelektovana.Add(item);
+                    ListaPrijateljskihIDs.Add(item.Id);
+                    return 1;
+                }
+                if (item.Ime.Contains(s) || item.Prezime.Contains(s) || s.Contains(item.ime) || s.Contains(item.prezime))
+                {
+                    if (listaPrijatelja.Contains(item)) return 0;
+                    ListaPrijatelja.Add(item);
+                    ListaPrijateljaSelektovana.Add(item);
+                    listaPrijateljskihIDs.Add(item.Id);
+                    MessageBox.Show("ok");
+                    return 1;
                 }
             }
-            Korisnik t = new Korisnik(s);
-            listaPrijatelja.Add(t);
-            listaPrijateljaSelektovana.Add(t);
-            listaPrijateljskihIDs.Add(t.Id);
-            return true;
+            Random idGen = new Random();
+            string newID = idGen.Next(100000, 1000000).ToString();
+            while (allIDs.Contains(newID))
+            {
+                newID = idGen.Next(100000, 1000000).ToString();
+            }
+            allIDs.Add(newID);
+
+            int num = -1;
+            if (int.TryParse(s, out num)) {
+                Korisnik t = new Korisnik(s);
+                listaPrijatelja.Add(t);
+                listaPrijateljaSelektovana.Add(t);
+                listaPrijateljskihIDs.Add(t.Id);
+                return 1;
+            }
+            else
+            {
+                string[] parts = s.Split(' ');
+                if (parts.Length == 2)
+                {
+                    Korisnik t = new Korisnik(newID,parts[0], parts[1]);
+                    listaPrijatelja.Add(t);
+                    listaPrijateljaSelektovana.Add(t);
+                    listaPrijateljskihIDs.Add(t.Id);
+                    return int.Parse(newID);
+                }
+                else if (parts.Length == 1) 
+                { 
+                    Korisnik t = new Korisnik(newID, parts[0], "prezime");
+                    listaPrijatelja.Add(t);
+                    listaPrijateljaSelektovana.Add(t);
+                    listaPrijateljskihIDs.Add(t.Id);
+                    return int.Parse(newID);
+                }
+                return 0;
+            }
+            
         }
 
         public bool ukloniPrijatelja(Korisnik k)

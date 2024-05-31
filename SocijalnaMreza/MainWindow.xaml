@@ -164,13 +164,13 @@
                     </TreeView>
 
                     <!-- Dugmad za dodavanje i brisanje prijatelja -->
-                    <Button Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="11" Margin="5"></Button>
-                    <TextBox Name="DodajPrijatelja" Grid.Row="12" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
-                    <Button Click="AddFriend" Content="Dodaj prijatelja sa napisanim id-jem" Grid.Row="13" Margin="5"></Button>
+                    <Button IsEnabled="False" Name="ObrisiPrijatelja" Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="11" Margin="5"></Button>
+                    <TextBox Name="DodajPrijatelja" Grid.Row="12" Margin="5" Padding="1" VerticalAlignment="Center"></TextBox>
+                    <Button Click="AddFriend" Content="Dodaj prijatelja sa id-em ili imenom" Grid.Row="13" Margin="5"></Button>
 
                     <!-- Search/filtriranje korisnika -->
 
-                    <Label  Grid.Row="14" Content="Pretrazi/Filtriraj prijatelje:" FontWeight="Bold" HorizontalContentAlignment="Left"  Grid.RowSpan="2"/>
+                    <Label  Grid.Row="14" Content="Pretrazi/Filtriraj prijatelje:" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" Grid.RowSpan="1"/>
                     <TextBox Name="SearchContent" Grid.Row="15" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
                     <Button Grid.Row="16" Click="SearchButt" Content="Pretrazi svoje prijatelje" Margin="5"></Button>
 
@@ -202,7 +202,7 @@
                     <!-- User content -->
                     <DataGrid Grid.Column="1" Grid.Row="8" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="IDMreza" Header="ID"                    Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn x:Name="IDMreza" Header="ID Poruke"             Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
                             <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave}"/>
                             <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
