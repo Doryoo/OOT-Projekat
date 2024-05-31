@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
-namespace SocijalnaMreza 
+namespace SocijalnaMreza
 {
 
 
@@ -24,6 +17,7 @@ namespace SocijalnaMreza
         private ObservableCollection<Korisnik> listaPrijatelja;
         private ObservableCollection<Korisnik> listaPrijateljaSelektovana;
 
+        //private ObservableCollection<Grupa> listaGrupa;
 
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
@@ -106,10 +100,37 @@ namespace SocijalnaMreza
             }
         }
 
+        /*
+         // nepotrebno teoretski
+        public ObservableCollection<Grupa> ListaGrupa
+        {
+            get { return listaGrupa; }
+            set
+            {
+                if (listaGrupa != value)
+                {
+                    listaGrupa = value;
+                    OnPropertyChanged(nameof(ListaGrupa));
+                }
+            }
+        }
+
+        public void updateGroups(ObservableCollection<Grupa> grupe)
+        {
+            listaGrupa.Clear();
+            foreach(var item in grupe)
+            {
+                if (item.ListaClanova.Contains(this))
+                {
+                    ListaGrupa.Add(item);
+                }
+            }
+        }*/
+
         public void initPrijatelji()
         {
             listaPrijateljaSelektovana.Clear();
-            foreach (var item in listaPrijatelja) 
+            foreach (var item in listaPrijatelja)
             {
                 ListaPrijateljaSelektovana.Add(item);
             }
@@ -135,15 +156,15 @@ namespace SocijalnaMreza
                     }
                 }
 
-                if (s == "" || item.ime.Contains(s) || item.prezime.Contains(s) || item.DatumRodjenja.ToString().Contains(s)) 
+                if (s == "" || item.ime.Contains(s) || item.prezime.Contains(s) || item.DatumRodjenja.ToString().Contains(s))
                 {
-                    if (!listaPrijateljaSelektovana.Contains(item)) { 
+                    if (!listaPrijateljaSelektovana.Contains(item))
+                    {
                         ListaPrijateljaSelektovana.Add(item);
                         //MessageBox.Show("test");
                     }
-                    //dodati jos za search po post-ovima
                 }
-               
+
             }
         }
 
@@ -165,12 +186,13 @@ namespace SocijalnaMreza
         public void editujPost(Post post, string novSadrzaj)
         {
             int index = objavljeniPostovi.IndexOf(post);
-            post.Sadrzaj= novSadrzaj;
+            post.Sadrzaj = novSadrzaj;
             objavljeniPostovi.RemoveAt(index);
             objavljeniPostovi.Insert(index, post);
         }
 
-        public ObservableCollection<Post> getPosts() {
+        public ObservableCollection<Post> getPosts()
+        {
             return objavljeniPostovi;
         }
 
@@ -180,39 +202,35 @@ namespace SocijalnaMreza
         public bool DodajPrijatelja(Korisnik k)
         {
             if (k == null || listaPrijatelja.Contains(k)) return false;
-                ListaPrijatelja.Add(k);
-                listaPrijateljaSelektovana.Add(k);
+            ListaPrijatelja.Add(k);
+            listaPrijateljaSelektovana.Add(k);
             return true;
         }
 
-        public bool DodajPrijatelja(string s,List<Korisnik> svi)
+        public bool DodajPrijatelja(string s, List<Korisnik> svi)
         {
             if (s == null || s.Length == 0) return false;
-            bool postoji = true;
-            Korisnik k;
-            for(int i = 0; i < listaPrijatelja.Count; i++)
+            for (int i = 0; i < listaPrijatelja.Count; i++)
             {
                 if (listaPrijatelja[i].id == s)
                 {
-                    postoji = false;
+                    return false;
                 }
             }
 
 
-            if (postoji) {
-                foreach (var item in svi)
+            foreach (var item in svi)
+            {
+                if (item.Id == s)
                 {
-                    if(item.Id == s)
-                    {
-                        listaPrijatelja.Add(item);
-                        listaPrijateljaSelektovana.Add(item);
-                        return true;
-                    }
+                    listaPrijatelja.Add(item);
+                    listaPrijateljaSelektovana.Add(item);
+                    return true;
                 }
-                Korisnik t = new Korisnik(s);
-                listaPrijatelja.Add(t);
-                listaPrijateljaSelektovana.Add(t);
             }
+            Korisnik t = new Korisnik(s);
+            listaPrijatelja.Add(t);
+            listaPrijateljaSelektovana.Add(t);
             return true;
         }
 
@@ -282,7 +300,8 @@ namespace SocijalnaMreza
         public string Id
         {
             get { return id; }
-            set { 
+            set
+            {
                 id = value;
                 OnPropertyChanged(nameof(Id));
             }
@@ -291,7 +310,8 @@ namespace SocijalnaMreza
         public string Ime
         {
             get { return ime; }
-            set { 
+            set
+            {
                 ime = value;
                 OnPropertyChanged(nameof(Ime));
             }
@@ -300,7 +320,8 @@ namespace SocijalnaMreza
         public string Prezime
         {
             get { return prezime; }
-            set { 
+            set
+            {
                 prezime = value;
                 OnPropertyChanged(nameof(Prezime));
             }
@@ -309,7 +330,8 @@ namespace SocijalnaMreza
         public DateOnly DatumRodjenja
         {
             get { return datumRodjenja; }
-            set { 
+            set
+            {
                 datumRodjenja = value;
                 OnPropertyChanged(nameof(DatumRodjenja));
             }
@@ -317,7 +339,8 @@ namespace SocijalnaMreza
         public string ProfilnaSlikaPath
         {
             get { return profilnaSlikaPath; }
-            set {
+            set
+            {
                 profilnaSlikaPath = value;
                 OnPropertyChanged(nameof(ProfilnaSlikaPath));
             }

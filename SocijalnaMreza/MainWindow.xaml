@@ -225,9 +225,11 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    
                     <ListBox Name="listaGrupa" SelectionChanged="listaGrupa_SelectionChanged" Grid.RowSpan="1">
 
                     </ListBox>
+                    
                     <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
@@ -256,7 +258,7 @@
                     
                     <!-- EDIT BOX KOJI SE PRIKAZUJE TEK KAD KLIKNEMO EDIT ZA GRUPU-->
                     <Label Content="Promeni x:" Name="LabelZaMenjanje" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden"/>
-                    <TextBox Name="EditBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" IsEnabled="False" Visibility="Hidden"></TextBox>
+                    <TextBox Name="EditBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" IsEnabled="False" Visibility="Hidden" VerticalAlignment="Center" Padding="3"></TextBox>
                     
 
                 </Grid>

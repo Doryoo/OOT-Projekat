@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace SocijalnaMreza
 {
-    internal class Grupa : INotifyPropertyChanged
+    public class Grupa : INotifyPropertyChanged
     {
         private string id;
         private string naziv;
