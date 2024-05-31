@@ -13,7 +13,7 @@
             <!--#######################-->
             <!--###### PRVI TAB ######-->
             <!--#######################-->
-            <TabItem Header="PregledProfilaIPostova" Width="150">
+            <TabItem Header="PregledProfilaIPostova" Width="153">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -122,7 +122,7 @@
             <!--###### DRUGI TAB ######-->
             <!--#######################-->
 
-            <TabItem Header="MrezaPrijatelja" Width="150">
+            <TabItem Header="MrezaPrijatelja" Width="154">
                 <!-- Grid definitions -->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -220,7 +220,7 @@
             <!--#######################-->
             <!--###### TRECI TAB ######-->
             <!--#######################-->
-            <TabItem Header="GrupneDiskusije" Width="150">
+            <TabItem Header="GrupneDiskusije" Width="153">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
