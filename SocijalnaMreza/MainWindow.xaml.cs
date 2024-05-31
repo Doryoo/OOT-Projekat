@@ -20,9 +20,9 @@ namespace SocijalnaMreza
         static ObservableCollection<Diskusija> sveDiskusije = new ObservableCollection<Diskusija>();
 
         Korisnik glavniKorisnik = new Korisnik(GenerateNewUniqueID(), "Nemanja", "Vojnov", "images/profileImage.png");
-        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac");
-        Korisnik treci = new Korisnik(GenerateNewUniqueID(), "Treci", "kk");
-        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(), "Cetvrti", "lol");
+        Korisnik drugiKorisnik = new Korisnik(GenerateNewUniqueID(), "Nikola", "Kovac", "images/user1.png");
+        Korisnik treci = new Korisnik(GenerateNewUniqueID(), "Treci", "kk", "images/user2.png");
+        Korisnik cetvrti = new Korisnik(GenerateNewUniqueID(), "Cetvrti", "lol", "images/user3.png");
 
 
 
@@ -384,7 +384,6 @@ namespace SocijalnaMreza
         private void FriendClicked(object sender, RoutedEventArgs e)
         {
 
-
             var tmp = SviPrijatelji.SelectedItem as Korisnik;
 
             if (tmp != null)
@@ -395,8 +394,9 @@ namespace SocijalnaMreza
                 IDMrezaSelektovano.Text = tmp.Id;
                 NameSurnameMreza.Text = tmp.Ime + " " + tmp.Prezime;
                 BirthDateMreza.Text = tmp.DatumRodjenja.ToString();
-                BitmapImage bitmap = new BitmapImage(new Uri("/images/defaultImage.jpg", UriKind.RelativeOrAbsolute));
-                ProfilePic.Source = bitmap;
+
+                BitmapImage bitmap = new BitmapImage(new Uri(tmp.ProfilnaSlikaPath, UriKind.Relative));
+                CurrentUserPicture.Source = bitmap;
 
                 //IDMreza.Binding = ;
                 //                LajkoviMreza = tmp.

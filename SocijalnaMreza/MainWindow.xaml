@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:SocijalnaMreza"
         mc:Ignorable="d"
         Height="640" Width="480"
->
+        ResizeMode="NoResize"
+        >
     <Grid>
         <TabControl Name="MainTabovi">
             <!--#######################-->
             <!--###### PRVI TAB ######-->
             <!--#######################-->
-            <TabItem Header="PregledProfilaIPostova">
+            <TabItem Header="PregledProfilaIPostova" Width="150">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -28,7 +29,13 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <Image x:Name="ProfileImage" Height="150" Width="150" ></Image>
+                        <Border Margin="0 20" Width="130" Height="130" CornerRadius="65" BorderThickness="1" BorderBrush="Black">
+                            <Image x:Name="ProfileImage" Width="130" Height="130" ClipToBounds="True">
+                                <Image.Clip>
+                                    <EllipseGeometry Center="65,65" RadiusX="65" RadiusY="65"/>
+                                </Image.Clip>
+                            </Image>
+                        </Border>
                         <Button Content="Select Photo" HorizontalAlignment="Center"  Click="SelectPhotoButton_Click"/>
                     </StackPanel>
 
@@ -114,8 +121,8 @@
             <!--#######################-->
             <!--###### DRUGI TAB ######-->
             <!--#######################-->
-            
-            <TabItem Header="MrezaPrijatelja">
+
+            <TabItem Header="MrezaPrijatelja" Width="150">
                 <!-- Grid definitions -->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -174,11 +181,13 @@
 
 
                     <StackPanel Margin="0 20 0 10" Grid.Row="0" Grid.Column="1" Grid.RowSpan="10" x:Name="ProfileInfoMreza" Visibility="Hidden">
-                        <Image x:Name="ProfilePic" Height="100" Width="100" >
-                            <Image.Source>
-                                <BitmapImage x:Name="CurrentUserPicture" UriSource="/images/defaultImage.jpg"/>
-                            </Image.Source>
-                        </Image>
+                        <Border Width="100" Height="100" CornerRadius="50" BorderThickness="1" BorderBrush="Black">
+                            <Image x:Name="CurrentUserPicture" Width="100" Height="100" ClipToBounds="True">
+                                <Image.Clip>
+                                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
+                                </Image.Clip>
+                            </Image>
+                        </Border>
                         <Label FontWeight="Bold">ID:</Label>
                         <Border BorderBrush="Black" BorderThickness="0.5" Margin="5 0 5 5">
                             <TextBlock Margin="5 1 5 1" IsEnabled="True" x:Name="IDMrezaSelektovano"></TextBlock>
@@ -211,7 +220,7 @@
             <!--#######################-->
             <!--###### TRECI TAB ######-->
             <!--#######################-->
-            <TabItem Header="GrupneDiskusije">
+            <TabItem Header="GrupneDiskusije" Width="150">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
