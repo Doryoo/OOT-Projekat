@@ -616,7 +616,8 @@ namespace SocijalnaMreza
         private void RemoveDiscussion(object sender, RoutedEventArgs e) //not done well.
         {
             var tmp = PregledDiskusija.SelectedItem as Diskusija;
-            if(tmp != null)
+
+            if (tmp != null)
             {
                 sveDiskusije.Remove(tmp);
             }
@@ -624,7 +625,22 @@ namespace SocijalnaMreza
 
         private void AddDiscussionButton(object sender, RoutedEventArgs e)
         {
-
+            var tmp = listaGrupa.SelectedItem as Grupa;
+            if (tmp != null && AddDiscussionBox.Text != null && AddDiscussionBox.Text != "")
+            {
+                sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), AddDiscussionBox.Text, DateOnly.FromDateTime(DateTime.Now), tmp.Id));
+                AddDiscussionBox.Text = "";
+                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+                for (int i = 0; i < sveDiskusije.Count; i++)
+                {
+                    if (sveDiskusije[i].IdGrupe == tmp.Id)
+                    {
+                        sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
+                        vezaneDiskusije.Add(sveDiskusije[i]);
+                    }
+                }
+                PregledDiskusija.ItemsSource = vezaneDiskusije;
+            }
         }
 
 

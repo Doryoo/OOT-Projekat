@@ -252,7 +252,7 @@
                     <!-- Dugmad za dodavanje i brisanje DISKUSIJE DESNA GRUPA-->
                     <Button Click="RemoveDiscussion" Content="Obrisi odabran discussion" Grid.Row="1" Margin="5" Grid.Column="3"></Button>
                     <TextBox Name="AddDiscussionBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" Grid.Column="3"></TextBox>
-                    <Button Click="AddDiscussionButton" Content="Dodaj discussion (id iznad)" Grid.Row="3" Margin="5" Grid.Column="3"></Button>
+                    <Button Click="AddDiscussionButton" Content="Dodaj discussion (ime)" Grid.Row="3" Margin="5" Grid.Column="3"></Button>
 
                     
                     
