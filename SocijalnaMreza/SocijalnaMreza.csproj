@@ -30,6 +30,9 @@
 	  <Content Include="users\*">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Include="csv\*">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <!-- 
     <Content Include="images\defaultIm.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

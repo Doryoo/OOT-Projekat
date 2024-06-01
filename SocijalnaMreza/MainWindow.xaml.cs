@@ -560,10 +560,13 @@ namespace SocijalnaMreza
                 PregledDiskusija.Visibility = Visibility.Visible;
                 AddDiscussionBox.IsEnabled = true;
                 addDiscButton.IsEnabled = true;
+                CSVExport.IsEnabled = true;
+
             }
             else
             {
                 delGroup.IsEnabled = false;
+                CSVExport.IsEnabled = false;
                 PregledDiskusija.Visibility = Visibility.Hidden;
                 AddDiscussionBox.IsEnabled = false;
                 addDiscButton.IsEnabled = false;
@@ -577,7 +580,7 @@ namespace SocijalnaMreza
             {
                 //MessageBox.Show(listaGrupa.IsKeyboardFocusWithin.ToString());
                 //tmpVremeDiskusije = DateTime.Now;
-
+                CSVExport.IsEnabled = true;
                 delDiscussion.IsEnabled = true;
             }
             else
@@ -697,7 +700,28 @@ namespace SocijalnaMreza
 
         private void ExportCSV(object sender, RoutedEventArgs e)
         {
-
+            if (PregledDiskusija.IsKeyboardFocusWithin)
+            {
+                if (PregledDiskusija.SelectedItem != null)
+                {
+                    Diskusija d = PregledDiskusija.SelectedItem as Diskusija;
+                    if (d != null)
+                    {
+                        d.exportToCsv();
+                    }
+                }
+            }
+            else
+            {
+                if (listaGrupa.SelectedItem != null)
+                {
+                    Grupa g = listaGrupa.SelectedItem as Grupa;
+                    if (g != null)
+                    {
+                        g.exportToCsv(sveDiskusije);
+                    }
+                }
+            }
         }
 
         private void RemoveDiscussion(object sender, RoutedEventArgs e) //not done well.
@@ -725,7 +749,7 @@ namespace SocijalnaMreza
             }
         }
 
-        private void preLevogKlika(object sender, MouseButtonEventArgs e)
+        private void EditSelectedT(object sender, MouseButtonEventArgs e)
         {
             // Proveravamo kojeg tipa je poslednji selektovani item
             if (listaGrupa.IsKeyboardFocusWithin)

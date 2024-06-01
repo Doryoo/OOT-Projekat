@@ -70,6 +70,52 @@ namespace SocijalnaMreza
 
             return ucitaneDiskusije;
         }
+        public bool exportToCsv()
+        {
+            bool uspeo = false;
+            StreamWriter? sw = null;
+            try
+            {
+                if (!Directory.Exists("export/"))
+                {
+                    Directory.CreateDirectory("export/");
+
+                }
+                sw = new StreamWriter("export/" + id + ".csv");
+                if (sw != null)
+                {
+                    sw.WriteLine("Id,Naziv,DatumPoslednjePoruke,IdGrupe,BrojClanovaGrupe");
+                    string[] s = datumPoslednjePoruke.ToString().Split('/');
+                    if (s != null)
+                    {
+                        sw.WriteLine(ExportString());
+                        uspeo = true;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Folder cannot be accessed");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Fajl " + id + ".csv");
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    try { sw.Close(); } catch (Exception ex) { MessageBox.Show(ex.Message); Console.WriteLine(ex.StackTrace); Console.WriteLine(ex.Message); }
+                    MessageBox.Show("Uspesan export!");
+                    uspeo = true;
+                }
+            }
+            return uspeo;
+        }
+
 
         static public Diskusija LoadDiscussion(string file)
         {
@@ -163,7 +209,13 @@ namespace SocijalnaMreza
             set { idGrupe = value; }
         }
 
-
+        public string ExportString()
+        {
+            string s = "";
+            string[] s2 = datumPoslednjePoruke.ToString().Split('/');
+            s += id + "," + naziv + "," + s2[0] + "." + s2[1] + "." + s2[2] + "." + "," + idGrupe + "," + brojClanovaGrupe;
+            return s;
+        }
 
     }
 }
