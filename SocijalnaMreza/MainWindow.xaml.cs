@@ -585,11 +585,12 @@ namespace SocijalnaMreza
             {
                 //MessageBox.Show(listaGrupa.IsKeyboardFocusWithin.ToString());
                 //tmpVremeDiskusije = DateTime.Now;
-
+                CSVExport.IsEnabled = true;
                 delDiscussion.IsEnabled = true;
             }
             else
             {
+                CSVExport.IsEnabled = false;
                 delDiscussion.IsEnabled = false;
             }
         }
@@ -601,6 +602,7 @@ namespace SocijalnaMreza
             {
                 tmp.UkloniClana(glavniKorisnik);
                 delDiscussion.IsEnabled = false;
+                CSVExport.IsEnabled = false;
                 SyncShownGroups();
             }
         }
@@ -700,7 +702,14 @@ namespace SocijalnaMreza
 
         private void ExportCSV(object sender, RoutedEventArgs e)
         {
-
+            if (PregledDiskusija.SelectedItem != null)
+            {
+                Diskusija d = PregledDiskusija.SelectedItem as Diskusija;
+                if (d != null)
+                {
+                    d.exportToCsv();
+                }
+            }
         }
 
         private void RemoveDiscussion(object sender, RoutedEventArgs e) //not done well.
@@ -725,7 +734,7 @@ namespace SocijalnaMreza
             }
         }
 
-        private void preLevogKlika(object sender, MouseButtonEventArgs e)
+        private void EditSelectedT(object sender, MouseButtonEventArgs e)
         {
             // Proveravamo kojeg tipa je poslednji selektovani item
             if (listaGrupa.IsKeyboardFocusWithin)
