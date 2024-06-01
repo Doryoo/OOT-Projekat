@@ -395,7 +395,7 @@ namespace SocijalnaMreza
             return newKorisnik;
         }
 
-        static public void SaveUser(string file, Korisnik k)
+        static public void SaveUser(Korisnik k)
         {
             StreamWriter sw = null;
         
@@ -409,7 +409,7 @@ namespace SocijalnaMreza
                        
                 }
 
-                sw = new StreamWriter(System.IO.Path.Combine("users/",file));
+                sw = new StreamWriter(System.IO.Path.Combine("users/",k.Id+".txt"));
 
                 sw.WriteLine(k.Id + "¬" + k.Ime + "¬" + k.Prezime + "¬" + k.DatumRodjenja + "¬" + k.ProfilnaSlikaPath + "¬" + numberOfPosts);
 
@@ -424,7 +424,10 @@ namespace SocijalnaMreza
                     
                 for (int i = 0; i < k.ListaPrijateljskihIDs.Count(); i++)
                 {
-                    friendIDs += friendIDArr[i] + "¬";
+                    if (i != k.ListaPrijateljskihIDs.Count() - 1)
+                        friendIDs += friendIDArr[i] + "¬";
+                    else
+                        friendIDs += friendIDArr[i];
                 }
 
                 

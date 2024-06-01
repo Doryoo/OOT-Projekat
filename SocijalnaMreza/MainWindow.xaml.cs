@@ -73,10 +73,14 @@ namespace SocijalnaMreza
             sveGrupe.Add(grupa1);
             sveGrupe.Add(grupa2);
 
-            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "diskusija123", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
-            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "d3", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
-            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "d4", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
-            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "d2", DateOnly.FromDateTime(DateTime.Now), grupa2.Id));
+            Diskusija d1 = new Diskusija(GenerateNewUniqueID(), "Diskusija1", DateOnly.FromDateTime(DateTime.Now), grupa1.Id);
+            Diskusija d2 = new Diskusija(GenerateNewUniqueID(), "Diskusija2", DateOnly.FromDateTime(DateTime.Now), grupa1.Id);
+            Diskusija d3 = new Diskusija(GenerateNewUniqueID(), "Diskusija3", DateOnly.FromDateTime(DateTime.Now), grupa1.Id);
+            Diskusija d4 = new Diskusija(GenerateNewUniqueID(), "Diskusija4", DateOnly.FromDateTime(DateTime.Now), grupa1.Id);
+            sveDiskusije.Add(d1);
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija3", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija4", DateOnly.FromDateTime(DateTime.Now), grupa1.Id));
+            sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), "Diskusija2", DateOnly.FromDateTime(DateTime.Now), grupa2.Id));
 
             SyncShownGroups(); // koristimo funkciju za prikazivanje svih groupa u kojima je glavni korisnik
 
@@ -90,11 +94,22 @@ namespace SocijalnaMreza
             Uri resourceUri = new Uri(glavniKorisnik.ProfilnaSlikaPath, UriKind.Relative);
             ProfileImage.Source = new BitmapImage(resourceUri);
 
-            Korisnik.SaveUser("glavniKorisnik.txt", glavniKorisnik);
-            Korisnik.SaveUser("user2.txt", drugiKorisnik);
-            Korisnik.SaveUser("user3.txt", treci);
-            Korisnik.SaveUser("user4.txt", cetvrti);
+            Korisnik.SaveUser(glavniKorisnik);
+            Korisnik.SaveUser(drugiKorisnik);
+            Korisnik.SaveUser(treci);
+            Korisnik.SaveUser(cetvrti);
             Korisnik novi = Korisnik.LoadUser("glavniKorisnik.txt");
+
+            Grupa.SaveGroup(grupa1);
+            Grupa.SaveGroup(grupa2);
+            Grupa newGroup = Grupa.LoadGroup("grupa1.txt");
+
+            Diskusija.SaveDiscussion(d1);
+            Diskusija.SaveDiscussion(d2);
+            Diskusija.SaveDiscussion(d3);
+            Diskusija.SaveDiscussion(d4);
+            //Diskusija d2 = Diskusija.LoadDiscussion("disc1.txt");
+
         }
 
         static public string GenerateNewUniqueID()

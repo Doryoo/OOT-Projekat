@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace SocijalnaMreza
@@ -39,61 +39,81 @@ namespace SocijalnaMreza
             this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
             this.idGrupe = idGrupe;
         }
-
-        public bool exportToCsv()
+        public Diskusija()
         {
-            StreamWriter? sw = null;
+            this.id = "";
+            this.naziv = "";
+            this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
+            this.idGrupe = "";
+        }
+
+        static public Diskusija LoadDiscussion(string file)
+        {
+            Diskusija newDiscussion = new Diskusija();
+            StreamReader sr = null;
+            string linija;
+
             try
             {
-                if (!Directory.Exists("export/"))
-                {
-                    Directory.CreateDirectory("export/");
-                    
-                }
-                sw = new StreamWriter("export/" + id + ".csv");
-                if (sw != null)
-                {
-                    sw.WriteLine("Id,Naziv,DatumPoslednjePoruke,IdGrupe,BrojClanovaGrupe");
-                    string[] s = datumPoslednjePoruke.ToString().Split('/');
-                    if (s.Length == 3)
-                    {
-                        sw.WriteLine(ExportString());
-                    }
-                    else
-                    {
-                        sw.WriteLine(id + "," + naziv + "," + datumPoslednjePoruke.ToString() + "," + idGrupe + "," + brojClanovaGrupe);
+                sr = new StreamReader(System.IO.Path.Combine("discussions/", file));
 
-                    }
-                }
-                else
-                {
-                    throw new Exception("Folder cannot be accessed");
-                }
+                linija = sr.ReadLine();
+
+                string[] lineParts = linija.Split('¬');
+                newDiscussion.Id = lineParts[0];
+                newDiscussion.Naziv = lineParts[1];
+                newDiscussion.DatumPoslednjePoruke = DateOnly.Parse(lineParts[2], CultureInfo.InvariantCulture);
+                newDiscussion.IdGrupe = lineParts[3];
+
             }
-            catch(Exception ex) 
+            catch (Exception e)
             {
-                MessageBox.Show(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Fajl " + id + ".csv");
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
             finally
             {
-                if (sw != null) { 
-
-                    try { sw.Close();} catch (Exception ex) { MessageBox.Show(ex.Message); Console.WriteLine(ex.StackTrace); Console.WriteLine(ex.Message);}
-                    MessageBox.Show("Uspesan export!");
+                if (sr != null)
+                {
+                    sr.Close();
                 }
             }
-            return false;
+            return newDiscussion;
         }
 
-        public string ExportString()
+        static public void SaveDiscussion(Diskusija g)
         {
-            string s = "";
-            string[] s2 = datumPoslednjePoruke.ToString().Split('/');
-            s += id + "," + naziv + "," + s2[0] + "." + s2[1] + "." + s2[2] + "." + "," + idGrupe + "," + brojClanovaGrupe;
-            return s;
+            StreamWriter sw = null;
+
+            try
+            {
+                if (!Directory.Exists("discussions/"))
+                {
+
+                    Directory.CreateDirectory("discussions/");
+
+                }
+
+                sw = new StreamWriter(System.IO.Path.Combine("discussions/", g.Id +".txt"));
+
+                sw.WriteLine(g.Id + "¬" + g.Naziv + "¬" + g.DatumPoslednjePoruke.ToString() + "¬" + g.idGrupe);
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
         }
 
         public string Id
