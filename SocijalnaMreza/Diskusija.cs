@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SocijalnaMreza
 {
@@ -36,8 +39,82 @@ namespace SocijalnaMreza
             this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
             this.idGrupe = idGrupe;
         }
+        public Diskusija()
+        {
+            this.id = "";
+            this.naziv = "";
+            this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
+            this.idGrupe = "";
+        }
 
-        
+        static public Diskusija LoadDiscussion(string file)
+        {
+            Diskusija newDiscussion = new Diskusija();
+            StreamReader sr = null;
+            string linija;
+
+            try
+            {
+                sr = new StreamReader(System.IO.Path.Combine("discussions/", file));
+
+                linija = sr.ReadLine();
+
+                string[] lineParts = linija.Split('¬');
+                newDiscussion.Id = lineParts[0];
+                newDiscussion.Naziv = lineParts[1];
+                newDiscussion.DatumPoslednjePoruke = DateOnly.Parse(lineParts[2], CultureInfo.InvariantCulture);
+                newDiscussion.IdGrupe = lineParts[3];
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (sr != null)
+                {
+                    sr.Close();
+                }
+            }
+            return newDiscussion;
+        }
+
+        static public void SaveDiscussion(Diskusija g)
+        {
+            StreamWriter sw = null;
+
+            try
+            {
+                if (!Directory.Exists("discussions/"))
+                {
+
+                    Directory.CreateDirectory("discussions/");
+
+                }
+
+                sw = new StreamWriter(System.IO.Path.Combine("discussions/", g.Id +".txt"));
+
+                sw.WriteLine(g.Id + "¬" + g.Naziv + "¬" + g.DatumPoslednjePoruke.ToString() + "¬" + g.idGrupe);
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
+        }
 
         public string Id
         {
