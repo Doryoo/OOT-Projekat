@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -172,6 +173,61 @@ namespace SocijalnaMreza
                     sw.Close();
                 }
             }
+        }
+        public bool exportToCsv(ObservableCollection<Diskusija> d)
+        {
+            bool uspeo = false;
+            StreamWriter? sw = null;
+            try
+            {
+                if (!Directory.Exists("export/"))
+                {
+                    Directory.CreateDirectory("export/");
+
+                }
+                sw = new StreamWriter("export/GRUPA" + id + ".csv");
+                if (sw != null)
+                {
+                    sw.WriteLine("Id,Naziv,Opis,ListaClanova");
+                    string line = id + "," + naziv + "," + opis + ",";
+                    foreach(var tmp in listaClanova)
+                    {
+                       line += tmp.Id;
+                       if(tmp != listaClanova.Last())
+                            line += "¬";
+                    }
+                    
+                    sw.WriteLine(line);
+                    sw.WriteLine();
+                    sw.WriteLine("Id,Naziv,DatumPoslednjePoruke,IdGrupe,BrojClanovaGrupe");
+                    foreach(var tmp in d)
+                    {
+                        if(tmp.IdGrupe == id)
+                            sw.WriteLine(tmp.ExportString());
+                    }
+                }
+                else
+                {
+                    throw new Exception("Folder cannot be accessed");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Fajl " + id + ".csv");
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    try { sw.Close(); } catch (Exception ex) { MessageBox.Show(ex.Message); Console.WriteLine(ex.StackTrace); Console.WriteLine(ex.Message); }
+                    MessageBox.Show("Uspesan export!");
+                    uspeo = true;
+                }
+            }
+            return uspeo;
         }
 
         public string Naziv

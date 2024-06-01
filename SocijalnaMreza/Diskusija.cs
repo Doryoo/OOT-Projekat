@@ -48,6 +48,7 @@ namespace SocijalnaMreza
         }
         public bool exportToCsv()
         {
+            bool uspeo = false;
             StreamWriter? sw = null;
             try
             {
@@ -61,14 +62,10 @@ namespace SocijalnaMreza
                 {
                     sw.WriteLine("Id,Naziv,DatumPoslednjePoruke,IdGrupe,BrojClanovaGrupe");
                     string[] s = datumPoslednjePoruke.ToString().Split('/');
-                    if (s.Length == 3)
+                    if (s != null)
                     {
                         sw.WriteLine(ExportString());
-                    }
-                    else
-                    {
-                        sw.WriteLine(id + "," + naziv + "," + datumPoslednjePoruke.ToString() + "," + idGrupe + "," + brojClanovaGrupe);
-
+                        uspeo = true;
                     }
                 }
                 else
@@ -87,12 +84,12 @@ namespace SocijalnaMreza
             {
                 if (sw != null)
                 {
-
                     try { sw.Close(); } catch (Exception ex) { MessageBox.Show(ex.Message); Console.WriteLine(ex.StackTrace); Console.WriteLine(ex.Message); }
                     MessageBox.Show("Uspesan export!");
+                    uspeo = true;
                 }
             }
-            return false;
+            return uspeo;
         }
 
 
