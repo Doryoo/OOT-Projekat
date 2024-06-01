@@ -42,7 +42,6 @@ namespace SocijalnaMreza
             SviPrijatelji.ItemsSource = new ObservableCollection<Korisnik>() { glavniKorisnik };
 
             ProfileInfo.DataContext = glavniKorisnik;
-            EditProfileInfo.DataContext = glavniKorisnik;
             ProfileImage.DataContext = glavniKorisnik;
 
             Uri resourceUri = new Uri(Path.Join(glavniKorisnik.ProfilnaSlikaPath) , UriKind.Relative);
@@ -191,33 +190,19 @@ namespace SocijalnaMreza
         ////////////////////////////////////////////////
         private void Toggle_Upload_Visibility_Click(object sender, RoutedEventArgs e)
         {
-            if (NewPostUpload.Visibility == Visibility.Hidden)
-            {
-                NewPostUpload.Visibility = Visibility.Visible;
-                UploadPostContent.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                NewPostUpload.Visibility = Visibility.Hidden;
-                UploadPostContent.Visibility = Visibility.Hidden;
-            }
+            UploadPost uploadPostWindow = new UploadPost(glavniKorisnik);
+            uploadPostWindow.ShowDialog();
         }
-        private void Upload_Post_Click(object sender, RoutedEventArgs e)
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (UploadPostContent.Text.Length > 0)
-            {
-                glavniKorisnik.dodajPost(UploadPostContent.Text);
-                Korisnik.SaveUser(glavniKorisnik);
-                UploadPostContent.Text = "";
-                NewPostUpload.Visibility = Visibility.Hidden;
-                UploadPostContent.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                MessageBox.Show("Ne moze se okaciti prazan post");
-            }
-
+            ((Button)sender).Cursor = Cursors.Cross;
         }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Cursor = Cursors.Arrow; // Reset to default cursor
+        }
+
         // ########## KRAJ OPERACIJA ZA UPLOAD POSTOVA ##########
 
 
@@ -263,41 +248,11 @@ namespace SocijalnaMreza
 
         private void Edit_Profile_Click(object sender, RoutedEventArgs e)
         {
-            ProfileInfo.Visibility = Visibility.Hidden;
-            EditProfileInfo.Visibility = Visibility.Visible;
+            EditUser editProfileWindow = new EditUser(glavniKorisnik);
+            editProfileWindow.ShowDialog();
         }
 
-        private void Save_Edit_Profile_Click(object sender, RoutedEventArgs e)
-        {
-            bool isInputValidated = true;
-
-            if (!DateOnly.TryParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                MessageBox.Show("Nije dobar datum");
-                isInputValidated = false;
-            }
-            if (EditedName.Text.Length == 0)
-            {
-                MessageBox.Show("Ime ne moze biti prazno");
-                isInputValidated = false;
-            }
-            if (EditedSurname.Text.Length == 0)
-            {
-                MessageBox.Show("Prezime ne moze biti prazno");
-                isInputValidated = false;
-            }
-            if (isInputValidated)
-            {
-                glavniKorisnik.Ime = EditedName.Text;
-                glavniKorisnik.Prezime = EditedSurname.Text;
-                glavniKorisnik.DatumRodjenja = DateOnly.ParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture);
-
-                Korisnik.SaveUser(glavniKorisnik);
-                ProfileInfo.Visibility = Visibility.Visible;
-                EditProfileInfo.Visibility = Visibility.Hidden;
-            }
-
-        }
+        
         // ########## KRAJ OPERACIJA ZA EDIT PROFILA GLAVNOG KORISNIKA ##########
 
 
@@ -498,7 +453,6 @@ namespace SocijalnaMreza
 
                 EditRowButton.IsEnabled = false;
                 DeleteRowButton.IsEnabled = false;
-                UpdateRowButton.IsEnabled = false;
                 Korisnik.SaveUser(glavniKorisnik);
             }
         }
@@ -507,30 +461,11 @@ namespace SocijalnaMreza
         {
             if (ViewPostsGrid.SelectedItem != null)
             {
-                EditContentTextBox.Visibility = Visibility.Visible;
-                _originalPost = (Post)ViewPostsGrid.SelectedItem;
-                EditContentTextBox.Text = _originalPost.Sadrzaj;
+                Post selectedPost = (Post)ViewPostsGrid.SelectedItem;
+                EditPost editPostWindow = new EditPost(selectedPost, glavniKorisnik);
+                editPostWindow.ShowDialog();
 
-                EditRowButton.IsEnabled = false;
-                DeleteRowButton.IsEnabled = false;
-                UpdateRowButton.IsEnabled = true;
-            }
-        }
-
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewPostsGrid.SelectedItem != null)
-            {
-                Post post = (Post)ViewPostsGrid.SelectedItem;
-
-                glavniKorisnik.editujPost(post, EditContentTextBox.Text);
-
-                EditContentTextBox.Visibility = Visibility.Hidden;
-
-                EditRowButton.IsEnabled = false;
-                DeleteRowButton.IsEnabled = false;
-                UpdateRowButton.IsEnabled = false;
-                Korisnik.SaveUser(glavniKorisnik);
+                // Optionally refresh the grid or other UI elements here
             }
         }
 
@@ -538,7 +473,6 @@ namespace SocijalnaMreza
         {
             EditRowButton.IsEnabled = true;
             DeleteRowButton.IsEnabled = true;
-            UpdateRowButton.IsEnabled = false;
         }
 
         // ########## KRAJ OPERACIJA NAD DATA GRID-OM ##########

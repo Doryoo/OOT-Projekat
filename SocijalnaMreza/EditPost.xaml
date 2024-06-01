@@ -1,0 +1,16 @@
+﻿<Window x:Class="SocijalnaMreza.EditPost"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SocijalnaMreza"
+        mc:Ignorable="d"
+        Title="EditPost" Height="250" Width="400">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock FontWeight="Bold" Margin="5">Unesi promenjen text</TextBlock>
+            <TextBox x:Name="EditContentTextBox"  Margin="0,0,0,10" Height="100"/>
+            <Button Content="Update Post" Click="UpdateButton_Click" x:Name="UpdateRowButton"/>
+        </StackPanel>
+    </Grid>
+</Window>
