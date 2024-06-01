@@ -7,21 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AddNewUser.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="DodajPrijateljaWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="AddNewUser.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="DodajPrijateljaWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UploadPost.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
