@@ -104,13 +104,13 @@
                             AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.RowSpan="3"
                             PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
                             AllowDrop="True" Drop="ListView_Drop" DragEnter="ListView_DragEnter"
-                            MouseDoubleClick="ViewPostsGrid_MouseDoubleClick"
+                            
                             
                             SelectionUnit="FullRow" SelectedCellsChanged="ViewPostsGrid_SelectedCellsChanged"
                             >
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding Path=Id}"/>
-                            <DataGridTextColumn Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Sadrzaj" Binding="{Binding Path=Sadrzaj}"/>
                             <DataGridTextColumn IsReadOnly="True" Header="Datum Objave" Binding="{Binding Path=DatumObjave}"/>
                             <DataGridTextColumn IsReadOnly="True" Header="Broj lajkova" Binding="{Binding Path=BrojLajkova}"/>
                         </DataGrid.Columns>
@@ -235,8 +235,8 @@
                     <ListBox Name="listaGrupa" SelectionChanged="listaGrupa_SelectionChanged" Grid.RowSpan="1">
 
                     </ListBox>
-                    
-                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Visibility="Hidden" SelectionChanged="diskusijeChanged">
+
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Visibility="Hidden" SelectionChanged="diskusijeChanged" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
                             <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanovaGrupe}"/>

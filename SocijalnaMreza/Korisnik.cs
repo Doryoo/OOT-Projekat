@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.DirectoryServices;
 using System.Globalization;
 using System.IO;
 using System.Printing;
@@ -23,7 +24,7 @@ namespace SocijalnaMreza
         private ObservableCollection<Korisnik> listaPrijateljaSelektovana;
 
         //private ObservableCollection<Grupa> listaGrupa;
-        private List <string> listaPrijateljskihIDs = new List <string> ();
+        private static List <string> listaPrijateljskihIDs = new List <string> ();
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
         {
@@ -141,7 +142,7 @@ namespace SocijalnaMreza
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -206,7 +207,7 @@ namespace SocijalnaMreza
             if (k == null || listaPrijatelja.Contains(k)) return false;
             ListaPrijatelja.Add(k);
             listaPrijateljaSelektovana.Add(k);
-            listaPrijateljskihIDs.Add(k.Id);
+            //listaPrijateljskihIDs.Add(k.Id);
             return true;
         }
 
@@ -229,7 +230,7 @@ namespace SocijalnaMreza
                     svi.Add(item);
                     listaPrijatelja.Add(item);
                     ListaPrijateljaSelektovana.Add(item);
-                    ListaPrijateljskihIDs.Add(item.Id);
+                    //ListaPrijateljskihIDs.Add(item.Id);
                     return s;
                 }
 
@@ -239,7 +240,7 @@ namespace SocijalnaMreza
                     svi.Add(item);
                     ListaPrijatelja.Add(item);
                     ListaPrijateljaSelektovana.Add(item);
-                    listaPrijateljskihIDs.Add(item.Id);
+                    //listaPrijateljskihIDs.Add(item.Id);
                     MessageBox.Show("ok");
                     return item.Id;
                 }
@@ -340,20 +341,38 @@ namespace SocijalnaMreza
         }
         */
 
+        static public List<Korisnik> LoadAllUsers() 
+        {
+            List<Korisnik> ucitaniKorisnici = new List<Korisnik>();
 
+            string folderPath = "users/";
+
+            if (Directory.Exists(folderPath))
+            {
+                var txtFiles = Directory.GetFiles(folderPath, "*.txt", SearchOption.AllDirectories);
+
+                for (int i = 0; i<txtFiles.Length; i++) { 
+                    Korisnik k = LoadUser(txtFiles[i]);
+                    ucitaniKorisnici.Add(k);
+                }
+            }
+            else
+            {
+                MessageBox.Show("The specified folder does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
+            return ucitaniKorisnici;
+        }
 
         static public Korisnik LoadUser(string file)
         {
             Korisnik newKorisnik = new Korisnik("temp");
             StreamReader sr = null;
-            string naziv;
-            double cena;
             string linija;
-            bool first = true;
             int numberOfPosts = 0;
             try
             {
-                sr = new StreamReader(System.IO.Path.Combine("users/", file));
+                sr = new StreamReader(file);
 
                 // petlja za kreiranje stavki (u fajlu je jedan red - jedna stavka)
                 linija = sr.ReadLine();
@@ -374,10 +393,11 @@ namespace SocijalnaMreza
                 }
 
                 linija = sr.ReadLine();
-                List<string> friendIDs = linija.Split('¬').ToList<string>();
-                newKorisnik.ListaPrijateljskihIDs = friendIDs;
-                
-                
+                if (linija != null)
+                {
+                    List<string> friendIDs = linija.Split('¬').ToList<string>();
+                    newKorisnik.ListaPrijateljskihIDs = friendIDs;
+                }
             }
             catch (Exception e)
             {

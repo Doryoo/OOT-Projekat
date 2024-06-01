@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -28,6 +29,7 @@ namespace SocijalnaMreza
             this.opis = opis;
             this.listaClanova = listaClanova;
             brojClanova = listaClanova.Count;
+            listaClanovaIDs = new List<string>();
         }
 
         public Grupa(string id, string naziv, string opis)
@@ -37,6 +39,7 @@ namespace SocijalnaMreza
             this.opis = opis;
             this.listaClanova = new List<Korisnik>();
             brojClanova = listaClanova.Count;
+            listaClanovaIDs = new List<string>();
         }
 
         public Grupa()
@@ -46,6 +49,7 @@ namespace SocijalnaMreza
             this.opis = "";
             this.listaClanova = new List<Korisnik>();
             brojClanova = listaClanova.Count;
+            listaClanovaIDs = new List<string>();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -82,6 +86,29 @@ namespace SocijalnaMreza
             return listaClanova.Remove(k);
         }
 
+        static public ObservableCollection<Grupa> LoadAllGroups()
+        {
+            ObservableCollection<Grupa> ucitaneGrupe = new ObservableCollection<Grupa>();
+
+            string folderPath = "groups/";
+
+            if (Directory.Exists(folderPath))
+            {
+                var txtFiles = Directory.GetFiles(folderPath, "*.txt", SearchOption.AllDirectories);
+
+                foreach (var txtFile in txtFiles)
+                {
+                    Grupa k = LoadGroup(txtFile);
+                    ucitaneGrupe.Add(k);
+                }
+            }
+            else
+            {
+                MessageBox.Show("The specified folder does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return ucitaneGrupe;
+        }
         static public Grupa LoadGroup(string file)
         {
             Grupa newGroup = new Grupa();
@@ -90,7 +117,7 @@ namespace SocijalnaMreza
 
             try
             {
-                sr = new StreamReader(System.IO.Path.Combine("groups/", file));
+                sr = new StreamReader(file);
 
                 // petlja za kreiranje stavki (u fajlu je jedan red - jedna stavka)
                 linija = sr.ReadLine();

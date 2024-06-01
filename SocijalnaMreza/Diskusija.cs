@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -46,6 +47,29 @@ namespace SocijalnaMreza
             this.datumPoslednjePoruke = DateOnly.FromDateTime(DateTime.Now);
             this.idGrupe = "";
         }
+        static public ObservableCollection<Diskusija> LoadAllDiscussions()
+        {
+            ObservableCollection<Diskusija> ucitaneDiskusije = new ObservableCollection<Diskusija>();
+
+            string folderPath = "discussions/";
+
+            if (Directory.Exists(folderPath))
+            {
+                var txtFiles = Directory.GetFiles(folderPath, "*.txt", SearchOption.AllDirectories);
+
+                foreach (var txtFile in txtFiles)
+                {
+                    Diskusija k = LoadDiscussion(txtFile);
+                    ucitaneDiskusije.Add(k);
+                }
+            }
+            else
+            {
+                MessageBox.Show("The specified folder does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return ucitaneDiskusije;
+        }
 
         static public Diskusija LoadDiscussion(string file)
         {
@@ -55,7 +79,7 @@ namespace SocijalnaMreza
 
             try
             {
-                sr = new StreamReader(System.IO.Path.Combine("discussions/", file));
+                sr = new StreamReader(file);
 
                 linija = sr.ReadLine();
 
