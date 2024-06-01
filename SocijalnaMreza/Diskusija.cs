@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace SocijalnaMreza
 {
-    internal class Diskusija
+    public class Diskusija
     {
         private string id;
         private string naziv;

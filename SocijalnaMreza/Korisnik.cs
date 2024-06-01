@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -67,8 +68,8 @@ namespace SocijalnaMreza
         public Korisnik(string id)
         {
             this.id = id;
-            this.ime = "bata";
-            this.prezime = "posao";
+            this.ime = "defaultIme";
+            this.prezime = "defaultPrezime";
             this.datumRodjenja = DateOnly.FromDateTime(DateTime.Now);
             this.profilnaSlikaPath = "images/defaultImage.jpg";
             objavljeniPostovi = new ObservableCollection<Post>();
@@ -209,32 +210,82 @@ namespace SocijalnaMreza
             return true;
         }
 
-        public bool DodajPrijatelja(string s, List<Korisnik> svi)
+        public string DodajPrijatelja(string s, List<Korisnik> svi,List<string> allIDs)
         {
-            if (s == null || s.Length == 0) return false;
-            for (int i = 0; i < listaPrijatelja.Count; i++)
+            if (s == null || s.Length == 0) return "0";
+            foreach (var item in ListaPrijatelja)
             {
-                if (listaPrijatelja[i].id == s)
+                if (item.Id == s)
                 {
-                    return false;
+                    return "0";
                 }
+                
             }
-
 
             foreach (var item in svi)
             {
                 if (item.Id == s)
                 {
+                    svi.Add(item);
                     listaPrijatelja.Add(item);
-                    listaPrijateljaSelektovana.Add(item);
-                    return true;
+                    ListaPrijateljaSelektovana.Add(item);
+                    ListaPrijateljskihIDs.Add(item.Id);
+                    return s;
+                }
+
+                if (item.Ime.Contains(s) || item.Prezime.Contains(s) || s.Contains(item.ime) || s.Contains(item.prezime))
+                {
+                    if (svi.Contains(item)) break;
+                    svi.Add(item);
+                    ListaPrijatelja.Add(item);
+                    ListaPrijateljaSelektovana.Add(item);
+                    listaPrijateljskihIDs.Add(item.Id);
+                    MessageBox.Show("ok");
+                    return item.Id;
                 }
             }
-            Korisnik t = new Korisnik(s);
-            listaPrijatelja.Add(t);
-            listaPrijateljaSelektovana.Add(t);
-            listaPrijateljskihIDs.Add(t.Id);
-            return true;
+
+            Random idGen = new Random();
+            string newID = idGen.Next(100000, 1000000).ToString();
+            while (allIDs.Contains(newID))
+            {
+                newID = idGen.Next(100000, 1000000).ToString();
+            }
+            allIDs.Add(newID);
+
+            int num = -1;
+            if (int.TryParse(s, out num)) {
+                Korisnik t = new Korisnik(s);
+                svi.Add(t);
+                ListaPrijatelja.Add(t);
+                listaPrijateljaSelektovana.Add(t);
+                listaPrijateljskihIDs.Add(t.Id);
+                return t.id;
+            }
+            else
+            {
+                string[] parts = s.Split(' ');
+                if (parts.Length == 2)
+                {
+                    Korisnik t = new Korisnik(newID,parts[0], parts[1]);
+                    svi.Add(t);
+                    ListaPrijatelja.Add(t);
+                    ListaPrijateljaSelektovana.Add(t);
+                    ListaPrijateljskihIDs.Add(t.Id);
+                    return newID;
+                }
+                else if (parts.Length == 1) 
+                { 
+                    Korisnik t = new Korisnik(newID, parts[0], "prezime");
+                    svi.Add(t);
+                    ListaPrijatelja.Add(t);
+                    listaPrijateljaSelektovana.Add(t);
+                    listaPrijateljskihIDs.Add(t.Id);
+                    return newID;
+                }
+                return "0";
+            }
+            
         }
 
         public bool ukloniPrijatelja(Korisnik k)

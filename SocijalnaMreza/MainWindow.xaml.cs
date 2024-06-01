@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace SocijalnaMreza
 {
+
     public partial class MainWindow : Window
     {
         static Random idGen = new Random();
@@ -27,6 +28,11 @@ namespace SocijalnaMreza
         Point startPoint = new Point();
         private Post _originalPost;
 
+        static public Grupa? tmpGrupa = null;
+        //static DateTime tmpVremeGrupe = DateTime.Now;
+        static public Diskusija? tmpDiskusija = null;
+        //static DateTime tmpVremeDiskusije = tmpVremeGrupe;
+        static bool oderOr;
         public MainWindow()
         {
             InitializeComponent();
@@ -106,7 +112,7 @@ namespace SocijalnaMreza
 
         }
 
-        static private string GenerateNewUniqueID()
+        static public string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
             while (allIDs.Contains(newID))
@@ -145,7 +151,7 @@ namespace SocijalnaMreza
         public void SyncShownGroups()
         {
 
-           ObservableCollection<Grupa> shownGroups = new ObservableCollection<Grupa>();
+            ObservableCollection<Grupa> shownGroups = new ObservableCollection<Grupa>();
             foreach (Grupa grupa in sveGrupe)
             {
                 if (grupa.ListaClanova.Contains(glavniKorisnik))
@@ -155,7 +161,35 @@ namespace SocijalnaMreza
             }
             listaGrupa.ItemsSource = shownGroups;
         }
-    
+
+        public void SyncShownDiscussions(Grupa tmp)
+        {
+            ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+            for (int i = 0; i < sveDiskusije.Count; i++)
+            {
+                if (sveDiskusije[i].IdGrupe == tmp.Id)
+                {
+                    sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
+                    vezaneDiskusije.Add(sveDiskusije[i]);
+                }
+            }
+            PregledDiskusija.ItemsSource = vezaneDiskusije;
+        }
+
+        public void SyncShownDiscussions(Diskusija tmpDiskusija)
+        {
+            ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
+            for (int i = 0; i < sveDiskusije.Count; i++)
+            {
+                if (sveDiskusije[i].IdGrupe == tmpDiskusija.IdGrupe)
+                {
+                    sveDiskusije[i].BrojClanovaGrupe = tmpDiskusija.BrojClanovaGrupe;
+                    vezaneDiskusije.Add(sveDiskusije[i]);
+                }
+            }
+            PregledDiskusija.ItemsSource = vezaneDiskusije;
+        }
+
 
         /*
          zanimljiv recommendation od intellisense-a 
@@ -385,7 +419,19 @@ namespace SocijalnaMreza
         {
             if (DodajPrijatelja.Text != null)
             {
-                glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers);
+                string num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
+                if (num != "0") 
+                { 
+                    allIDs.Add(num);
+                    ObservableCollection<Korisnik> tmp = glavniKorisnik.ListaPrijatelja;
+                    foreach(Korisnik korisnik in tmp)
+                    {
+                        if (korisnik.Id == num)
+                        {
+                            allUsers.Add(korisnik);
+                        }
+                    }
+                }
                 DodajPrijatelja.Text = "";
             }
         }
@@ -396,6 +442,7 @@ namespace SocijalnaMreza
             if (tmp != null)
             {
                 glavniKorisnik.ukloniPrijatelja(tmp);
+                ObrisiPrijatelja.IsEnabled = false;
 
             }
         }
@@ -407,6 +454,9 @@ namespace SocijalnaMreza
 
             if (tmp != null)
             {
+                if (tmp!= glavniKorisnik) { 
+                    ObrisiPrijatelja.IsEnabled = true;
+                }
                 ViewPostsGridMreza.ItemsSource = tmp.getPosts();
                 ViewPostsGridMreza.Visibility = Visibility.Visible;
                 ProfileInfoMreza.Visibility = Visibility.Visible;
@@ -423,6 +473,7 @@ namespace SocijalnaMreza
             }
             else
             {
+                ObrisiPrijatelja.IsEnabled = false;
                 ViewPostsGridMreza.Visibility = Visibility.Hidden;
                 ProfileInfoMreza.Visibility = Visibility.Hidden;
                 IDMrezaSelektovano.Text = "";
@@ -521,24 +572,40 @@ namespace SocijalnaMreza
 
         private void listaGrupa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            if (listaGrupa.SelectedItem != null)
+            Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+            if (tmp != null)
             {
-                Grupa? tmp = listaGrupa.SelectedItem as Grupa;
-                if (tmp != null)
-                {
-                    //MessageBox.Show(tmp.ToString());
-                    ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                    for (int i = 0; i < sveDiskusije.Count; i++)
-                    {
-                        if (sveDiskusije[i].IdGrupe == tmp.Id)
-                        {
-                            sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
-                            vezaneDiskusije.Add(sveDiskusije[i]);
-                        }
-                    }
-                    PregledDiskusija.ItemsSource = vezaneDiskusije;
-                }
+                //tmpVremeGrupe = DateTime.Now;
+
+                delGroup.IsEnabled = true;
+                //MessageBox.Show(tmp.ToString());
+                SyncShownDiscussions(tmp);
+                PregledDiskusija.Visibility = Visibility.Visible;
+                AddDiscussionBox.IsEnabled = true;
+                addDiscButton.IsEnabled = true;
+            }
+            else
+            {
+                delGroup.IsEnabled = false;
+                PregledDiskusija.Visibility = Visibility.Hidden;
+                AddDiscussionBox.IsEnabled = false;
+                addDiscButton.IsEnabled = false;
+            }
+        }
+
+        private void diskusijeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
+            if (tmp != null)
+            {
+                //MessageBox.Show(listaGrupa.IsKeyboardFocusWithin.ToString());
+                //tmpVremeDiskusije = DateTime.Now;
+
+                delDiscussion.IsEnabled = true;
+            }
+            else
+            {
+                delDiscussion.IsEnabled = false;
             }
         }
 
@@ -548,6 +615,7 @@ namespace SocijalnaMreza
             if (tmp != null)
             {
                 tmp.UkloniClana(glavniKorisnik);
+                delDiscussion.IsEnabled = false;
                 SyncShownGroups();
             }
         }
@@ -556,7 +624,7 @@ namespace SocijalnaMreza
         {
             if (AddGroupBox.Text != null)
             {
-                foreach(Grupa grupa in sveGrupe)
+                foreach (Grupa grupa in sveGrupe)
                 {
                     if (grupa.Id == AddGroupBox.Text)
                     {
@@ -574,52 +642,70 @@ namespace SocijalnaMreza
         {
             /*koristimo, kako bi napravili mesta za textbox koji nam sluzi za editovanje // ipak ne treba, za ovu trenutnu verziju xd
             Grid.SetRowSpan(listaGrupa, 1);
-            Grid.SetRowSpan(PregledDiskusija, 1);*/
+            Grid.SetRowSpan(PregledDiskusija, 1);
+            //MessageBox.Show(listaGrupa.PreviewMouseLeftButtonDown);
+
+            bool barJedan = true;
+
             if (PregledDiskusija.SelectedItem != null)
             {
                 Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
                 if (tmp != null)
                 {
+                    tmpDiskusija = tmp;
                     //MessageBox.Show(tmp.ToString());
                     LabelZaMenjanje.Visibility = Visibility.Visible;
                     EditBox.Visibility = Visibility.Visible;
                     EditBox.IsEnabled = true;
                     LabelZaMenjanje.Content = "Promeni diskusiju " + tmp.Naziv + " :";
+                    barJedan = false;
                 }
             }
-            else if (listaGrupa.SelectedItem != null)
+
+            if (listaGrupa.SelectedItem != null)
             {
                 Grupa? tmp = listaGrupa.SelectedItem as Grupa;
                 if (tmp != null)
                 {
+                    tmpGrupa = tmp;
+
                     //MessageBox.Show(tmp.ToString());
                     LabelZaMenjanje.Visibility = Visibility.Visible;
                     EditBox.Visibility = Visibility.Visible;
                     EditBox.IsEnabled = true;
                     LabelZaMenjanje.Content = "Promeni grupu " + tmp.Naziv + " :";
+                    barJedan = false;
                 }
             }
-            else
+
+            if (barJedan)
             {
                 LabelZaMenjanje.Visibility = Visibility.Hidden;
                 EditBox.Visibility = Visibility.Hidden;
                 EditBox.IsEnabled = false;
                 EditBox.Text = "";
             }
+            */
         }
 
+        //Dugme koje se klikne kada zavrsimo editovanje selektovanog itema na trecem tabu
         private void EditDone(object sender, RoutedEventArgs e)
         {
 
             //ovde treba da se izvrsi editovanje selektovanog itema
-            if (PregledDiskusija.SelectedItem != null)
-            {
 
-            }
-            else if (listaGrupa.SelectedItem != null)
+            if(tmpGrupa != null)
             {
-
+                tmpGrupa.Naziv = EditBox.Text;
+                SyncShownGroups();
             }
+            else if (tmpDiskusija != null)
+            {
+                tmpDiskusija.Naziv = EditBox.Text;
+
+                SyncShownDiscussions(tmpDiskusija); 
+            }
+
 
             LabelZaMenjanje.Visibility = Visibility.Hidden;
             EditBox.Visibility = Visibility.Hidden;
@@ -639,6 +725,7 @@ namespace SocijalnaMreza
             if (tmp != null)
             {
                 sveDiskusije.Remove(tmp);
+                SyncShownDiscussions(tmp);
             }
         }
 
@@ -649,20 +736,78 @@ namespace SocijalnaMreza
             {
                 sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), AddDiscussionBox.Text, DateOnly.FromDateTime(DateTime.Now), tmp.Id));
                 AddDiscussionBox.Text = "";
-                ObservableCollection<Diskusija> vezaneDiskusije = new ObservableCollection<Diskusija>();
-                for (int i = 0; i < sveDiskusije.Count; i++)
-                {
-                    if (sveDiskusije[i].IdGrupe == tmp.Id)
-                    {
-                        sveDiskusije[i].BrojClanovaGrupe = tmp.BrojClanova;
-                        vezaneDiskusije.Add(sveDiskusije[i]);
-                    }
-                }
-                PregledDiskusija.ItemsSource = vezaneDiskusije;
+                SyncShownDiscussions(tmp);
             }
         }
 
-
+        private void preLevogKlika(object sender, MouseButtonEventArgs e)
+        {
+            // Proveravamo kojeg tipa je poslednji selektovani item
+            if (listaGrupa.IsKeyboardFocusWithin)
+            {
+                if (listaGrupa.SelectedItem != null)
+                {
+                    Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+                    if (tmp != null)
+                    {
+                        tmpGrupa = tmp;
+                        tmpDiskusija = null;
+                        EditBox.Text = tmp.Naziv;
+                        //MessageBox.Show(tmp.ToString());
+                        LabelZaMenjanje.Visibility = Visibility.Visible;
+                        EditBox.Visibility = Visibility.Visible;
+                        EditBox.IsEnabled = true;
+                        LabelZaMenjanje.Content = "Promeni grupu " + tmp.Naziv + " :";
+                    }
+                    else
+                    {
+                        tmpGrupa = null;
+                        tmpDiskusija = null;
+                    }
+                }
+                else
+                {
+                    LabelZaMenjanje.Visibility = Visibility.Hidden;
+                    EditBox.Visibility = Visibility.Hidden;
+                    EditBox.IsEnabled = false;
+                    EditBox.Text = "";
+                    tmpGrupa = null;
+                    tmpDiskusija = null;
+                }
+            }
+            else
+            {
+                if (PregledDiskusija.SelectedItem != null)
+                {
+                    Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
+                    if (tmp != null)
+                    {
+                        tmpGrupa = null;
+                        tmpDiskusija = tmp;
+                        EditBox.Text = tmp.Naziv;
+                        //MessageBox.Show(tmp.ToString());
+                        LabelZaMenjanje.Visibility = Visibility.Visible;
+                        EditBox.Visibility = Visibility.Visible;
+                        EditBox.IsEnabled = true;
+                        LabelZaMenjanje.Content = "Promeni diskusiju " + tmp.Naziv + " :";
+                    }
+                    else
+                    {
+                        tmpGrupa = null;
+                        tmpDiskusija = null;
+                    }
+                }
+                else
+                {
+                    LabelZaMenjanje.Visibility = Visibility.Hidden;
+                    EditBox.Visibility = Visibility.Hidden;
+                    EditBox.IsEnabled = false;
+                    EditBox.Text = "";
+                    tmpGrupa = null;
+                    tmpDiskusija = null;
+                }
+            }
+        }
 
 
         // ########## TRECI TAB ##########
