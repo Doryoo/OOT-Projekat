@@ -1,11 +1,7 @@
-﻿using Microsoft.VisualBasic;
-using SocijalnaMreza;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.DirectoryServices;
 using System.Globalization;
 using System.IO;
-using System.Printing;
 using System.Windows;
 
 namespace SocijalnaMreza
@@ -25,7 +21,7 @@ namespace SocijalnaMreza
         private ObservableCollection<Korisnik> listaPrijateljaSelektovana;
 
         //private ObservableCollection<Grupa> listaGrupa;
-        private static List <string> listaPrijateljskihIDs = new List <string> ();
+        private static List<string> listaPrijateljskihIDs = new List<string>();
 
         public Korisnik(string id, string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
         {
@@ -66,6 +62,8 @@ namespace SocijalnaMreza
             listaPrijatelja = new ObservableCollection<Korisnik>();
             listaPrijateljaSelektovana = new ObservableCollection<Korisnik>();
         }
+
+
 
         public Korisnik(string id)
         {
@@ -212,7 +210,7 @@ namespace SocijalnaMreza
             return true;
         }
 
-        public string DodajPrijatelja(string s, List<Korisnik> svi,List<string> allIDs)
+        public string DodajPrijatelja(string s, List<Korisnik> svi, List<string> allIDs)
         {
             if (s == null || s.Length == 0) return "0";
             foreach (var item in ListaPrijatelja)
@@ -221,7 +219,7 @@ namespace SocijalnaMreza
                 {
                     return "0";
                 }
-                
+
             }
 
             foreach (var item in svi)
@@ -253,43 +251,64 @@ namespace SocijalnaMreza
             {
                 newID = idGen.Next(100000, 1000000).ToString();
             }
-            allIDs.Add(newID);
+            //allIDs.Add(newID); ← ne radi nista, posto je lokalna kopija
 
-            int num = -1;
-            if (int.TryParse(s, out num)) {
-                Korisnik t = new Korisnik(s);
+            string[] parts = s.Split(' ');
+            if (parts.Length == 2)
+            {
+                Korisnik t = new Korisnik(newID, parts[0], parts[1]);
+                svi.Add(t);
+                ListaPrijatelja.Add(t);
+                ListaPrijateljaSelektovana.Add(t);
+                ListaPrijateljskihIDs.Add(t.Id);
+                return newID;
+            }
+            else if (parts.Length == 1)
+            {
+                Korisnik t = new Korisnik(newID, parts[0], "prezime");
                 svi.Add(t);
                 ListaPrijatelja.Add(t);
                 listaPrijateljaSelektovana.Add(t);
                 listaPrijateljskihIDs.Add(t.Id);
-                return t.id;
+                return newID;
             }
-            else
-            {
-                string[] parts = s.Split(' ');
-                if (parts.Length == 2)
-                {
-                    Korisnik t = new Korisnik(newID,parts[0], parts[1]);
-                    svi.Add(t);
-                    ListaPrijatelja.Add(t);
-                    ListaPrijateljaSelektovana.Add(t);
-                    ListaPrijateljskihIDs.Add(t.Id);
-                    return newID;
-                }
-                else if (parts.Length == 1) 
-                { 
-                    Korisnik t = new Korisnik(newID, parts[0], "prezime");
-                    svi.Add(t);
-                    ListaPrijatelja.Add(t);
-                    listaPrijateljaSelektovana.Add(t);
-                    listaPrijateljskihIDs.Add(t.Id);
-                    return newID;
-                }
-                return "0";
-            }
-            
+            return "0";
         }
 
+        public bool DodajPrijateljaV2(string[] s, List<Korisnik> svi)
+        {
+            if (s == null || s.Length == 0) return false;
+            foreach (var item in svi)
+            {
+                if (!listaPrijatelja.Contains(item) && !item.Id.Equals("964964")) { 
+                    if (s[0].Contains(item.Ime) || item.Ime.Contains(s[0]))
+                    {
+                        listaPrijatelja.Add(item);
+                        listaPrijateljaSelektovana.Add(item);
+                        ListaPrijateljskihIDs.Add(item.Id);
+                        Korisnik.SaveUser(this);
+                        return true;
+                    }
+                    else if (s[1].Contains(item.Prezime) || item.prezime.Contains(s[1]))
+                    {
+                        listaPrijatelja.Add(item);
+                        listaPrijateljaSelektovana.Add(item);
+                        ListaPrijateljskihIDs.Add(item.Id);
+                        Korisnik.SaveUser(this);
+                        return true;
+                    }
+                    else if (s[2].Equals(item.Id))
+                    {
+                        listaPrijatelja.Add(item);
+                        listaPrijateljaSelektovana.Add(item);
+                        ListaPrijateljskihIDs.Add(item.Id);
+                        Korisnik.SaveUser(this);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public bool ukloniPrijatelja(Korisnik k)
         {
             listaPrijateljaSelektovana.Remove(k);
@@ -342,7 +361,7 @@ namespace SocijalnaMreza
         }
         */
 
-        static public List<Korisnik> LoadAllUsers() 
+        static public List<Korisnik> LoadAllUsers()
         {
             List<Korisnik> ucitaniKorisnici = new List<Korisnik>();
 
@@ -352,7 +371,8 @@ namespace SocijalnaMreza
             {
                 var txtFiles = Directory.GetFiles(folderPath, "*.txt", SearchOption.AllDirectories);
 
-                for (int i = 0; i<txtFiles.Length; i++) { 
+                for (int i = 0; i < txtFiles.Length; i++)
+                {
                     Korisnik k = LoadUser(txtFiles[i]);
                     ucitaniKorisnici.Add(k);
                 }
@@ -361,7 +381,7 @@ namespace SocijalnaMreza
             {
                 MessageBox.Show("The specified folder does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           
+
             return ucitaniKorisnici;
         }
 
@@ -369,7 +389,7 @@ namespace SocijalnaMreza
         {
             Korisnik newKorisnik = new Korisnik("temp");
             StreamReader sr = null;
-            string linija;
+            string? linija;
             int numberOfPosts = 0;
             try
             {
@@ -419,18 +439,18 @@ namespace SocijalnaMreza
         static public void SaveUser(Korisnik k)
         {
             StreamWriter sw = null;
-        
+            
             int numberOfPosts = k.getPosts().Count();
             try
             {
                 if (!Directory.Exists("users/"))
                 {
-                    
+
                     Directory.CreateDirectory("users/");
-                       
+
                 }
 
-                sw = new StreamWriter(System.IO.Path.Combine("users/",k.Id+".txt"));
+                sw = new StreamWriter(System.IO.Path.Combine("users/", k.Id + ".txt"));
 
                 sw.WriteLine(k.Id + "¬" + k.Ime + "¬" + k.Prezime + "¬" + k.DatumRodjenja + "¬" + k.ProfilnaSlikaPath + "¬" + numberOfPosts);
 
@@ -442,7 +462,7 @@ namespace SocijalnaMreza
 
                 string friendIDs = "";
                 string[] friendIDArr = k.ListaPrijateljskihIDs.ToArray();
-                    
+
                 for (int i = 0; i < k.ListaPrijateljskihIDs.Count(); i++)
                 {
                     if (i != k.ListaPrijateljskihIDs.Count() - 1)
@@ -451,11 +471,12 @@ namespace SocijalnaMreza
                         friendIDs += friendIDArr[i];
                 }
 
-                
-                if (friendIDs.Length > 0) {
+
+                if (friendIDs.Length > 0)
+                {
                     sw.WriteLine(friendIDs);
                 }
-                
+
 
 
             }
@@ -528,7 +549,7 @@ namespace SocijalnaMreza
                 OnPropertyChanged(nameof(ProfilnaSlikaPath));
             }
         }
-    
+
         public List<string> ListaPrijateljskihIDs
         {
             get { return listaPrijateljskihIDs; }

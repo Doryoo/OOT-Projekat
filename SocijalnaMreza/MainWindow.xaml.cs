@@ -21,6 +21,11 @@ namespace SocijalnaMreza
         static ObservableCollection<Diskusija> sveDiskusije = Diskusija.LoadAllDiscussions();
         static List<string> allIDs = LoadAllIDs();
         Korisnik glavniKorisnik = SelectMainUser();
+        DodajPrijateljaWindow dodajPrijateljaWindow;
+        AddNewUser addNewUserWindow;
+
+
+
 
         Point startPoint = new();
         private Post? _originalPost;
@@ -30,6 +35,9 @@ namespace SocijalnaMreza
         public MainWindow()
         {
             InitializeComponent();
+
+            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
+            addNewUserWindow = new AddNewUser(allUsers, allIDs);
 
             LoadAllFriendsForUser(glavniKorisnik);
             LoadAllUsersForGroups();
@@ -121,6 +129,7 @@ namespace SocijalnaMreza
         //////////////////////////////////////
         ///////// KORISNE OPERACIJE //////////
         //////////////////////////////////////
+        
         static public string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
@@ -170,6 +179,7 @@ namespace SocijalnaMreza
             }
             PregledDiskusija.ItemsSource = vezaneDiskusije;
         }
+
 
 
         /*
@@ -403,6 +413,9 @@ namespace SocijalnaMreza
         ///////////////////////////////////////////////
         private void AddFriend(object sender, RoutedEventArgs e)
         {
+            
+            dodajPrijateljaWindow.Show();
+            /*
             if (DodajPrijatelja.Text != null)
             {
                 string num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
@@ -415,12 +428,14 @@ namespace SocijalnaMreza
                         if (korisnik.Id == num)
                         {
                             allUsers.Add(korisnik);
+                            Korisnik.SaveUser(korisnik);
                         }
                     }
                 }
-                DodajPrijatelja.Text = "";
-                Korisnik.SaveUser(glavniKorisnik);
-            }
+                
+                DodajPrijatelja.Text = ""; */
+            Korisnik.SaveUser(glavniKorisnik);
+
         }
 
         private void RemoveFriend(object sender, RoutedEventArgs e)
@@ -479,6 +494,11 @@ namespace SocijalnaMreza
             SearchContent.Text = "";
         }
 
+
+        private void AddNewUser(object sender, RoutedEventArgs e)
+        {
+            addNewUserWindow.Show();
+        }
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
 
 
@@ -817,6 +837,8 @@ namespace SocijalnaMreza
                 }
             }
         }
+
+
 
 
         // ########## TRECI TAB ##########
