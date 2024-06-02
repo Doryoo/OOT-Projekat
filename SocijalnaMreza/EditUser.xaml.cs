@@ -54,7 +54,7 @@ namespace SocijalnaMreza
                 glavniKorisnik.DatumRodjenja = DateOnly.ParseExact(EditedBirthDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture);
 
                 Korisnik.SaveUser(glavniKorisnik);
-                MessageBox.Show("Profile updated successfully!");
+                MessageBox.Show("Profil uspesno azuriran!");
                 this.Close();
             }
 

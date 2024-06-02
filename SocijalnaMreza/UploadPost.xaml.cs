@@ -31,7 +31,7 @@ namespace SocijalnaMreza
             {
                 glavniKorisnik.dodajPost(UploadPostContent.Text);
                 Korisnik.SaveUser(glavniKorisnik);
-                MessageBox.Show("Post successfully uploaded!");
+                MessageBox.Show("Post uspesno okacen!");
                 UploadPostContent.Text = "";
                 this.Close();
             }
