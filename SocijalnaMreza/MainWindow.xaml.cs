@@ -36,8 +36,15 @@ namespace SocijalnaMreza
         {
             InitializeComponent();
 
+
             dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
+            dodajPrijateljaWindow.Closed += dodajPrijateljaWindow_Closed;
+            
+            
             addNewUserWindow = new AddNewUser(allUsers, allIDs);
+            addNewUserWindow.Closed += addNewUserWindow_Closed;
+
+            this.Closed += mainWindowClosed;
 
             LoadAllFriendsForUser(glavniKorisnik);
             LoadAllUsersForGroups();
@@ -56,6 +63,7 @@ namespace SocijalnaMreza
             ProfileImage.Source = new BitmapImage(resourceUri);
 
            }
+
 
         /////////////////////////////////////////////////////////////
         ///////// OPERACIJE ZA LOADOVANJE PODATAKA IZ BAZE //////////
@@ -179,21 +187,26 @@ namespace SocijalnaMreza
             PregledDiskusija.ItemsSource = vezaneDiskusije;
         }
 
-
-
-        /*
-         zanimljiv recommendation od intellisense-a 
-         
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void addNewUserWindow_Closed(object sender, EventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Da li ste sigurni da zelite da zatvorite aplikaciju?", "Zatvaranje aplikacije", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.No)
-            {
-                e.Cancel = true;
-            }
+            addNewUserWindow = new AddNewUser(allUsers, allIDs);
+
         }
-        
-         */
+        private void dodajPrijateljaWindow_Closed(object sender, EventArgs e)
+        {
+            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
+        }
+        private void mainWindowClosed(object sender, EventArgs e)
+        {
+            dodajPrijateljaWindow.Closed -= dodajPrijateljaWindow_Closed;
+            addNewUserWindow.Closed -= addNewUserWindow_Closed;
+            dodajPrijateljaWindow.Close();
+            dodajPrijateljaWindow = null;
+            addNewUserWindow.Close();
+            addNewUserWindow = null;
+            System.Diagnostics.Debug.WriteLine("Window closed");
+        }
+
 
         ////////////////////////////////////////////////
         ///////// OPERACIJE ZA UPLOAD POSTOVA //////////
@@ -414,6 +427,10 @@ namespace SocijalnaMreza
             {
                 if (tmp!= glavniKorisnik) { 
                     ObrisiPrijatelja.IsEnabled = true;
+                }
+                else
+                {
+                    ObrisiPrijatelja.IsEnabled = false;
                 }
                 ViewPostsGridMreza.ItemsSource = tmp.getPosts();
                 ViewPostsGridMreza.Visibility = Visibility.Visible;
