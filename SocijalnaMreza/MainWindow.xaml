@@ -214,8 +214,8 @@
 
                     <!-- Dugmad za dodavanje i brisanje GRUPE LEVA GRUPA-->
                     <Button Name="delGroup" Click="RemoveGroup" Content="Obrisi odabranu grupu" Grid.Row="1" Margin="5" IsEnabled="False"></Button>
-                    <TextBox Name="AddGroupBox" Grid.Row="2" Margin="5" Padding="1" VerticalAlignment="Center" ></TextBox>
-                    <Button Click="AddGroupButton" Content="Dodaj grupu (id iznad)" Grid.Row="3" Margin="5"></Button>
+                    <Button Click="AddGroupButton" Content="Dodaj grupu" Grid.Row="2" Margin="5"></Button>
+                    <Button Click="AddNewGroupButton" Content="Napravi novu grupu" Grid.Row="3" Margin="5"></Button>
 
 
                     <!-- Dugmad za EXPORT, EDIT CENTRALNA GRUPA-->
