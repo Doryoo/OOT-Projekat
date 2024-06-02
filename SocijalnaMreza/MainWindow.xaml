@@ -133,8 +133,8 @@
 
                     <!-- Dugmad za dodavanje i brisanje prijatelja -->
                     <Button IsEnabled="False" Name="ObrisiPrijatelja" Click="RemoveFriend" Content="Obrisi odabranog prijatelja" Grid.Row="11" Margin="5"></Button>
-                    <TextBox Name="DodajPrijatelja" Grid.Row="12" Margin="5" Padding="1" VerticalAlignment="Center"></TextBox>
-                    <Button Click="AddFriend" Content="Dodaj prijatelja sa id-em ili imenom" Grid.Row="13" Margin="5"></Button>
+                    <Button Name="DodajKorisnika" Click="AddNewUser" Content="Dodaj novog korisnika" Grid.Row="12" Margin="5"></Button>
+                    <Button Click="AddFriend" Content="Dodaj prijatelja imenom i prezimenom" Grid.Row="13" Margin="5"></Button>
 
                     <!-- Search/filtriranje korisnika -->
 

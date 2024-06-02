@@ -21,6 +21,11 @@ namespace SocijalnaMreza
         static ObservableCollection<Diskusija> sveDiskusije = Diskusija.LoadAllDiscussions();
         static List<string> allIDs = LoadAllIDs();
         Korisnik glavniKorisnik = SelectMainUser();
+        DodajPrijateljaWindow dodajPrijateljaWindow;
+        AddNewUser addNewUserWindow;
+
+
+
 
         Point startPoint = new();
         private Post? _originalPost;
@@ -30,6 +35,16 @@ namespace SocijalnaMreza
         public MainWindow()
         {
             InitializeComponent();
+
+
+            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
+            dodajPrijateljaWindow.Closed += dodajPrijateljaWindow_Closed;
+            
+            
+            addNewUserWindow = new AddNewUser(allUsers, allIDs);
+            addNewUserWindow.Closed += addNewUserWindow_Closed;
+
+            this.Closed += mainWindowClosed;
 
             LoadAllFriendsForUser(glavniKorisnik);
             LoadAllUsersForGroups();
@@ -48,6 +63,7 @@ namespace SocijalnaMreza
             ProfileImage.Source = new BitmapImage(resourceUri);
 
            }
+
 
         /////////////////////////////////////////////////////////////
         ///////// OPERACIJE ZA LOADOVANJE PODATAKA IZ BAZE //////////
@@ -120,6 +136,7 @@ namespace SocijalnaMreza
         //////////////////////////////////////
         ///////// KORISNE OPERACIJE //////////
         //////////////////////////////////////
+        
         static public string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
@@ -170,20 +187,26 @@ namespace SocijalnaMreza
             PregledDiskusija.ItemsSource = vezaneDiskusije;
         }
 
-
-        /*
-         zanimljiv recommendation od intellisense-a 
-         
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void addNewUserWindow_Closed(object sender, EventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Da li ste sigurni da zelite da zatvorite aplikaciju?", "Zatvaranje aplikacije", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.No)
-            {
-                e.Cancel = true;
-            }
+            addNewUserWindow = new AddNewUser(allUsers, allIDs);
+
         }
-        
-         */
+        private void dodajPrijateljaWindow_Closed(object sender, EventArgs e)
+        {
+            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
+        }
+        private void mainWindowClosed(object sender, EventArgs e)
+        {
+            dodajPrijateljaWindow.Closed -= dodajPrijateljaWindow_Closed;
+            addNewUserWindow.Closed -= addNewUserWindow_Closed;
+            dodajPrijateljaWindow.Close();
+            dodajPrijateljaWindow = null;
+            addNewUserWindow.Close();
+            addNewUserWindow = null;
+            System.Diagnostics.Debug.WriteLine("Window closed");
+        }
+
 
         ////////////////////////////////////////////////
         ///////// OPERACIJE ZA UPLOAD POSTOVA //////////
@@ -358,6 +381,9 @@ namespace SocijalnaMreza
         ///////////////////////////////////////////////
         private void AddFriend(object sender, RoutedEventArgs e)
         {
+            
+            dodajPrijateljaWindow.Show();
+            /*
             if (DodajPrijatelja.Text != null)
             {
                 string num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
@@ -370,12 +396,14 @@ namespace SocijalnaMreza
                         if (korisnik.Id == num)
                         {
                             allUsers.Add(korisnik);
+                            Korisnik.SaveUser(korisnik);
                         }
                     }
                 }
-                DodajPrijatelja.Text = "";
-                Korisnik.SaveUser(glavniKorisnik);
-            }
+                
+                DodajPrijatelja.Text = ""; */
+            Korisnik.SaveUser(glavniKorisnik);
+
         }
 
         private void RemoveFriend(object sender, RoutedEventArgs e)
@@ -399,6 +427,10 @@ namespace SocijalnaMreza
             {
                 if (tmp!= glavniKorisnik) { 
                     ObrisiPrijatelja.IsEnabled = true;
+                }
+                else
+                {
+                    ObrisiPrijatelja.IsEnabled = false;
                 }
                 ViewPostsGridMreza.ItemsSource = tmp.getPosts();
                 ViewPostsGridMreza.Visibility = Visibility.Visible;
@@ -434,6 +466,11 @@ namespace SocijalnaMreza
             SearchContent.Text = "";
         }
 
+
+        private void AddNewUser(object sender, RoutedEventArgs e)
+        {
+            addNewUserWindow.Show();
+        }
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
 
 
@@ -751,6 +788,8 @@ namespace SocijalnaMreza
                 }
             }
         }
+
+
 
 
         // ########## TRECI TAB ##########
