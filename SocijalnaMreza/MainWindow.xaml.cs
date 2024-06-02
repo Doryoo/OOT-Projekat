@@ -586,10 +586,13 @@ namespace SocijalnaMreza
         private void AddNewGroupButton(object sender, RoutedEventArgs e)
         {
             makeNewGrupWindow.Show();
+            SyncShownGroups();
         }
         private void AddGroupButton(object sender, RoutedEventArgs e)
         {
-            
+            AddGroup addGroupWindow = new AddGroup(sveGrupe, allIDs, glavniKorisnik);
+            addGroupWindow.ShowDialog();
+            SyncShownGroups();
         }
 
 

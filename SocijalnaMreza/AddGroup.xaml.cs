@@ -16,38 +16,49 @@ using System.Windows.Shapes;
 namespace SocijalnaMreza
 {
     /// <summary>
-    /// Interaction logic for MakeNewGrup.xaml
+    /// Interaction logic for AddGroup.xaml
     /// </summary>
-    ///
-    public partial class MakeNewGrup : Window
+    public partial class AddGroup : Window
     {
         static Random idGen = new Random();
         static ObservableCollection<Grupa> sveGrupe;
         static List<string> allIDs;
-        public MakeNewGrup(ObservableCollection<Grupa> SveGrupe, List<string> AllIDs)
+        Korisnik glavniKorisnik;
+        public AddGroup(ObservableCollection<Grupa> SveGrupe, List<string> AllIDs, Korisnik GlavniKorisnik)
         {
             InitializeComponent();
             sveGrupe = SveGrupe;
             allIDs = AllIDs;
+            glavniKorisnik = GlavniKorisnik;
         }
-        private void napraviGrupu(object sender, RoutedEventArgs e)
+
+        private void dodajGrupu(object sender, RoutedEventArgs e)
         {
             boxIme.Text = boxIme.Text.Trim();
-            boxOpis.Text = boxOpis.Text.Trim();
-            if (boxIme.Text == "" && boxOpis.Text == "")
+            boxID.Text = boxID.Text.Trim();
+            if (boxIme.Text == "" && boxID.Text == "")
             {
                 MessageBox.Show("Morate uneti bar jedno polje!");
                 return;
             }
 
-            Grupa g = new Grupa(GenerateNewUniqueID(), boxIme.Text, boxOpis.Text);
-            sveGrupe.Add(g);
-            Grupa.SaveGroup(g);
-            MessageBox.Show("Napravili ste novu grupu pod nazivom " + g.Naziv + " sa id-jem" + g.Id);
+            bool uspeh = true;
+            foreach (var item in sveGrupe)
+            {
+                if (item.Id == boxID.Text || item.Naziv.Contains(boxIme.Text) && boxIme.Text != "" || boxIme.Text.Contains(item.Naziv) && boxIme.Text != "")
+                {
+                    item.DodajClana(glavniKorisnik);
+                    Grupa.SaveGroup(item);
+                    MessageBox.Show(boxID.Text + " " + item.Id);
+                    uspeh = false;
+                }
+            }
+            if(uspeh)
+                MessageBox.Show("Vasa grupa nije nadjena");
+            //treba dodati da se cuva korisnik
 
             this.Close();
         }
-
         static public string GenerateNewUniqueID()
         {
             string newID = idGen.Next(100000, 1000000).ToString();
