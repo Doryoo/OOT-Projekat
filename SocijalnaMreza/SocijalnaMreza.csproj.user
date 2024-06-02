@@ -16,6 +16,9 @@
     <Compile Update="DodajPrijateljaWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MakeNewDiscussion.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MakeNewGrup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +40,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MakeNewDiscussion.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MakeNewGrup.xaml">

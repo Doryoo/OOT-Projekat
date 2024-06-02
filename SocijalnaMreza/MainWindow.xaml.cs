@@ -540,7 +540,7 @@ namespace SocijalnaMreza
                 //MessageBox.Show(tmp.ToString());
                 SyncShownDiscussions(tmp);
                 PregledDiskusija.Visibility = Visibility.Visible;
-                AddDiscussionBox.IsEnabled = true;
+ //               AddDiscussionBox.IsEnabled = true;
                 addDiscButton.IsEnabled = true;
                 CSVExport.IsEnabled = true;
 
@@ -550,7 +550,7 @@ namespace SocijalnaMreza
                 delGroup.IsEnabled = false;
                 CSVExport.IsEnabled = false;
                 PregledDiskusija.Visibility = Visibility.Hidden;
-                AddDiscussionBox.IsEnabled = false;
+//                AddDiscussionBox.IsEnabled = false;
                 addDiscButton.IsEnabled = false;
             }
         }
@@ -712,6 +712,7 @@ namespace SocijalnaMreza
             }
         }
 
+        /*
         private void AddDiscussionButton(object sender, RoutedEventArgs e)
         {
             var tmp = listaGrupa.SelectedItem as Grupa;
@@ -723,7 +724,7 @@ namespace SocijalnaMreza
                 SyncShownDiscussions(tmp);
                 Diskusija.SaveDiscussion(d);
             }
-        }
+        }*/
 
         private void EditSelectedT(object sender, MouseButtonEventArgs e)
         {
@@ -793,6 +794,23 @@ namespace SocijalnaMreza
                 }
             }
         }
+
+        private void AddNewDiscussion(object sender, RoutedEventArgs e)
+        {
+            Grupa? tmp = null;
+            if (listaGrupa.SelectedItem != null)
+                tmp = listaGrupa.SelectedItem as Grupa;
+
+            Grupa? output = null;
+            
+            MakeNewDiscussion makeNewDiscussionWindow = new MakeNewDiscussion(sveGrupe,sveDiskusije, allIDs,tmp, output);
+            makeNewDiscussionWindow.ShowDialog();
+            if(tmp != null)
+            {
+                SyncShownDiscussions(tmp);
+            }
+        }
+
 
 
 

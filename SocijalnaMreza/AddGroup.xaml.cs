@@ -49,13 +49,13 @@ namespace SocijalnaMreza
                 {
                     item.DodajClana(glavniKorisnik);
                     Grupa.SaveGroup(item);
+                    Korisnik.SaveUser(glavniKorisnik);
                     MessageBox.Show(boxID.Text + " " + item.Id);
                     uspeh = false;
                 }
             }
             if(uspeh)
                 MessageBox.Show("Vasa grupa nije nadjena");
-            //treba dodati da se cuva korisnik
 
             this.Close();
         }
