@@ -373,7 +373,7 @@ namespace SocijalnaMreza
 
         private Post GetDataGridRowItem(DataGrid dataGrid, Point position)
         {
-            // Helper method to get the item from DataGridRow based on mouse position
+            // Pomocna metoda za dobijanje item-a iz DataGridRow na osnovu pozicije misa
             HitTestResult hitTestResult = VisualTreeHelper.HitTest(dataGrid, position);
             DataGridRow dataGridRow = FindAncestor<DataGridRow>(hitTestResult.VisualHit);
 
