@@ -104,34 +104,6 @@ namespace SocijalnaMreza
                 }
             }
         }
-
-        /*
-         // nepotrebno teoretski
-        public ObservableCollection<Grupa> ListaGrupa
-        {
-            get { return listaGrupa; }
-            set
-            {
-                if (listaGrupa != value)
-                {
-                    listaGrupa = value;
-                    OnPropertyChanged(nameof(ListaGrupa));
-                }
-            }
-        }
-
-        public void updateGroups(ObservableCollection<Grupa> grupe)
-        {
-            listaGrupa.Clear();
-            foreach(var item in grupe)
-            {
-                if (item.ListaClanova.Contains(this))
-                {
-                    ListaGrupa.Add(item);
-                }
-            }
-        }*/
-
         public void initPrijatelji()
         {
             listaPrijateljaSelektovana.Clear();
@@ -206,75 +178,11 @@ namespace SocijalnaMreza
             if (k == null || listaPrijatelja.Contains(k)) return false;
             ListaPrijatelja.Add(k);
             listaPrijateljaSelektovana.Add(k);
-            //listaPrijateljskihIDs.Add(k.Id);
             return true;
         }
 
-        public string DodajPrijatelja(string s, List<Korisnik> svi, List<string> allIDs)
-        {
-            if (s == null || s.Length == 0) return "0";
-            foreach (var item in ListaPrijatelja)
-            {
-                if (item.Id == s)
-                {
-                    return "0";
-                }
-
-            }
-
-            foreach (var item in svi)
-            {
-                if (item.Id == s)
-                {
-                    svi.Add(item);
-                    listaPrijatelja.Add(item);
-                    ListaPrijateljaSelektovana.Add(item);
-                    //ListaPrijateljskihIDs.Add(item.Id);
-                    return s;
-                }
-
-                if (item.Ime.Contains(s) || item.Prezime.Contains(s) || s.Contains(item.ime) || s.Contains(item.prezime))
-                {
-                    if (svi.Contains(item)) break;
-                    svi.Add(item);
-                    ListaPrijatelja.Add(item);
-                    ListaPrijateljaSelektovana.Add(item);
-                    //listaPrijateljskihIDs.Add(item.Id);
-                    MessageBox.Show("ok");
-                    return item.Id;
-                }
-            }
-
-            Random idGen = new Random();
-            string newID = idGen.Next(100000, 1000000).ToString();
-            while (allIDs.Contains(newID))
-            {
-                newID = idGen.Next(100000, 1000000).ToString();
-            }
-            //allIDs.Add(newID); ← ne radi nista, posto je lokalna kopija
-
-            string[] parts = s.Split(' ');
-            if (parts.Length == 2)
-            {
-                Korisnik t = new Korisnik(newID, parts[0], parts[1]);
-                svi.Add(t);
-                ListaPrijatelja.Add(t);
-                ListaPrijateljaSelektovana.Add(t);
-                ListaPrijateljskihIDs.Add(t.Id);
-                return newID;
-            }
-            else if (parts.Length == 1)
-            {
-                Korisnik t = new Korisnik(newID, parts[0], "prezime");
-                svi.Add(t);
-                ListaPrijatelja.Add(t);
-                listaPrijateljaSelektovana.Add(t);
-                listaPrijateljskihIDs.Add(t.Id);
-                return newID;
-            }
-            return "0";
-        }
-
+        
+        //Funkcija koja se poziva za dodavanje prijatelja unutar novog prozora
         public bool DodajPrijateljaV2(string[] s, List<Korisnik> svi)
         {
             if (s == null || s.Length == 0) return false;
@@ -285,17 +193,15 @@ namespace SocijalnaMreza
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);
-                        ListaPrijateljskihIDs.Add(item.Id);
                         Korisnik.SaveUser(this);
-                        MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po imenu)" + s[0]);
+                        //MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po imenu)" + s[0]);
                         return true;
                     }
                     else if (s[1].Contains(item.Prezime) && s[1] != "" || item.prezime.Contains(s[1]) && s[1] != "")
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);
-                        ListaPrijateljskihIDs.Add(item.Id);
-                        MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po prezimenu)" + s[1]);
+                        //MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po prezimenu)" + s[1]);
                         Korisnik.SaveUser(this);
                         return true;
                     }
@@ -303,7 +209,6 @@ namespace SocijalnaMreza
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);
-                        ListaPrijateljskihIDs.Add(item.Id);
                         Korisnik.SaveUser(this);
                         return true;
                     }
@@ -314,54 +219,8 @@ namespace SocijalnaMreza
         public bool ukloniPrijatelja(Korisnik k)
         {
             listaPrijateljaSelektovana.Remove(k);
-            listaPrijateljskihIDs.Remove(k.Id);
             return listaPrijatelja.Remove(k);
         }
-
-
-        /*
-         
-        public bool DodajPrijatelja(List<Korisnik> k)
-        {
-            if (k == null || listaPrijatelja.Contains(k)) return false;
-            listaPrijatelja.Add(k);
-            return true;
-        }
-
-        public bool ukloniPrijatelja(List<Korisnik> k)
-        {
-            return listaPrijatelja.Remove(k);
-        }
-
-
-
-        //ovako bi izgledalo da zelimo listu sa stringovima (id-evima) prijatelja
-        private ObservableCollection<string> listaPrijatelja;
-
-        public bool DodajPrijatelja(string s)
-        {
-            if (s == null || s.Length == 0 || listaPrijatelja.Contains(s)) return false;
-            listaPrijatelja.Add(s);
-            return true;
-        }
-
-        public bool DodajPrijatelja(Korisnik k)
-        {
-            if (k == null || listaPrijatelja.Contains(k.Id)) return false;
-            listaPrijatelja.Add(k.Id);
-            return true;
-        }
-
-
-        public bool ukloniPrijatelja(string s)
-        {
-            return listaPrijatelja.Remove(s);
-        }
-        public bool ukloniPrijatelja(Korisnik k)
-        {
-            return listaPrijatelja.Remove(k.Id);
-        }
-        */
 
         static public List<Korisnik> LoadAllUsers()
         {

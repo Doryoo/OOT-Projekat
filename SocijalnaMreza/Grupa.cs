@@ -20,7 +20,7 @@ namespace SocijalnaMreza
         private string opis;
         List<Korisnik> listaClanova;
         List<string> listaClanovaIDs;
-        private int brojClanova; // teoretski nepotrebno? moze se uvek izvuci iz listeClanova, ali teoretski ce trebati za prikazivanje kako bi se moglo navezati sa bindingom (dole su getteri i setteri isto)
+        private int brojClanova; 
 
         public Grupa(string id, string naziv, string opis, List<Korisnik> listaClanova)
         {

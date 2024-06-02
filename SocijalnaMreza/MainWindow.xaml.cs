@@ -347,29 +347,12 @@ namespace SocijalnaMreza
         ///////////////////////////////////////////////
         ///////// OPERACIJE NAD FRIEND LISTOM /////////
         ///////////////////////////////////////////////
+        
+        //Poziva dugme za dodavanje vec postojeceg prijatelja
         private void AddFriend(object sender, RoutedEventArgs e)
         {
             DodajPrijateljaWindow dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers,glavniKorisnik);
             dodajPrijateljaWindow.ShowDialog();
-            /*
-            if (DodajPrijatelja.Text != null)
-            {
-                string num = glavniKorisnik.DodajPrijatelja(DodajPrijatelja.Text, allUsers, allIDs);
-                if (num != "0") 
-                { 
-                    allIDs.Add(num);
-                    ObservableCollection<Korisnik> tmp = glavniKorisnik.ListaPrijatelja;
-                    foreach(Korisnik korisnik in tmp)
-                    {
-                        if (korisnik.Id == num)
-                        {
-                            allUsers.Add(korisnik);
-                            Korisnik.SaveUser(korisnik);
-                        }
-                    }
-                }
-                
-                DodajPrijatelja.Text = ""; */
             Korisnik.SaveUser(glavniKorisnik);
 
         }
@@ -386,6 +369,7 @@ namespace SocijalnaMreza
             Korisnik.SaveUser(glavniKorisnik);
         }
 
+        //Prizove se kada se bilo koji prijatelj selektuje, kako bi se prikazale sve informacije o njemu
         private void FriendClicked(object sender, RoutedEventArgs e)
         {
 
@@ -425,7 +409,7 @@ namespace SocijalnaMreza
             }
         }
 
-        private void SearchButt(object sender, RoutedEventArgs e)
+        private void SearchButtn(object sender, RoutedEventArgs e)
         {
             if (SearchContent.Text != null)
             {
@@ -441,6 +425,7 @@ namespace SocijalnaMreza
             addNewUserWindow.ShowDialog();
         }
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
+
 
 
         ///////////////////////////////////////////////
@@ -483,6 +468,7 @@ namespace SocijalnaMreza
 
         // ########## KRAJ OPERACIJA NAD DATA GRID-OM ##########
 
+
         //////////////////////////////
         /////////  TRECI TAB /////////
         //////////////////////////////
@@ -492,23 +478,17 @@ namespace SocijalnaMreza
             Grupa? tmp = listaGrupa.SelectedItem as Grupa;
             if (tmp != null)
             {
-                //tmpVremeGrupe = DateTime.Now;
-
                 delGroup.IsEnabled = true;
-                //MessageBox.Show(tmp.ToString());
                 SyncShownDiscussions(tmp);
                 PregledDiskusija.Visibility = Visibility.Visible;
- //               AddDiscussionBox.IsEnabled = true;
                 addDiscButton.IsEnabled = true;
                 CSVExport.IsEnabled = true;
-
             }
             else
             {
                 delGroup.IsEnabled = false;
                 CSVExport.IsEnabled = false;
                 PregledDiskusija.Visibility = Visibility.Hidden;
-//                AddDiscussionBox.IsEnabled = false;
                 addDiscButton.IsEnabled = false;
             }
         }
@@ -518,8 +498,6 @@ namespace SocijalnaMreza
             Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
             if (tmp != null)
             {
-                //MessageBox.Show(listaGrupa.IsKeyboardFocusWithin.ToString());
-                //tmpVremeDiskusije = DateTime.Now;
                 CSVExport.IsEnabled = true;
                 delDiscussion.IsEnabled = true;
             }
@@ -555,84 +533,6 @@ namespace SocijalnaMreza
         }
 
 
-        //editovanje selektovanog itema u trecem tabu
-        private void EditSelectedT(object sender, RoutedEventArgs e)
-        {
-            /*koristimo, kako bi napravili mesta za textbox koji nam sluzi za editovanje // ipak ne treba, za ovu trenutnu verziju xd
-            Grid.SetRowSpan(listaGrupa, 1);
-            Grid.SetRowSpan(PregledDiskusija, 1);
-            //MessageBox.Show(listaGrupa.PreviewMouseLeftButtonDown);
-
-            bool barJedan = true;
-
-            if (PregledDiskusija.SelectedItem != null)
-            {
-                Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
-                if (tmp != null)
-                {
-                    tmpDiskusija = tmp;
-                    //MessageBox.Show(tmp.ToString());
-                    LabelZaMenjanje.Visibility = Visibility.Visible;
-                    EditBox.Visibility = Visibility.Visible;
-                    EditBox.IsEnabled = true;
-                    LabelZaMenjanje.Content = "Promeni diskusiju " + tmp.Naziv + " :";
-                    barJedan = false;
-                }
-            }
-
-            if (listaGrupa.SelectedItem != null)
-            {
-                Grupa? tmp = listaGrupa.SelectedItem as Grupa;
-                if (tmp != null)
-                {
-                    tmpGrupa = tmp;
-
-                    //MessageBox.Show(tmp.ToString());
-                    LabelZaMenjanje.Visibility = Visibility.Visible;
-                    EditBox.Visibility = Visibility.Visible;
-                    EditBox.IsEnabled = true;
-                    LabelZaMenjanje.Content = "Promeni grupu " + tmp.Naziv + " :";
-                    barJedan = false;
-                }
-            }
-
-            if (barJedan)
-            {
-                LabelZaMenjanje.Visibility = Visibility.Hidden;
-                EditBox.Visibility = Visibility.Hidden;
-                EditBox.IsEnabled = false;
-                EditBox.Text = "";
-            }
-            */
-        }
-
-        //Dugme koje se klikne kada zavrsimo editovanje selektovanog itema na trecem tabu
-        private void EditDone(object sender, RoutedEventArgs e)
-        {
-
-            //ovde treba da se izvrsi editovanje selektovanog itema
-
-            if(tmpGrupa != null)
-            {
-                tmpGrupa.Naziv = EditBox.Text;
-                SyncShownGroups();
-                Grupa.SaveGroup(tmpGrupa);
-            }
-            else if (tmpDiskusija != null)
-            {
-                tmpDiskusija.Naziv = EditBox.Text;
-
-                SyncShownDiscussions(tmpDiskusija);
-                Diskusija.SaveDiscussion(tmpDiskusija);
-            }
-
-
-            LabelZaMenjanje.Visibility = Visibility.Hidden;
-            EditBox.Visibility = Visibility.Hidden;
-            EditBox.IsEnabled = false;
-            EditBox.Text = "";
-        }
-
         private void ExportCSV(object sender, RoutedEventArgs e)
         {
             if (PregledDiskusija.IsKeyboardFocusWithin)
@@ -659,31 +559,19 @@ namespace SocijalnaMreza
             }
         }
 
-        private void RemoveDiscussion(object sender, RoutedEventArgs e) //not done well.
+        private void RemoveDiscussion(object sender, RoutedEventArgs e) 
         {
-            var tmp = PregledDiskusija.SelectedItem as Diskusija;
+            if(PregledDiskusija.SelectedItem != null) { 
+                var tmp = PregledDiskusija.SelectedItem as Diskusija;
 
-            if (tmp != null)
-            {
-                sveDiskusije.Remove(tmp);
-                SyncShownDiscussions(tmp);
-                File.Delete(Path.Join("discussions/", tmp.Id + ".txt"));
+                if (tmp != null)
+                {
+                    sveDiskusije.Remove(tmp);
+                    SyncShownDiscussions(tmp);
+                    File.Delete(Path.Join("discussions/", tmp.Id + ".txt"));
+                }
             }
         }
-
-        /*
-        private void AddDiscussionButton(object sender, RoutedEventArgs e)
-        {
-            var tmp = listaGrupa.SelectedItem as Grupa;
-            if (tmp != null && AddDiscussionBox.Text != null && AddDiscussionBox.Text != "")
-            {
-                Diskusija d = new Diskusija(GenerateNewUniqueID(), AddDiscussionBox.Text, DateOnly.FromDateTime(DateTime.Now), tmp.Id);
-                sveDiskusije.Add(d);
-                AddDiscussionBox.Text = "";
-                SyncShownDiscussions(tmp);
-                Diskusija.SaveDiscussion(d);
-            }
-        }*/
 
         private void EditSelectedT(object sender, MouseButtonEventArgs e)
         {
@@ -699,10 +587,6 @@ namespace SocijalnaMreza
                         editujGrupuWindow.ShowDialog();
                         SyncShownGroups();
                     }
-                }
-                else
-                {
-                    LabelZaMenjanje.Visibility = Visibility.Hidden;
                 }
             }
             else
@@ -768,74 +652,5 @@ namespace SocijalnaMreza
         //    return novi;
         //}
 
-        /*
-         BACKUP OF EDIT BUTTON ON THRID TAB
-
-        if (listaGrupa.IsKeyboardFocusWithin)
-            {
-                if (listaGrupa.SelectedItem != null)
-                {
-                    Grupa? tmp = listaGrupa.SelectedItem as Grupa;
-                    if (tmp != null)
-                    {
-                        tmpGrupa = tmp;
-                        tmpDiskusija = null;
-                        EditBox.Text = tmp.Naziv;
-                        //MessageBox.Show(tmp.ToString());
-                        LabelZaMenjanje.Visibility = Visibility.Visible;
-                        EditBox.Visibility = Visibility.Visible;
-                        EditBox.IsEnabled = true;
-                        LabelZaMenjanje.Content = "Promeni grupu " + tmp.Naziv + " :";
-                    }
-                    else
-                    {
-                        tmpGrupa = null;
-                        tmpDiskusija = null;
-                    }
-                }
-                else
-                {
-                    LabelZaMenjanje.Visibility = Visibility.Hidden;
-                    EditBox.Visibility = Visibility.Hidden;
-                    EditBox.IsEnabled = false;
-                    EditBox.Text = "";
-                    tmpGrupa = null;
-                    tmpDiskusija = null;
-                }
-            }
-            else
-            {
-                if (PregledDiskusija.SelectedItem != null)
-                {
-                    Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
-                    if (tmp != null)
-                    {
-                        tmpGrupa = null;
-                        tmpDiskusija = tmp;
-                        EditBox.Text = tmp.Naziv;
-                        //MessageBox.Show(tmp.ToString());
-                        LabelZaMenjanje.Visibility = Visibility.Visible;
-                        EditBox.Visibility = Visibility.Visible;
-                        EditBox.IsEnabled = true;
-                        LabelZaMenjanje.Content = "Promeni diskusiju " + tmp.Naziv + " :";
-                    }
-                    else
-                    {
-                        tmpGrupa = null;
-                        tmpDiskusija = null;
-                    }
-                }
-                else
-                {
-                    LabelZaMenjanje.Visibility = Visibility.Hidden;
-                    EditBox.Visibility = Visibility.Hidden;
-                    EditBox.IsEnabled = false;
-                    EditBox.Text = "";
-                    tmpGrupa = null;
-                    tmpDiskusija = null;
-                }
-            }
-         
-         */
     }
 }

@@ -55,7 +55,7 @@ namespace SocijalnaMreza
                 boxId.Text = "";
                 boxIme.Text = "";
                 boxPrezime.Text = "";
-                MessageBox.Show("Ne postoji korisnik sa tim podacima!");
+                MessageBox.Show("Ne postoji prijatelj sa tim podacima, a da ga vec nemate!");
             }
             this.Close();
         }

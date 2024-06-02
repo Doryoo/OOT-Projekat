@@ -20,7 +20,6 @@ namespace SocijalnaMreza
 
         private void dodajPrijatelja(object sender, RoutedEventArgs e)
         {
-            //boxIme, boxPrezime
             if (boxIme.Text == "" || boxPrezime.Text == "")
             {
                 MessageBox.Show("Morate uneti ime i prezime!");
