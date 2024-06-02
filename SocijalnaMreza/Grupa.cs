@@ -128,7 +128,10 @@ namespace SocijalnaMreza
                 newGroup.Opis = lineParts[2];
 
                 linija = sr.ReadLine();
-                newGroup.ListaClanovaIDs = linija.Split('¬').ToList<string>();
+                if (linija != null) {
+                    newGroup.ListaClanovaIDs = linija.Split('¬').ToList<string>();
+                }
+                    
 
             }
             catch (Exception e)
