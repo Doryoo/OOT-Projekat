@@ -6,7 +6,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="AddNewUser.xaml.cs">
       <SubType>Code</SubType>
@@ -14,8 +13,10 @@
     <Compile Update="DodajPrijateljaWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MakeNewGrup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Page Update="AddNewUser.xaml">
       <SubType>Designer</SubType>
@@ -32,13 +33,14 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="MakeNewGrup.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UploadPost.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
-
- <ItemGroup>
+  <ItemGroup>
     <Compile Update="EditPost.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,5 +51,4 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-
 </Project>

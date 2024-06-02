@@ -21,9 +21,10 @@ namespace SocijalnaMreza
         static ObservableCollection<Diskusija> sveDiskusije = Diskusija.LoadAllDiscussions();
         static List<string> allIDs = LoadAllIDs();
         Korisnik glavniKorisnik = SelectMainUser();
+
         DodajPrijateljaWindow dodajPrijateljaWindow;
         AddNewUser addNewUserWindow;
-
+        MakeNewGrup makeNewGrupWindow;
 
 
 
@@ -43,6 +44,9 @@ namespace SocijalnaMreza
             
             addNewUserWindow = new AddNewUser(allUsers, allIDs);
             addNewUserWindow.Closed += addNewUserWindow_Closed;
+
+            makeNewGrupWindow = new MakeNewGrup(sveGrupe,allIDs);
+            makeNewGrupWindow.Closed += makeNewGrupWindow_Closed;
 
             this.Closed += mainWindowClosed;
 
@@ -196,15 +200,22 @@ namespace SocijalnaMreza
         {
             dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
         }
+        private void makeNewGrupWindow_Closed(object sender, EventArgs e)
+        {
+            makeNewGrupWindow = new MakeNewGrup(sveGrupe,allIDs);
+        }
         private void mainWindowClosed(object sender, EventArgs e)
         {
+            makeNewGrupWindow.Closed -= makeNewGrupWindow_Closed;
             dodajPrijateljaWindow.Closed -= dodajPrijateljaWindow_Closed;
             addNewUserWindow.Closed -= addNewUserWindow_Closed;
+            makeNewGrupWindow.Close();
+            makeNewGrupWindow = null;
             dodajPrijateljaWindow.Close();
             dodajPrijateljaWindow = null;
             addNewUserWindow.Close();
             addNewUserWindow = null;
-            System.Diagnostics.Debug.WriteLine("Window closed");
+            System.Diagnostics.Debug.WriteLine("Windows closed");
         }
 
 
@@ -572,22 +583,13 @@ namespace SocijalnaMreza
             }
         }
 
+        private void AddNewGroupButton(object sender, RoutedEventArgs e)
+        {
+            makeNewGrupWindow.Show();
+        }
         private void AddGroupButton(object sender, RoutedEventArgs e)
         {
-            if (AddGroupBox.Text != null)
-            {
-                foreach (Grupa grupa in sveGrupe)
-                {
-                    if (grupa.Id == AddGroupBox.Text)
-                    {
-                        grupa.DodajClana(glavniKorisnik);
-                        SyncShownGroups();
-                        return;
-                    }
-                    Grupa.SaveGroup(grupa);
-                }
-
-            }
+            
         }
 
 
