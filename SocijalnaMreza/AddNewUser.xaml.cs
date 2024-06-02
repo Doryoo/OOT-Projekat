@@ -21,13 +21,18 @@ namespace SocijalnaMreza
         private void dodajPrijatelja(object sender, RoutedEventArgs e)
         {
             //boxIme, boxPrezime
+            if (boxIme.Text == "" || boxPrezime.Text == "")
+            {
+                MessageBox.Show("Morate uneti ime i prezime!");
+                return;
+            }
             Korisnik k = new Korisnik(GenerateNewUniqueID(),boxIme.Text, boxPrezime.Text);
             allUsers.Add(k);
             allIDs.Add(k.Id);
             Korisnik.SaveUser(k);
             boxIme.Text = "";
             boxPrezime.Text = "";
-            this.Hide();
+            this.Close();
             MessageBox.Show("Uspešno ste dodali korisnika!");
         }
 

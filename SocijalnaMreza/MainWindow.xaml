@@ -168,12 +168,12 @@
                     </StackPanel>
 
                     <!-- User content -->
-                    <DataGrid Grid.Column="1" Grid.Row="8" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5">
+                    <DataGrid Grid.Column="1" Grid.Row="8" x:Name="ViewPostsGridMreza"  IsReadOnly="True" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" Grid.RowSpan="9" Visibility="Hidden" Margin="5" >
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="IDMreza" Header="ID Poruke"             Binding="{Binding Path=Id}"/>
-                            <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"          Binding="{Binding Path=Sadrzaj}"/>
-                            <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno"    Binding="{Binding Path=DatumObjave, StringFormat='{}{0:dd.MM.yyyy}'}"/>
-                            <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi"          Binding="{Binding Path=BrojLajkova}"/>
+                            <DataGridTextColumn x:Name="IDMreza" Header="ID Poruke" IsReadOnly="True"           Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn x:Name="SadrzajMreza" Header="Sadrzaj"  IsReadOnly="True"       Binding="{Binding Path=Sadrzaj}"/>
+                            <DataGridTextColumn x:Name="ObjavljenoMreza" Header="Objavljeno" IsReadOnly="True"  Binding="{Binding Path=DatumObjave}"/>
+                            <DataGridTextColumn x:Name="LajkoviMreza" Header="Lajkovi" IsReadOnly="True"        Binding="{Binding Path=BrojLajkova}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -204,29 +204,30 @@
 
                     </ListBox>
 
-                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Visibility="Hidden" SelectionChanged="diskusijeChanged" CanUserAddRows="False">
+                    <DataGrid Grid.Column="1" x:Name="PregledDiskusija" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Visibility="Hidden" SelectionChanged="diskusijeChanged" CanUserAddRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn  Header="Naziv"                 Binding="{Binding Path=Naziv}"/>
-                            <DataGridTextColumn  Header="Broj Clanova"          Binding="{Binding Path=BrojClanovaGrupe}"/>
-                            <DataGridTextColumn  Header="Datum zadnje poruke"   Binding="{Binding Path=DatumPoslednjePoruke}"/>
+                            <DataGridTextColumn  Header="Naziv" IsReadOnly="True"                 Binding="{Binding Path=Naziv}"/>
+                            <DataGridTextColumn  Header="Broj Clanova"  IsReadOnly="True"         Binding="{Binding Path=BrojClanovaGrupe}"/>
+                            <DataGridTextColumn  Header="Datum zadnje poruke" IsReadOnly="True"   Binding="{Binding Path=DatumPoslednjePoruke}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
                     <!-- Dugmad za dodavanje i brisanje GRUPE LEVA GRUPA-->
                     <Button Name="delGroup" Click="RemoveGroup" Content="Obrisi odabranu grupu" Grid.Row="1" Margin="5" IsEnabled="False"></Button>
-                    <Button Click="AddGroupButton" Content="Dodaj grupu" Grid.Row="2" Margin="5"></Button>
-                    <Button Click="AddNewGroupButton" Content="Napravi novu grupu" Grid.Row="3" Margin="5"></Button>
+                    <Button Click="AddNewGroupButton" Content="Napravi novu grupu" Grid.Row="2" Margin="5"></Button>
+                    <Button Click="AddGroupButton" Content="Dodaj grupu" Grid.Row="3" Margin="5"></Button>
+
 
 
                     <!-- Dugmad za EXPORT, EDIT CENTRALNA GRUPA-->
                     <Button Content="Exportuj u CSV" PreviewMouseLeftButtonDown="ExportCSV" Grid.Column="1" Grid.Row="1" Margin="5" Name="CSVExport" IsEnabled="False"></Button>
                     <Button Content="Edituj odabrano" Grid.Column="1" Grid.Row="2" Margin="5" PreviewMouseLeftButtonDown="EditSelectedT"></Button>
-                    <Button Content="Zavrsi editovanje" Click="EditDone" Grid.Column="1" Grid.Row="3" Margin="5" ></Button>
+                    <!--<Button Content="Zavrsi editovanje" Click="EditDone" Grid.Column="1" Grid.Row="3" Margin="5" ></Button>-->
        
                     <!-- Dugmad za dodavanje i brisanje DISKUSIJE DESNA GRUPA-->
-                    <Button x:Name="delDiscussion" Click="RemoveDiscussion" Content="Obrisi odabran discussion" Grid.Row="1" Margin="5" Grid.Column="3" IsEnabled="False"></Button>
+                    <Button x:Name="delDiscussion" Click="RemoveDiscussion" Content="Obrisi odabranu diskusiju" Grid.Row="1" Margin="5" Grid.Column="3" IsEnabled="False"></Button>
                     <!--<Button Click="AddDiscussion" Grid.Row="2" Margin="5" Padding="1" Grid.Column="3" IsEnabled="True" Content="Dodaj disussion"></Button>-->
-                    <Button  Click="AddNewDiscussion" Content="Napravi novi discussion" Grid.Row="3" Margin="5" Grid.Column="3" Name="addDiscButton" IsEnabled="True"></Button>
+                    <Button  Click="AddNewDiscussion" Content="Napravi novu diskusiju" Grid.Row="2" Margin="5" Grid.Column="3" Name="addDiscButton" IsEnabled="True"></Button>
 
                     
                     

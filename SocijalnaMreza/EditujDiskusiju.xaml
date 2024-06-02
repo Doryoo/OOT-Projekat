@@ -1,0 +1,29 @@
+﻿<Window x:Class="SocijalnaMreza.EditujDiskusiju"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SocijalnaMreza"
+        mc:Ignorable="d"
+        Title="EditujDiskusiju" Height="150" Width="400" ResizeMode="NoResize" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.ColumnSpan="1" Grid.Row="0" VerticalAlignment="Center" Grid.RowSpan="4">
+            <Label>Naziv diskusije:</Label>
+            <TextBox Margin="5" Padding="1" Name="boxIme" Width="Auto" />
+            
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Click="saveChanges" Padding="10">Sacuvaj izmene nad diskusijom</Button>
+        </StackPanel>
+    </Grid>
+</Window>

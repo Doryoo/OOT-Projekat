@@ -280,24 +280,26 @@ namespace SocijalnaMreza
             if (s == null || s.Length == 0) return false;
             foreach (var item in svi)
             {
-                if (!listaPrijatelja.Contains(item) && !item.Id.Equals("964964")) { 
-                    if (s[0].Contains(item.Ime) || item.Ime.Contains(s[0]))
+                if (!listaPrijatelja.Contains(item) && item.Id != "964964") { 
+                    if (s[0].Contains(item.Ime) && s[0] != "" || item.Ime.Contains(s[0]) && s[0] != "")
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);
                         ListaPrijateljskihIDs.Add(item.Id);
                         Korisnik.SaveUser(this);
+                        MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po imenu)" + s[0]);
                         return true;
                     }
-                    else if (s[1].Contains(item.Prezime) || item.prezime.Contains(s[1]))
+                    else if (s[1].Contains(item.Prezime) && s[1] != "" || item.prezime.Contains(s[1]) && s[1] != "")
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);
                         ListaPrijateljskihIDs.Add(item.Id);
+                        MessageBox.Show(" nadjen korisnik : " + item.ToString() + " trazen korisnik (po prezimenu)" + s[1]);
                         Korisnik.SaveUser(this);
                         return true;
                     }
-                    else if (s[2].Equals(item.Id))
+                    else if (s[2] == item.Id && s[2] != "")
                     {
                         listaPrijatelja.Add(item);
                         listaPrijateljaSelektovana.Add(item);

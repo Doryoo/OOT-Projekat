@@ -22,10 +22,6 @@ namespace SocijalnaMreza
         static List<string> allIDs = LoadAllIDs();
         Korisnik glavniKorisnik = SelectMainUser();
 
-        DodajPrijateljaWindow dodajPrijateljaWindow;
-        AddNewUser addNewUserWindow;
-        MakeNewGrup makeNewGrupWindow;
-
 
 
         Point startPoint = new();
@@ -36,19 +32,6 @@ namespace SocijalnaMreza
         public MainWindow()
         {
             InitializeComponent();
-
-
-            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
-            dodajPrijateljaWindow.Closed += dodajPrijateljaWindow_Closed;
-            
-            
-            addNewUserWindow = new AddNewUser(allUsers, allIDs);
-            addNewUserWindow.Closed += addNewUserWindow_Closed;
-
-            makeNewGrupWindow = new MakeNewGrup(sveGrupe,allIDs);
-            makeNewGrupWindow.Closed += makeNewGrupWindow_Closed;
-
-            this.Closed += mainWindowClosed;
 
             LoadAllFriendsForUser(glavniKorisnik);
             LoadAllUsersForGroups();
@@ -191,32 +174,6 @@ namespace SocijalnaMreza
             PregledDiskusija.ItemsSource = vezaneDiskusije;
         }
 
-        private void addNewUserWindow_Closed(object sender, EventArgs e)
-        {
-            addNewUserWindow = new AddNewUser(allUsers, allIDs);
-
-        }
-        private void dodajPrijateljaWindow_Closed(object sender, EventArgs e)
-        {
-            dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers, glavniKorisnik);
-        }
-        private void makeNewGrupWindow_Closed(object sender, EventArgs e)
-        {
-            makeNewGrupWindow = new MakeNewGrup(sveGrupe,allIDs);
-        }
-        private void mainWindowClosed(object sender, EventArgs e)
-        {
-            makeNewGrupWindow.Closed -= makeNewGrupWindow_Closed;
-            dodajPrijateljaWindow.Closed -= dodajPrijateljaWindow_Closed;
-            addNewUserWindow.Closed -= addNewUserWindow_Closed;
-            makeNewGrupWindow.Close();
-            makeNewGrupWindow = null;
-            dodajPrijateljaWindow.Close();
-            dodajPrijateljaWindow = null;
-            addNewUserWindow.Close();
-            addNewUserWindow = null;
-            System.Diagnostics.Debug.WriteLine("Windows closed");
-        }
 
 
         ////////////////////////////////////////////////
@@ -392,8 +349,8 @@ namespace SocijalnaMreza
         ///////////////////////////////////////////////
         private void AddFriend(object sender, RoutedEventArgs e)
         {
-            
-            dodajPrijateljaWindow.Show();
+            DodajPrijateljaWindow dodajPrijateljaWindow = new DodajPrijateljaWindow(allUsers,glavniKorisnik);
+            dodajPrijateljaWindow.ShowDialog();
             /*
             if (DodajPrijatelja.Text != null)
             {
@@ -480,7 +437,8 @@ namespace SocijalnaMreza
 
         private void AddNewUser(object sender, RoutedEventArgs e)
         {
-            addNewUserWindow.Show();
+            AddNewUser addNewUserWindow = new AddNewUser(allUsers, allIDs);
+            addNewUserWindow.ShowDialog();
         }
         // ########## KRAJ OPERACIJA NAD FRIEND LISTOM ##########
 
@@ -585,7 +543,8 @@ namespace SocijalnaMreza
 
         private void AddNewGroupButton(object sender, RoutedEventArgs e)
         {
-            makeNewGrupWindow.Show();
+            MakeNewGrup makeNewGrupWindow = new MakeNewGrup(sveGrupe, allIDs);
+            makeNewGrupWindow.ShowDialog();
             SyncShownGroups();
         }
         private void AddGroupButton(object sender, RoutedEventArgs e)
@@ -736,6 +695,89 @@ namespace SocijalnaMreza
                     Grupa? tmp = listaGrupa.SelectedItem as Grupa;
                     if (tmp != null)
                     {
+                        EditujGrupu editujGrupuWindow = new EditujGrupu(tmp);
+                        editujGrupuWindow.ShowDialog();
+                        SyncShownGroups();
+                    }
+                }
+                else
+                {
+                    LabelZaMenjanje.Visibility = Visibility.Hidden;
+                }
+            }
+            else
+            {
+                if (PregledDiskusija.SelectedItem != null)
+                {
+                    Diskusija? tmp = PregledDiskusija.SelectedItem as Diskusija;
+                    if (tmp != null)
+                    {
+                        EditujDiskusiju editujDiskusijuWindow = new EditujDiskusiju(tmp);
+                        editujDiskusijuWindow.ShowDialog();
+                        SyncShownDiscussions(tmp);
+                    }
+                }
+            }
+        }
+
+        private void AddNewDiscussion(object sender, RoutedEventArgs e)
+        {
+            Grupa? tmp = null;
+            if (listaGrupa.SelectedItem != null)
+                tmp = listaGrupa.SelectedItem as Grupa;
+
+            Grupa? output = null;
+            
+            MakeNewDiscussion makeNewDiscussionWindow = new MakeNewDiscussion(sveGrupe,sveDiskusije, allIDs,tmp, output);
+            makeNewDiscussionWindow.ShowDialog();
+            if(tmp != null)
+            {
+                SyncShownDiscussions(tmp);
+            }
+        }
+
+
+
+
+
+        // ########## TRECI TAB ##########
+
+
+        //public Korisnik newUser()
+        //{
+        //    Korisnik novi = new Korisnik(GenerateNewUniqueID());
+        //    allUsers.Add(novi);
+        //    return novi;
+        //}
+        //public Korisnik newUser(string ime, string prezime)
+        //{
+        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime);
+        //    allUsers.Add(novi);
+        //    return novi;
+        //}
+        //public Korisnik newUser(string ime, string prezime, string profilnaSlikaPath)
+        //{
+        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime, profilnaSlikaPath);
+        //    allUsers.Add(novi);
+        //    return novi;
+        //}
+        //public Korisnik newUser(string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
+        //{
+        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime, datumRodjenja, profilnaSlikaPath);
+        //    allUsers.Add(novi);
+        //    return novi;
+        //}
+
+        /*
+         BACKUP OF EDIT BUTTON ON THRID TAB
+
+        if (listaGrupa.IsKeyboardFocusWithin)
+            {
+                if (listaGrupa.SelectedItem != null)
+                {
+                    Grupa? tmp = listaGrupa.SelectedItem as Grupa;
+                    if (tmp != null)
+                    {
                         tmpGrupa = tmp;
                         tmpDiskusija = null;
                         EditBox.Text = tmp.Naziv;
@@ -793,54 +835,7 @@ namespace SocijalnaMreza
                     tmpDiskusija = null;
                 }
             }
-        }
-
-        private void AddNewDiscussion(object sender, RoutedEventArgs e)
-        {
-            Grupa? tmp = null;
-            if (listaGrupa.SelectedItem != null)
-                tmp = listaGrupa.SelectedItem as Grupa;
-
-            Grupa? output = null;
-            
-            MakeNewDiscussion makeNewDiscussionWindow = new MakeNewDiscussion(sveGrupe,sveDiskusije, allIDs,tmp, output);
-            makeNewDiscussionWindow.ShowDialog();
-            if(tmp != null)
-            {
-                SyncShownDiscussions(tmp);
-            }
-        }
-
-
-
-
-
-        // ########## TRECI TAB ##########
-
-
-        //public Korisnik newUser()
-        //{
-        //    Korisnik novi = new Korisnik(GenerateNewUniqueID());
-        //    allUsers.Add(novi);
-        //    return novi;
-        //}
-        //public Korisnik newUser(string ime, string prezime)
-        //{
-        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime);
-        //    allUsers.Add(novi);
-        //    return novi;
-        //}
-        //public Korisnik newUser(string ime, string prezime, string profilnaSlikaPath)
-        //{
-        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime, profilnaSlikaPath);
-        //    allUsers.Add(novi);
-        //    return novi;
-        //}
-        //public Korisnik newUser(string ime, string prezime, DateOnly datumRodjenja, string profilnaSlikaPath)
-        //{
-        //    Korisnik novi = new Korisnik(GenerateNewUniqueID(), ime, prezime, datumRodjenja, profilnaSlikaPath);
-        //    allUsers.Add(novi);
-        //    return novi;
-        //}
+         
+         */
     }
 }

@@ -57,6 +57,7 @@ namespace SocijalnaMreza
                 boxPrezime.Text = "";
                 MessageBox.Show("Ne postoji korisnik sa tim podacima!");
             }
+            this.Close();
         }
     }
 }

@@ -53,7 +53,9 @@ namespace SocijalnaMreza
                 }
                 else
                 {
-                    sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), boxIme.Text, DateOnly.FromDateTime(DateTime.Now), input.Id));
+                    Diskusija d = new Diskusija(GenerateNewUniqueID(), boxIme.Text, DateOnly.FromDateTime(DateTime.Now), input.Id);
+                    sveDiskusije.Add(d);
+                    Diskusija.SaveDiscussion(d);
                 }
             }
             else
@@ -62,7 +64,9 @@ namespace SocijalnaMreza
                 {
                     if (grupa.Id == boxId.Text)
                     {
-                        sveDiskusije.Add(new Diskusija(GenerateNewUniqueID(), boxIme.Text, DateOnly.FromDateTime(DateTime.Now), grupa.Id));
+                        Diskusija d = new Diskusija(GenerateNewUniqueID(), boxIme.Text, DateOnly.FromDateTime(DateTime.Now), grupa.Id);
+                        sveDiskusije.Add(d);
+                        Diskusija.SaveDiscussion(d);
                         output = grupa;
                         uspeo = false;
                     }
